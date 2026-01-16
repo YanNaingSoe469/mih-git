@@ -12,7 +12,7 @@ def login_page(request):
     return render(request,'login.html')
 
 def register_page(request):
-    return render(request, 'register.html')
+    return render(request, 'sign-up.html')
 
 def register(request):
     if request.method == 'POST':
@@ -29,10 +29,10 @@ def register(request):
             login(request, user)
             return redirect('test_homepage')
         else:
-            return render(request, 'register.html', {'form': form})
+            return render(request, 'sign-up.html', {'form': form})
     else:
         form = RegistrationForm()
-        return render(request, 'register.html', {'form': form})
+        return render(request, 'sign-up.html', {'form': form})
 
 def signout(request):
     logout(request)
@@ -46,7 +46,7 @@ def signout(request):
 #         login(request, user)
 #         return redirect('test_homepage')
 #     else:
-#         return render(request, 'login.html')
+#         return render(request, 'login-old.html')
 
 def signin(request):
     if request.method == 'POST':
