@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>UCSY KP | Register</title>
     <style>
         body {
@@ -25,64 +25,72 @@
             border-radius: 20px;
         }
 
-        .register-btn{
+        .register-btn {
             background-color: #004aad;
         }
 
-        .register-btn:hover{
+        .register-btn:hover {
             background-color: #003d8c;;
         }
     </style>
 </head>
 
 <body>
-    <div class="box py-3">
-        <form action="{% url 'register' %}" method="POST">
-            {% csrf_token %}
-            <div class="row w-100 d-flex justify-content-center align-items-center">
-                <h3 class="text-center">Create New Account at <img style="height:40px; display:inline; border-radius: 50%;" class="mx-1" {% load static %} src="{% static 'MiH Logo.jpg' %}" alt="">MiH</h3>
-                <div class="col-6 ">
-                    <div class="row my-1 mx-1">
-                        <label for="">Name</label>
-                        <input type="text" autocomplete="off" name="name" id=""
-                            class="form-control my-1 {% if form.name.errors %}is-invalid{% endif %}" placeholder="Name" value="{{ form.name.value|default:''}}">
-                        <span class=" text-danger">{{form.name.errors}}</span>
-                    </div>
-
-                    <div class="row my-1 mx-1">
-                        <label for="">Email</label>
-                        <input type="text" autocomplete="off" name="email" id=""
-                            class="form-control my-1 {% if form.email.errors %}is-invalid{% endif %}" placeholder="Your Email" value="{{ form.email.value|default:'' }}">
-                        <span class=" text-danger">{{form.email.errors}}</span>
-                    </div>
-
-                    <div class="row my-1 mx-1">
-                        <label for="">Password</label>
-                        <input type="password" name="password1" class="form-control my-1 {% if form.password1.errors %}is-invalid{% endif %}" placeholder="Enter Password" autocomplete="off">
-                        <span class=" text-danger">{{form.password1.errors}}</span>
-                    </div>
-
-                    <div class="row my-1 mx-1">
-                        <label for="">Confirm Password</label>
-                        <input type="password" name="password2" class="form-control my-1 {% if form.password2.errors %}is-invalid{% endif %}" placeholder="Retype Password" autocomplete="off">
-                        <span class=" text-danger">{{form.password2.errors}}</span>
-                    </div>
-
-                    <div class="row my-1 mx-2 text-center">
-                        <input type="submit" class="register-btn btn text-white" value="Register">
-                    </div>
-
-                    <div class="row my-2 text-center">
-                        <span>Already have an account? Login <a href="{% url 'login#page' %}">Here</a></span>
-                    </div>
+<div class="box py-3">
+    <form action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+        <div class="row w-100 d-flex justify-content-center align-items-center">
+            <h3 class="text-center">Create New Account at <img style="height:40px; display:inline; border-radius: 50%;"
+                                                               class="mx-1" {% load static %}
+                                                               src="{% static 'MiH Logo.jpg' %}" alt="">MiH</h3>
+            <div class="col-6 ">
+                <div class="row my-1 mx-1">
+                    <label for="">Name</label>
+                    <input type="text" autocomplete="off" name="name" id=""
+                           class="form-control my-1 {% if form.name.errors %}is-invalid{% endif %}" placeholder="Name"
+                           value="{{ form.name.value|default:''}}">
+                    <span class=" text-danger">{{form.name.errors}}</span>
                 </div>
 
+                <div class="row my-1 mx-1">
+                    <label for="">Email</label>
+                    <input type="text" autocomplete="off" name="email" id=""
+                           class="form-control my-1 {% if form.email.errors %}is-invalid{% endif %}"
+                           placeholder="Your Email" value="{{ form.email.value|default:'' }}">
+                    <span class=" text-danger">{{form.email.errors}}</span>
+                </div>
+
+                <div class="row my-1 mx-1">
+                    <label for="">Password</label>
+                    <input type="password" name="password1"
+                           class="form-control my-1 {% if form.password1.errors %}is-invalid{% endif %}"
+                           placeholder="Enter Password" autocomplete="off">
+                    <span class=" text-danger">{{form.password1.errors}}</span>
+                </div>
+
+                <div class="row my-1 mx-1">
+                    <label for="">Confirm Password</label>
+                    <input type="password" name="password2"
+                           class="form-control my-1 {% if form.password2.errors %}is-invalid{% endif %}"
+                           placeholder="Retype Password" autocomplete="off">
+                    <span class=" text-danger">{{form.password2.errors}}</span>
+                </div>
+
+                <div class="row my-1 mx-2 text-center">
+                    <input type="submit" class="register-btn btn text-white" value="Register">
+                </div>
+
+                <div class="row my-2 text-center">
+                    <span>Already have an account? Login <a href="{% url 'login#page' %}">Here</a></span>
+                </div>
             </div>
-        </form>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
-    </script>
+</script>
 </body>
 
 </html>

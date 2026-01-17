@@ -1,54 +1,56 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Login | Myanmar InnoHub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" {% load static %} href="{% static 'login-style.css' %}">
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'login-style.css' %}">
 </head>
 
 <body>
 
-    <div class="auth-container">
+<div class="auth-container">
 
-        <!-- Welcome Section -->
-        <div class="welcome-box">
-            <div class="logo-wrapper">
-                <img {% load static %} src="{% static 'MiH Logo.jpg' %}" alt="MiH Logo" class="logo">
-            </div>
-            <h2>Welcome to</h2>
-            <h3>Myanmar InnoHub</h3>
-            <p>Learn, Inspire, and Share</p>
+    <!-- Welcome Section -->
+    <div class="welcome-box">
+        <div class="logo-wrapper">
+            <img {% load static %} src="{% static 'MiH Logo.jpg' %}" alt="MiH Logo" class="logo">
         </div>
-
-        <!-- Login Form -->
-        <div class="form-box">
-            <h3>Login</h3>
-            <form method="POST" action="{% url 'signin' %}">
-                {% csrf_token %}
-                <label>Username</label>
-
-                <input type="text" name="username" class="form-control {% if form.username.errors %}is-invalid{% endif %}" value="{{ form.username.value|default:'' }}" placeholder="Email">
-                <span class="text-danger">{{form.username.errors}}</span>
-
-                <label> Password</label>
-                <input type="password" name="password" class="form-control {% if form.password.errors %}is-invalid{% endif %}" placeholder="Enter Password">
-                <span class="text-danger">{{form.password.errors}}</span>
-
-                {% if form.non_field_errors %}
-                      <div class="alert alert-danger">
-                                {{ form.non_field_errors }}
-                      </div>
-                {% endif %}
-                <span class="eye"></span>
-                <button type="submit">Login</button>
-            </form>
-            <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
-        </div>
-
+        <h2>Welcome to</h2>
+        <h3>Myanmar InnoHub</h3>
+        <p>Learn, Inspire, and Share</p>
     </div>
+
+    <!-- Login Form -->
+    <div class="form-box">
+        <h3>Login</h3>
+        <form method="POST" action="{% url 'signin' %}">
+            {% csrf_token %}
+            <label>Username</label>
+
+            <input type="text" name="username" class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+                   value="{{ form.username.value|default:'' }}" placeholder="Email">
+            <span class="text-danger">{{form.username.errors}}</span>
+
+            <label> Password</label>
+            <input type="password" name="password"
+                   class="form-control {% if form.password.errors %}is-invalid{% endif %}" placeholder="Enter Password">
+            <span class="text-danger">{{form.password.errors}}</span>
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+            <span class="eye"></span>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+    </div>
+
+</div>
 
 </body>
 
