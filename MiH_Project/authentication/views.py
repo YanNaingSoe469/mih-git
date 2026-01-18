@@ -7,15 +7,7 @@ from .forms import UpdateProfileForm, ChangePasswordForm
 from .models import *
 
 
-# Create your views here.
-def login_page(request):
-    return render(request, "login.html")
-
-
-def register_page(request):
-    return render(request, "sign-up.html")
-
-
+#F1: Signup
 def register(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
@@ -37,22 +29,13 @@ def register(request):
         return render(request, "sign-up.html", {"form": form})
 
 
+#Logout
 def signout(request):
     logout(request)
-    return redirect("login#page")
+    return redirect("signin")
 
 
-# def signin(request):
-#     email = request.POST['email']
-#     password = request.POST['password']
-#     user = authenticate(request, email=email, password=password)
-#     if user:
-#         login(request, user)
-#         return redirect('test_homepage')
-#     else:
-#         return render(request, 'login-old.html')
-
-
+#F2: Login
 def signin(request):
     if request.method == "POST":
         form = LoginForm(request.POST, data=request.POST)
@@ -67,32 +50,20 @@ def signin(request):
         return render(request, "login.html", {"form": form})
 
 
+#Direct to homepage (Test)
 def test_homepage(request):
     user = request.user
     return render(request, "test_homepage.html", {"user": user})
 
 
-def profilePage(request):
+#F3: View Profile
+def profile_page(request):
     user = request.user
     return render(request, "profile.html", {"user": user})
 
 
-# def updateProfile(request, id):
-#     data = User.objects.get(id=id)
-#     if request.method == "POST":
-#         profile_data = UpdateProfileForm(request.POST, instance=data)
-#         if profile_data.is_valid():
-#             profile_data.save()
-#             return redirect("profile_page")
-#         else:
-#             messages.warning(request, "Could not update the data.")
-#             return render(request, "profile-update.html", {"form": profile_data})
-#     else:
-#         form = UpdateProfileForm(instance=data)
-#         return render(request, "profile-update.html", {"form": form})
-
-
-def updateProfile(request, id):
+#F4: Update Profile
+def update_profile(request, id):
     user = get_object_or_404(User, id=id)
     if request.method == "POST":
         form = UpdateProfileForm(request.POST, request.FILES, instance=user)
@@ -106,7 +77,8 @@ def updateProfile(request, id):
     return render(request, "profile-update.html", {"form": form, "user": user})
 
 
-def changePassword(request):
+#F5: Change Password
+def change_password(request):
     user = request.user
 
     if request.method == "POST":
