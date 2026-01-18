@@ -118,7 +118,7 @@ def changePassword(request):
 
             if not user.check_password(old_password):
                 messages.error(request, "Old password is incorrect")
-            if old_password == new_password:
+            elif old_password == new_password:
                 messages.error(request, "Old password and new password are same")
             elif new_password != confirm_password:
                 messages.error(

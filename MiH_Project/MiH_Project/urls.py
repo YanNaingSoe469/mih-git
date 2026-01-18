@@ -5,6 +5,8 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
+
+    ##authentication routes
     path("admin/", admin.site.urls),
     path("", views.login_page),
     path("login-page/", views.login_page, name="login#page"),
