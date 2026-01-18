@@ -1,224 +1,363 @@
-{% extends 'master.html' %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Myanmar InnoHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'style.css' %}"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-{% block page_title %}MiH | Homepage{% endblock %}
+</head>
 
-{% block content %}
-<div class="main-pane">
-      <h1>Innvation of Myanmar</h1>
+<body>
 
-      <div class="project-types-pane slide my-4">
-        <a href="#" class="project-type  btn">
-          <div><i class="fa-solid fa-border-all"></i></div>
-          All Projects
-        </a>
+<!-- HEADER -->
+<header class="navbar fixed-top" style="background-color: #E4F8FF; z-index: 1000;">
+    <div class="logo">
+        <img src="{% static 'MiH Logo.jpg' %}" alt="Myanmar InnoHub Logo" class="logo-img">
+        <span><b>Myanmar<br>InnoHub</b></span>
+    </div>
 
-        <a href="#" class="project-type btn">
-          <div><i class="fa-solid fa-code"></i></div>
-          Software
-        </a>
+    <nav>
+        <a href="#projects"><b>Projects</b></a>
+        <a href="#about"><b>About</b></a>
+        <a href="#contact"><b>Contact</b></a>
+    </nav>
 
-        <a href="#" class="project-type btn">
-          <div><i class="fa-solid fa-microchip"></i></div>
-          Hardware
-        </a>
+    <div class="nav-right">
+        <button class="nav-btn">+ New Project</button>
+        <button class="btn btn-light"><i class="bi bi-bell-fill me-1"></i></button>
+        <a href="{% url 'profile_page' %}">{% if user.profile_pic %}
+            <img src="{{ user.profile_pic.url }}"
+                 class="profile"
+                 alt="Profile Picture">
+            {% else %}
+            <img src="{% static 'assets/default-profile.png' %}"
+                 class="profile"
+                 alt="Default Profile">
+            {% endif %}</a>
+    </div>
+</header>
 
-        <a href="#" class="project-type btn">
-          <div><i class="fa-solid fa-hexagon-nodes"></i></div>
-          Ai
-        </a>
+<!-- HERO -->
+<section class="hero" id="projects" style="padding-top: 100px;">
+    <a href="#projects" class="nav-link"></a>
+    <h1>Innovation of Myanmar</h1>
+    <div class="search-wrapper">
+        <div class="search-icon">
+            <i class="bi bi-search"></i>
+        </div>
+        <input type="text" class="search-input" placeholder="Search"/>
+    </div>
 
-        <a href="#" class="project-type btn">
-          <div><i class="fa-solid fa-gear"></i></div>
-          Others
-        </a>
-      </div>
-<!--    <div class="project-type-wrapper mx-auto">-->
-<!--      <div id="projectTypeCarousel" class="carousel slide my-4" data-bs-ride="carousel">-->
-<!--      <div class="carousel-inner text-center">-->
 
-<!--        &lt;!&ndash; Slide 1 &ndash;&gt;-->
-<!--        <div class="carousel-item active">-->
-<!--          <div class="d-flex justify-content-center gap-3 flex-wrap">-->
-<!--            <a href="#" class="project-type btn">-->
-<!--              <div><i class="fa-solid fa-border-all"></i></div>-->
-<!--              All Projects-->
-<!--            </a>-->
+    <div class="tabs mb-4 d-flex gap-3">
+        <button class="active filter-btn" data-category="all"><i class="bi bi-grid-1x2-fill me-1"></i>All Projects
+        </button>
+        <button class="filter-btn" data-category="software"><i class="bi bi-laptop me-1"></i>Software</button>
+        <button class="filter-btn" data-category="hardware"><i class="bi bi-cpu-fill me-1"></i>Hardware</button>
+        <button class="filter-btn" data-category="ai"><i class="bi bi-robot me-1"></i>AI</button>
+    </div>
 
-<!--            <a href="#" class="project-type btn">-->
-<!--              <div><i class="fa-solid fa-code"></i></div>-->
-<!--              Software-->
-<!--            </a>-->
+</section>
 
-<!--            <a href="#" class="project-type btn">-->
-<!--              <div><i class="fa-solid fa-microchip"></i></div>-->
-<!--              Hardware-->
-<!--            </a>-->
-<!--          </div>-->
-<!--        </div>-->
+<!-- SOFTWARE DROPDOWN FILTERS -->
+<div class="software-filter-wrapper" id="softwareFilters">
 
-<!--        &lt;!&ndash; Slide 2 &ndash;&gt;-->
-<!--        <div class="carousel-item">-->
-<!--          <div class="d-flex justify-content-center gap-3 flex-wrap">-->
-<!--            <a href="#" class="project-type btn">-->
-<!--              <div><i class="fa-solid fa-hexagon-nodes"></i></div>-->
-<!--              AI-->
-<!--            </a>-->
+    <div class="software-filters">
 
-<!--            <a href="#" class="project-type btn">-->
-<!--              <div><i class="fa-solid fa-gear"></i></div>-->
-<!--              Others-->
-<!--            </a>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    </div>-->
+        <div class="custom-dropdown">
+            <div class="dropdown-header">
+                Choose platform <i class="bi bi-chevron-down"></i>
+            </div>
+            <ul class="dropdown-list">
+                <li>Website</li>
+                <li>Android</li>
+                <li>IOS</li>
+                <li>Desktop</li>
+            </ul>
+        </div>
 
-  <!-- Controls -->
-<!--  <button class="carousel-control-prev" type="button" data-bs-target="#projectTypeCarousel" data-bs-slide="prev">-->
-<!--    <span class="carousel-control-prev-icon"></span>-->
-<!--  </button>-->
+        <div class="custom-dropdown">
+            <div class="dropdown-header">
+                Choose language <i class="bi bi-chevron-down"></i>
+            </div>
+            <ul class="dropdown-list">
+                <li>Python</li>
+                <li>Java</li>
+                <li>C++</li>
+            </ul>
+        </div>
 
-<!--  <button class="carousel-control-next" type="button" data-bs-target="#projectTypeCarousel" data-bs-slide="next">-->
-<!--    <span class="carousel-control-next-icon"></span>-->
-<!--  </button>-->
+        <div class="custom-dropdown">
+            <div class="dropdown-header">
+                Choose framework <i class="bi bi-chevron-down"></i>
+            </div>
+            <ul class="dropdown-list">
+                <li>React</li>
+                <li>Flutter</li>
+                <li>.NET</li>
+                <li>Laravel</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="ai-filter-wrapper" id="aiFilters">
+
+    <div class="ai-filters">
+        <div class="custom-dropdown">
+            <div class="dropdown-header">
+                Choose focus <i class="bi bi-chevron-down"></i>
+            </div>
+            <ul class="dropdown-list">
+                <li>Machine Learning</li>
+                <li>Deep Learning</li>
+                <li>NLP</li>
+                <li>Computer Vision</li>
+            </ul>
+        </div>
+
+        <div class="custom-dropdown">
+            <div class="dropdown-header">
+                Choose algorithm <i class="bi bi-chevron-down"></i>
+            </div>
+            <ul class="dropdown-list">
+                <li>Decision Tree</li>
+                <li>Random Forest</li>
+                <li>Linear Regression</li>
+                <li>Transformer</li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 
-      <div class="form-pane my-1">
-        <form action="" class="d-flex justify-content-center align-item-center">
-          <div class="input-group mx-3">
-            <input type="text" class="form-control"  placeholder="Search anything" />
-            <div class="input-group-prepend">
-              <a href="" class="input-group-text" id="inputGroup-sizing-default"><span ><i
-                    class="fa-solid fa-magnifying-glass fs-6"></i></span></a>
-            </div>
-          </div>
+<!-- PROJECTS -->
+<section class="projects">
 
-          <select class="form-control mx-3" name="" id="">
-            <option value="">Choose Platform</option>
-            <option value="">Web</option>
-            <option value="">Android</option>
-            <option value="">iOS</option>
-            <option value="">Desktop</option>
-          </select>
-
-          <select name="" id="" class="form-control mx-3">
-            <option value="">Choose Technology</option>
-            <option value="">Java</option>
-            <option value="">Python</option>
-            <option value="">C++</option>
-            <option value="">PHP</option>
-          </select>
-        </form>
-      </div>
+    <div class="card">
+        <span class="tag software">Software</span>
+        <h3>Online Shopping</h3>
+        <p>Create a unit responsive project using Java language<br>by Mis.Emily</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="Online Shopping"/>
     </div>
-    <div class="d-flex justify-content-center">
-      <div class="project-pane d-flex align-item-center justify-content-center my-1 ">
-        <div class="project card mx-2 bg-primary-subtle p-1">
-          <img {% load static %} src="{% static 'assets/Screenshot 2025-05-21 173919.png'%}" alt="" />
-          <div class="p-2">
-            <a href="" class="project-link">
-              <h5>Signal Processor for Ultrasonic Waves</h5>
-            </a>
-            <div class="d-flex justify-content-between align-items-center">
-              <span>Mc Arthur</span>
-              <span>#arduino</span>
-            </div>
-          </div>
-        </div>
 
-
-        <div class="project card mx-2 bg-primary-subtle p-1">
-          <img {% load static %} src="{% static 'assets/Screenshot 2025-05-21 173919.png'%}" alt="" />
-          <div class="p-2">
-            <a href="" class="project-link">
-              <h5>Signal Processor for Ultrasonic Waves</h5>
-            </a>
-            <div class="d-flex justify-content-between align-items-center">
-              <span>Mc Arthur</span>
-              <span>#arduino</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project card mx-2 bg-primary-subtle p-1">
-          <img {% load static %} src="{% static 'assets/Screenshot 2025-05-21 173919.png'%}" alt="" />
-          <div class="p-2">
-            <a href="" class="project-link">
-              <h5>Signal Processor for Ultrasonic Waves</h5>
-            </a>
-            <div class="d-flex justify-content-between align-items-center">
-              <span>Mc Arthur</span>
-              <span>#arduino</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project card mx-2 bg-primary-subtle p-1">
-          <img {% load static %} src="{% static 'assets/Screenshot 2025-05-21 173919.png'%}" alt="" />
-          <div class="p-2">
-            <a href="" class="project-link">
-              <h5>Signal Processor for Ultrasonic Waves</h5>
-            </a>
-            <div class="d-flex justify-content-between align-items-center">
-              <span>Mc Arthur</span>
-              <span>#arduino</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project card mx-2 bg-primary-subtle p-1">
-          <img {% load static %} src="{% static 'assets/Screenshot 2025-05-21 173919.png'%}" alt="" />
-          <div class="p-2">
-            <a href="" class="project-link">
-              <h5>Signal Processor for Ultrasonic Waves</h5>
-            </a>
-            <div class="d-flex justify-content-between align-items-center">
-              <span>Mc Arthur</span>
-              <span>#arduino</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project card mx-2 bg-primary-subtle p-1">
-          <img {% load static %} src="{% static 'assets/Screenshot 2025-05-21 173919.png'%}" alt="" />
-          <div class="p-2">
-            <a href="" class="project-link">
-              <h5>Signal Processor for Ultrasonic Waves</h5>
-            </a>
-            <div class="d-flex justify-content-between align-items-center">
-              <span>Mc Arthur</span>
-              <span>#arduino</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project card mx-2 bg-primary-subtle p-1">
-          <img {% load static %} src="{% static 'assets/Screenshot 2025-05-21 173919.png'%}" alt="" />
-          <div class="p-2">
-            <a href="" class="project-link">
-              <h5>Signal Processor for Ultrasonic Waves</h5>
-            </a>
-            <div class="d-flex justify-content-between align-items-center">
-              <span>Mc Arthur</span>
-              <span>#arduino</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project card mx-2 bg-primary-subtle p-1">
-          <img {% load static %} src="{% static 'assets/Screenshot 2025-05-21 173919.png'%}" alt="" />
-          <div class="p-2">
-            <a href="" class="project-link">
-              <h5>Signal Processor for Ultrasonic Waves</h5>
-            </a>
-            <div class="d-flex justify-content-between align-items-center">
-              <span>Mc Arthur</span>
-              <span>#arduino</span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="card">
+        <span class="tag software">Software</span>
+        <h3>Banking System</h3>
+        <p>Create a unit responsive project using Python language<br>by Mr. Smith</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="Banking"/>
     </div>
-{% endblock %}
+
+    <div class="card">
+        <span class="tag software">Software</span>
+        <h3>Online Booking</h3>
+        <p>Create a unit responsive project using C++ language<br>by Mr. Smith</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="Booking"/>
+    </div>
+
+    <div class="card">
+        <span class="tag software">Software</span>
+        <h3>Food Delivery System</h3>
+        <p>Create a unit responsive project using Java language<br>by Mr. Smith</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="Delivering"/>
+    </div>
+
+    <div class="card">
+        <span class="tag hardware">Hardware</span>
+        <h3>Smart Plant Monitoring System</h3>
+        <p>Create by Mis.Emily</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="Smart Plant"/>
+    </div>
+
+    <div class="card">
+        <span class="tag hardware">Hardware</span>
+        <h3>LDR Light Detection System</h3>
+        <p>Create small light-sensing system by Mr. Smith</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="LDR"/>
+    </div>
+
+    <div class="card">
+        <span class="tag hardware">Hardware</span>
+        <h3>Rain Detection System</h3>
+        <p>Create by Webotricks</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="Rain Detection"/>
+    </div>
+
+    <div class="card">
+        <span class="tag hardware">Hardware</span>
+        <h3>LED Hourglass</h3>
+        <p>Create a digital hourglass by Mr.Smith</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="LED"/>
+    </div>
+
+    <div class="card">
+        <span class="tag hardware">Hardware</span>
+        <h3>Soil Moisture Sensor</h3>
+        <p>Create by Mr.Debashis Das</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="Soil"/>
+    </div>
+
+    <div class="card">
+        <span class="tag ai">AI</span>
+        <h3>Chatbots</h3>
+        <p>Create by Mis.Emily</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="Chatbots"/>
+    </div>
+
+    <div class="card">
+        <span class="tag ai">AI</span>
+        <h3>Stock Market Predictor</h3>
+        <p>Create by Mr.Smith</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="Stock"/>
+    </div>
+
+    <div class="card">
+        <span class="tag ai">AI</span>
+        <h3>Sentiment Predictor</h3>
+        <p>Create by Mr.Smith</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="Sentiment"/>
+    </div>
+
+    <div class="card">
+        <span class="tag ai">AI</span>
+        <h3>Object Detector</h3>
+        <p>Create by Mr.Smith</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="Object"/>
+    </div>
+
+    <div class="card">
+        <span class="tag ai">AI</span>
+        <h3>Recommender Engine</h3>
+        <p>Create by Mr.Smith</p>
+        <img src="{% static 'assets/default-project.jpg'%}" alt="RE"/>
+    </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about" class="d-flex align-items-center justify-content-center"
+         style="min-height: 100vh; background-color: #fff; padding: 200px 20px;">
+    <div class="container">
+        <h1 class="text-center fw-bold mb-5">About MiH</h1>
+        <div class="row align-items-start gx-4 gy-4">
+            <div class="col-md-auto d-flex justify-content-center">
+                <img src="{% static 'MiH Logo.jpg'%}" alt="MiH Logo" class="rounded-circle"
+                     style="width: 40%; height: 40%; object-fit: cover;"/>
+            </div>
+            <div class="col d-flex flex-column justify-content-center mt-100">
+                <h2 class="fw-semibold mb-3" style="color: #004AAD;">Myanmar InnoHub</h2>
+                <p class="mb-0 text-secondary" padding-right="30px">
+                    Myanmar InnoHub is a central portal for showcasing a variety of tech innovations of Burmese
+                    innovators. This platform aims to honor the spirit of innovation and nation building using
+                    technology. Innovators can showcase their projects, artifacts, and innovations while learners can
+                    browse them in a comprehensive central portal.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- CONTACT SECTION -->
+<section id="contact" class="contact-wrapper" style="min-height: 100vh; padding-top: 200px;">
+    <div class="contact-card">
+        <div class="row g-0">
+            <div class="col-lg-5 col-md-6 contact-left d-flex flex-column justify-content-center">
+                <h2 class="contact-title" style="color: #004AAD;">Connect with us to grow your business.</h2>
+                <div class="contact-item">
+                    <i class="bi bi-envelope-fill" style="color: #004AAD;"></i>
+                    <a href="mailto:mih012@gmail.com" style="color: #004AAD;">mih012@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="bi bi-telephone-fill" style="color: #004AAD;"></i>
+                    <a href="tel:09123456789" style="color: #004AAD;">09123456789</a>
+                </div>
+            </div>
+
+            <div class="col-lg-7 col-md-6 contact-right d-flex align-items-center">
+                <div class="card w-100 p-4" style="border: 4px solid #004AAD; border-radius: 8px;">
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="title" placeholder="Title">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" id="message" rows="4" placeholder="Message"
+                                      style="height: 200px;"></textarea>
+                        </div>
+                        <div class="contact-right d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary px-4">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const softwareFilters = document.getElementById("softwareFilters");
+        const aiFilters = document.getElementById("aiFilters");
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const projectCards = document.querySelectorAll(".projects .card");
+        const dropdownHeaders = document.querySelectorAll(".dropdown-header");
+
+        softwareFilters.style.display = "none";
+        aiFilters.style.display = "none";
+
+        dropdownHeaders.forEach(header => {
+            header.addEventListener("click", () => {
+                const parent = header.parentElement;
+                parent.classList.toggle("active");
+                dropdownHeaders.forEach(h => {
+                    if (h !== header) h.parentElement.classList.remove("active");
+                });
+            });
+        });
+
+        const dropdownLists = document.querySelectorAll(".dropdown-list li");
+        dropdownLists.forEach(item => {
+            item.addEventListener("click", () => {
+                const dropdown = item.closest(".custom-dropdown");
+                const header = dropdown.querySelector(".dropdown-header");
+                header.childNodes[0].nodeValue = item.textContent + " ";
+                dropdown.classList.remove("active");
+            });
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!e.target.closest(".custom-dropdown")) {
+                dropdownHeaders.forEach(h => h.parentElement.classList.remove("active"));
+            }
+        });
+
+        filterButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                const category = button.dataset.category;
+                filterButtons.forEach(btn => btn.classList.remove("active"));
+                button.classList.add("active");
+                projectCards.forEach(card => {
+                    const tag = card.querySelector(".tag");
+                    if (category === "all") {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = tag.classList.contains(category) ? "block" : "none";
+                    }
+                });
+
+                softwareFilters.style.display = category === "software" ? "flex" : "none";
+                aiFilters.style.display = category === "ai" ? "flex" : "none";
+                dropdownHeaders.forEach(h => h.parentElement.classList.remove("active"));
+            });
+        });
+    });
+</script>
+
+
+</body>
+</html>

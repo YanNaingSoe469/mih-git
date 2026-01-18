@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign Up | Myanmar InnoHub</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css" integrity="sha512-2bBQCjcnw658Lho4nlXJcc6WkV/UxpE/sAokbXPxQNGqmNdQrWqtw26Ns9kFF/yG792pKR1Sx8/Y1Lf1XN4GKA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css"
+          integrity="sha512-2bBQCjcnw658Lho4nlXJcc6WkV/UxpE/sAokbXPxQNGqmNdQrWqtw26Ns9kFF/yG792pKR1Sx8/Y1Lf1XN4GKA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" {% load static %} href="{% static 'login-style.css' %}">
 </head>
 <body>
@@ -23,16 +25,21 @@
         <h3>Register on MiH</h3>
         <form method="post" action="{% url 'register' %}">
             {% csrf_token %}
-            <input type="text" name="name" class="form-control {% if form.name.errors %}is-invalid{% endif %}" placeholder="Name" value="{{ form.name.value|default:''}}">
+            <input type="text" name="name" class="form-control {% if form.name.errors %}is-invalid{% endif %}"
+                   placeholder="Name" value="{{ form.name.value|default:''}}">
             <span class="text-danger">{{form.name.errors}}</span>
 
-            <input type="email" name="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" placeholder="Email" value="{{ form.email.value|default:''}}">
+            <input type="email" name="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+                   placeholder="Email" value="{{ form.email.value|default:''}}">
             <span class=" text-danger">{{form.email.errors}}</span>
 
-            <input type="password" name="password1" class="form-control {% if form.password1.errors %}is-invalid{% endif %}" placeholder="Password">
+            <input type="password" name="password1"
+                   class="form-control {% if form.password1.errors %}is-invalid{% endif %}" placeholder="Password">
             <span class=" text-danger">{{form.password1.errors}}</span>
 
-            <input type="password" name="password2" class="form-control {% if form.password2.errors %}is-invalid{% endif %}" placeholder="Confirm Password">
+            <input type="password" name="password2"
+                   class="form-control {% if form.password2.errors %}is-invalid{% endif %}"
+                   placeholder="Confirm Password">
             <span class=" text-danger">{{form.password2.errors}}</span>
             <button type="submit">Register</button>
         </form>
