@@ -62,7 +62,9 @@
                 <input type="text"
                        name="name"
                        value="{{ user.name }}"></div>
-
+            <span class="text-danger">
+                    {{ form.name.errors }}
+            </span>
             <label>Email</label>
             <div class="email-box">
                 <input type="email"
@@ -78,17 +80,18 @@
                        value="{{ form.phone.value|default:user.phone }}"
                        class="form-control"
                        inputmode="numeric">
-                <span class="text-danger">
-                    {{ form.phone.errors }}
-                </span>
             </div>
-
+            <span class="text-danger">
+                    {{ form.phone.errors }}
+            </span>
             <label>Address</label>
             <div class="address-box">
                 <input type="text"
                        name="address"
                        value="{{ user.address }}"></div>
-
+            <span class="text-danger">
+                    {{ form.address.errors }}
+            </span>
             <div class="buttons">
                 <button type="submit" class="btn btn-change">
                     Update
