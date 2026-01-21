@@ -25,10 +25,10 @@ class UpdateProfileForm(forms.ModelForm):
         }
 
     def clean_phone(self):
-        phone = self.cleaned_data["phone"]
+        phone = self.cleaned_data.get("phone", "")
 
         if not phone:
-            return phone
+            return ""
 
         if not phone.isdigit():
             raise forms.ValidationError("Phone number must contain only digits.")

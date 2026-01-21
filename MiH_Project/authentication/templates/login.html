@@ -28,7 +28,7 @@
         <h3>Login</h3>
         <form method="POST" action="{% url 'signin' %}">
             {% csrf_token %}
-            <label>Username</label>
+            <label>Email</label>
 
             <input type="text" name="username" class="form-control {% if form.username.errors %}is-invalid{% endif %}"
                    value="{{ form.username.value|default:'' }}" placeholder="Email">

@@ -71,7 +71,7 @@ def update_profile(request, id):
         form = UpdateProfileForm(request.POST, request.FILES, instance=user)
 
         #old profile path if exists
-        old_profile_path = user.profile_pic.path if user.profile_pic else None
+        old_profile_path = user.profile_pic.path if user.profile_pic.name and user.profile_pic.name != 'profile_pics/default-profile.png' else None
 
         if form.is_valid():
             #if the user uploads new profile
