@@ -1,3 +1,5 @@
+import os
+
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.shortcuts import render, redirect, get_object_or_404
@@ -67,7 +69,18 @@ def update_profile(request, id):
     user = get_object_or_404(User, id=id)
     if request.method == "POST":
         form = UpdateProfileForm(request.POST, request.FILES, instance=user)
+
+        #old profile path if exists
+        old_profile_path = user.profile_pic.path if user.profile_pic.name and user.profile_pic.name != 'profile_pics/default-profile.png' else None
+
         if form.is_valid():
+            #if the user uploads new profile
+            if 'profile_pic' in request.FILES:
+
+                #and the user already have an old profile
+                if old_profile_path and os.path.isfile(old_profile_path):
+                    os.remove(old_profile_path)
+
             form.save()
             messages.success(request, "Profile updated successfully.")
             return redirect("update_profile", id=user.id)

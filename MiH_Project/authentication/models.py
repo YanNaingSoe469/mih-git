@@ -32,21 +32,6 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class Field(models.Model):
-    name = models.CharField(max_length=20, unique=True)
-
-    class Meta:
-        verbose_name_plural = "Fields"
-
-    def save(self, *args, **kwargs):
-        if self.name:
-            self.name = self.name.lower()
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-
-
 class Language(models.Model):
     name = models.CharField(max_length=20, unique=True)
 
@@ -64,13 +49,11 @@ class User(AbstractUser):
         ("user", "user"),
     ]
 
-    name = models.CharField(max_length=50, default="Anonymous User")
+    name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
-    fields = models.ManyToManyField(Field, blank=True, null=True)
-    languages = models.ManyToManyField(Language, blank=True, null=True)
     role = models.CharField(max_length=20, choices=roles, default="user")
-    phone = models.CharField(max_length=20, blank=True, null=True)
-    address = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True)
+    address = models.CharField(max_length=100, blank=True)
     profile_pic = models.ImageField(upload_to="profile_pics/", blank=True, null=True)
 
     USERNAME_FIELD = "email"
