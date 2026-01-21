@@ -249,7 +249,7 @@ input:focus {
     margin: 120px auto 30px;
 }
 
-.edite-group input {
+.edit-group input {
     display: flex;
     flex-direction: column;
     font-weight: 600;

@@ -1,37 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'master.html' %}
+
+{% block title %}Edit Profile | {{user.name}} {% endblock %}
+
 {% load static %}
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Profile | Myanmar Innovations Hub</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
 
-    <!-- Link CSS -->
-    <link rel="stylesheet" href="{% static 'profile-edit-style.css' %}">
+{% block style %}
+<link rel="stylesheet" href="{% static 'profile-edit-style.css' %}">
+{% endblock %}
 
-</head>
+{% block content %}
+
 <body data-update-success="{% if messages %}{% for message in messages %}{% if message.tags == 'success' %}true{% endif %}{% endfor %}{% endif %}">
-<!-- HEADER -->
-<header class="navbar" style="background-color: #E4F8FF; z-index: 1000;">
-    <div class="logo">
-        <img src="{% static 'MiH Logo.jpg' %}" alt="Myanmar InnoHub Logo" class="logo-img">
-        <span><b>Myanmar<br>InnoHub</b></span>
-    </div>
-
-    <nav>
-        <a href="{% url 'test_homepage' %}"><b>Projects</b></a>
-        <a href="{% url 'test_homepage' %}"><b>About</b></a>
-        <a href="{% url 'test_homepage' %}"><b>Contact</b></a>
-    </nav>
-
-    <div class="nav-right">
-        <button class="nav-btn">+ New Project</button>
-        <button class="btn btn-light"><i class="bi bi-bell-fill me-1"></i></button>
-    </div>
-</header>
-
 <div class="edit-wrapper">
     <form action="{% url 'update_profile' id=user.id %}"
           method="post"
@@ -50,10 +29,10 @@
         {% endif %}
 
         <!-- Upload new image -->
-        <div class="mb-3 text-center">
+        <div class="mb-3 text-center" >
             <input type="file"
                    name="profile_pic"
-                   class="form-control w-50 mx-auto">
+                   class="form-control w-50 h-100 mx-auto">
         </div>
 
         <div class="edite-group">
@@ -115,7 +94,9 @@
         <button id="modalBackBtn">Back</button>
     </div>
 </div>
+{% endblock %}
 
+{% block script %}
 <script>
     const modal = document.getElementById("successModal");
     const modalBackBtn = document.getElementById("modalBackBtn");
@@ -143,5 +124,4 @@
         window.location.href = "{% url 'profile_page' %}";
     });
 </script>
-</body>
-</html>
+{% endblock %}

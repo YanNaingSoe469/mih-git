@@ -1,76 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{% load static %}
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>{% block page_title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css"
-          integrity="sha512-2bBQCjcnw658Lho4nlXJcc6WkV/UxpE/sAokbXPxQNGqmNdQrWqtw26Ns9kFF/yG792pKR1Sx8/Y1Lf1XN4GKA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-          integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" {% load static %} href="{% static 'style.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'style.css' %}"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    {% block style %}{% endblock %}
 </head>
 
-<body class="d-flex flex-column min-vh-100">
-<div class="nav-bar">
-    <div id="name-pane">
-        <a href="{% url 'test_homepage' %}">
-            <img {% load static %} src="{% static 'assets/MiH Logo.jpg'%}" id="logo-img" alt="" srcset=""/>
-        </a>
-        <div id="name-box">
-            <div>Myanmar</div>
-            <div>InnoHub</div>
-        </div>
+<body>
+
+<!-- HEADER -->
+<header class="navbar fixed-top" style="background-color: #E4F8FF; z-index: 1000;">
+    <div class="logo">
+        <img src="{% static 'MiH Logo.jpg' %}" alt="Myanmar InnoHub Logo" class="logo-img">
+        <span><b>Myanmar<br>InnoHub</b></span>
     </div>
-    <div class="nav-item">
-        <a href="">Projects</a>
-        <a href="">About Page</a>
-        <a href="" id="create-btn">+ Create</a>
-        <div class="btn-group">
-            <button type="button" id="profile-btn" class="btn dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false">
-                <img id="profile-img" {% load static %} src="{% static 'assets/default-profile.jpg'%}" alt=""
-                     srcset=""/>
-                {{user.name}}
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a href="{% url 'profile_page' %}" class="dropdown-item" type="button">
-                    <i class="fa-regular fa-circle-user"></i> Profile
-                </a>
-                <a href="{% url 'signout' %}" class="btn dropdown-item" type="button">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-                </a>
-            </div>
-        </div>
+
+    <nav>
+        <a href="{% url 'test_homepage' %}"><b>Projects</b></a>
+        <a href="{% url 'test_homepage' %}#about"><b>About</b></a>
+        <a href="{% url 'test_homepage' %}#contact"><b>Contact</b></a>
+    </nav>
+
+    <div class="nav-right">
+        <button class="nav-btn">+ New Project</button>
+        <button class="btn btn-light"><i class="bi bi-bell-fill me-1"></i></button>
+        <a href="{% url 'profile_page' %}">{% if user.profile_pic %}
+            <img src="{{ user.profile_pic.url }}"
+                 class="profile"
+                 alt="Profile Picture">
+            {% else %}
+            <img src="{% static 'assets/default-profile.png' %}"
+                 class="profile"
+                 alt="Default Profile">
+            {% endif %}</a>
     </div>
-</div>
+</header>
 
-<div class="container flex-grow-1">
-    {% block content %}
+{% block content %}
 
-    {% endblock %}
-</div>
+{% endblock %}
 
-<footer class=" text-center d-flex align-items-center justify-content-center bg-secondary-subtle" style="height: 40px;">
-    &copy; MiH 2026
-</footer>
+{% block script %}
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+{% endblock %}
 
 </body>
-
 </html>

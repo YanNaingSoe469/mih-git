@@ -1,35 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'master.html' %}
+
+{% block title %}{{user.name}}'s Profile{% endblock %}
+
 {% load static %}
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Myanmar InnoHub</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{% static 'profile-style.css' %}">
-</head>
 
-<body>
-<!-- HEADER -->
-<header class="navbar fixed-top" style="background-color: #E4F8FF; z-index: 1000;">
-    <div class="logo">
-        <img src="{% static 'MiH Logo.jpg' %}" alt="Myanmar InnoHub Logo" class="logo-img">
-        <span><b>Myanmar<br>InnoHub</b></span>
-    </div>
+{% block style %}
+<link rel="stylesheet" href="{% static 'profile-style.css' %}">
+{% endblock %}
 
-    <nav>
-        <a href="{% url 'test_homepage' %}"><b>Projects</b></a>
-        <a href="{% url 'test_homepage' %}"><b>About</b></a>
-        <a href="{% url 'test_homepage' %}"><b>Contact</b></a>
-    </nav>
-
-    <div class="nav-right">
-        <button class="nav-btn">+ New Project</button>
-        <button class="btn btn-light"><i class="bi bi-bell-fill me-1"></i></button>
-    </div>
-</header>
-
+{% block content %}
 <h1 class="h1" style="padding-top: 100px;">User Profile</h1>
 <div class="row justify-content-center align-items-stretch gx-0 gy-1">
 
@@ -56,7 +35,7 @@
         <div class="d-flex flex-column align-items-center">
             <div class="d-flex justify-content-center gap-4 mb-4">
                 <a href="{% url 'update_profile' id=user.id %}">
-                    <button class="btn profile-btn px-4">Edit Profile</button>
+                    <button class="btn profile-btn px-4">Edit Profile</button> </a>
                     <a href="{% url 'change_password' %}">
                         <button class="btn profile-btn px-4">Change Password</button>
                     </a>
@@ -80,7 +59,8 @@
     </div>
 
     <section class="projects">
-        <h2 class="section-title">My Projects</h2>
+        <div>
+            <h2 class="section-title">{{user.name}}'s Projects</h2>
         <div class="project-grid">
             <div class="card">
                 <span class="tag software">Software</span>
@@ -103,7 +83,8 @@
                 <img src="{% static 'assets/default-project.jpg' %}" alt="Chatbots"/>
             </div>
         </div>
+        </div>
     </section>
 
 </div>
-</body>
+{% endblock %}
