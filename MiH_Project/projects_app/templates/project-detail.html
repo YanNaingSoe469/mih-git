@@ -1,0 +1,66 @@
+{% extends 'master.html' %}
+
+{% block title %}Project Create{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="my-3 p-4"> {{project.type}} Project</h1>
+    <ul>
+        <li>{{project.title}}</li>
+        <li>{{project.innovator}}</li>
+        <img class="w-25" src="{{project.cover_photo.url}}" alt="hey">
+        <li>{{project.description}}</li>
+        <li>{{project.duration}} Weeks</li>
+        <li>{{project.created_at}}</li>
+
+        {% if project.type == "SW" %}
+            <li>{{project.source_link}}</li>
+            <li>{{project.language}}</li>
+            <li>{{project.framework}}</li>
+            <li>{{project.platform}}</li>
+        {% endif %}
+
+        {% if project.type == "HW" %}
+            <li>{{project.code}}</li>
+            <li>
+                {% for component in project.components.all %}
+                    {{component}},
+                {% endfor %}
+            </li>
+            <li>{{project.skill_level}}</li>
+        {% endif %}
+
+        {% if project.type == "AI" %}
+            <li>{{project.dataset_link}}</li>
+            <li>{{project.notebook_source_link}}</li>
+            <li>
+                {% for algorithm in project.algorithms.all %}
+                    {{algorithm}},
+                {% endfor %}
+            </li>
+            <li>{{project.focus}}</li>
+        {% endif %}
+
+        {% if project.innovator.id == user.id %}
+            <a href="{% url 'project_update' project.id %}">Update Project</a> |
+            <a href="{% url 'project_delete' project.id %}">Delete Project</a>
+        {% endif %}
+
+    </ul>
+</div>
+{% endblock %}
+
+{% block script %}
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.3.0/mdb.umd.min.js"
+></script>
+<script>
+
+</script>
+
+{% endblock %}

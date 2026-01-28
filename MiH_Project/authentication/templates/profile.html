@@ -62,26 +62,16 @@
         <div>
             <h2 class="section-title">{{user.name}}'s Projects</h2>
         <div class="project-grid">
-            <div class="card">
-                <span class="tag software">Software</span>
-                <h3>Online Shopping</h3>
-                <p>Create a unit responsive project using Java language<br>by Mis.Emily</p>
-                <img src="{% static 'assets/default-project.jpg' %}" alt="Online Shopping"/>
-            </div>
-
-            <div class="card">
-                <span class="tag hardware">Hardware</span>
-                <h3>Smart Plant Monitoring System</h3>
-                <p>Create by Mis.Emily</p>
-                <img src="{% static 'assets/default-project.jpg' %}" alt="Smart Plant"/>
-            </div>
-
-            <div class="card">
-                <span class="tag ai">AI</span>
-                <h3>Chatbots</h3>
-                <p>Create by Mis.Emily</p>
-                <img src="{% static 'assets/default-project.jpg' %}" alt="Chatbots"/>
-            </div>
+        {% for project in projects %}
+            <a href="{% url 'project_detail' project.id %}">
+                <div class="card">
+                    <span class="tag software">{{project.type}}</span>
+                    <h3>{{project.title}}</h3>
+                    <p>by {{project.innovator}}</p>
+                    <img src="{{project.cover_photo.url}}" alt="{{project.title}}"/>
+                </div>
+            </a>
+        {% endfor %}
         </div>
         </div>
     </section>
