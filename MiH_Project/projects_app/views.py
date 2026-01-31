@@ -12,9 +12,6 @@ from projects_app.models import Project
 from projects_app.models import Software, Hardware, Ai
 
 
-def project_create(request):
-    return None
-
 # Create your views here.
 def create_software(request):
     if request.method == "POST":
