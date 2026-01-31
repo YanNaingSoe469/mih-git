@@ -20,9 +20,9 @@
     <div class="tabs mb-4 d-flex gap-3">
         <button class="active filter-btn" data-category="all"><i class="bi bi-grid-1x2-fill me-1"></i>All Projects
         </button>
-        <button class="filter-btn" data-category="software"><i class="bi bi-laptop me-1"></i>Software</button>
-        <button class="filter-btn" data-category="hardware"><i class="bi bi-cpu-fill me-1"></i>Hardware</button>
-        <button class="filter-btn" data-category="ai"><i class="bi bi-robot me-1"></i>AI</button>
+        <button class="filter-btn" data-category="SW"><i class="bi bi-laptop me-1"></i>Software</button>
+        <button class="filter-btn" data-category="HW"><i class="bi bi-cpu-fill me-1"></i>Hardware</button>
+        <button class="filter-btn" data-category="AI"><i class="bi bi-robot me-1"></i>AI</button>
     </div>
 
 </section>
@@ -102,103 +102,18 @@
 <!-- PROJECTS -->
 <section class="projects">
 
-    <div class="card">
-        <span class="tag software">Software</span>
-        <h3>Online Shopping</h3>
-        <p>Create a unit responsive project using Java language<br>by Mis.Emily</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="Online Shopping"/>
-    </div>
+    {% for project in projects %}
+        <a href="{% url 'project_detail' project.id %}">
+            <div class="card">
+                <span class="tag {{project.type}}">{{project.type}}</span>
+                <h3>{{project.title}}</h3>
+                <p>by {{project.innovator.name}}</p>
+                <img src="{{project.cover_photo.url}}" alt="{{project.title}}"/>
+            </div>
+        </a>
+    {% endfor %}
 
-    <div class="card">
-        <span class="tag software">Software</span>
-        <h3>Banking System</h3>
-        <p>Create a unit responsive project using Python language<br>by Mr. Smith</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="Banking"/>
-    </div>
 
-    <div class="card">
-        <span class="tag software">Software</span>
-        <h3>Online Booking</h3>
-        <p>Create a unit responsive project using C++ language<br>by Mr. Smith</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="Booking"/>
-    </div>
-
-    <div class="card">
-        <span class="tag software">Software</span>
-        <h3>Food Delivery System</h3>
-        <p>Create a unit responsive project using Java language<br>by Mr. Smith</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="Delivering"/>
-    </div>
-
-    <div class="card">
-        <span class="tag hardware">Hardware</span>
-        <h3>Smart Plant Monitoring System</h3>
-        <p>Create by Mis.Emily</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="Smart Plant"/>
-    </div>
-
-    <div class="card">
-        <span class="tag hardware">Hardware</span>
-        <h3>LDR Light Detection System</h3>
-        <p>Create small light-sensing system by Mr. Smith</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="LDR"/>
-    </div>
-
-    <div class="card">
-        <span class="tag hardware">Hardware</span>
-        <h3>Rain Detection System</h3>
-        <p>Create by Webotricks</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="Rain Detection"/>
-    </div>
-
-    <div class="card">
-        <span class="tag hardware">Hardware</span>
-        <h3>LED Hourglass</h3>
-        <p>Create a digital hourglass by Mr.Smith</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="LED"/>
-    </div>
-
-    <div class="card">
-        <span class="tag hardware">Hardware</span>
-        <h3>Soil Moisture Sensor</h3>
-        <p>Create by Mr.Debashis Das</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="Soil"/>
-    </div>
-
-    <div class="card">
-        <span class="tag ai">AI</span>
-        <h3>Chatbots</h3>
-        <p>Create by Mis.Emily</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="Chatbots"/>
-    </div>
-
-    <div class="card">
-        <span class="tag ai">AI</span>
-        <h3>Stock Market Predictor</h3>
-        <p>Create by Mr.Smith</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="Stock"/>
-    </div>
-
-    <div class="card">
-        <span class="tag ai">AI</span>
-        <h3>Sentiment Predictor</h3>
-        <p>Create by Mr.Smith</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="Sentiment"/>
-    </div>
-
-    <div class="card">
-        <span class="tag ai">AI</span>
-        <h3>Object Detector</h3>
-        <p>Create by Mr.Smith</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="Object"/>
-    </div>
-
-    <div class="card">
-        <span class="tag ai">AI</span>
-        <h3>Recommender Engine</h3>
-        <p>Create by Mr.Smith</p>
-        <img src="{% static 'assets/default-project.jpg'%}" alt="RE"/>
-    </div>
 </section>
 
 <!-- ABOUT SECTION -->

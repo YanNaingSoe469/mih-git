@@ -1,5 +1,6 @@
 import os
 
+from django.apps import apps
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.shortcuts import render, redirect, get_object_or_404
@@ -55,13 +56,17 @@ def signin(request):
 # Direct to homepage (Test)
 def test_homepage(request):
     user = request.user
-    return render(request, "test_homepage.html", {"user": user})
+    Project = apps.get_model('projects_app', 'Project')
+    projects = Project.objects.all()
+    return render(request, "test_homepage.html", {"user": user, 'projects': projects})
 
 
 # F3: View Profile
 def profile_page(request):
     user = request.user
-    return render(request, "profile.html", {"user": user})
+    Project = apps.get_model('projects_app', 'Project')
+    projects = Project.objects.filter(innovator_id=user.id)
+    return render(request, "profile.html", {"user": user, 'projects': projects})
 
 
 # F4: Update Profile

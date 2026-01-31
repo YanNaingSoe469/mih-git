@@ -28,7 +28,16 @@
     </nav>
 
     <div class="nav-right">
-        <button class="nav-btn">+ New Project</button>
+        <div class="dropdown">
+          <button class="btn nav-right btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            + Create Project
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'sw_create' %}">Software Project</a></li>
+            <li><a class="dropdown-item" href="{% url 'hw_create' %}">Hardware Project</a></li>
+            <li><a class="dropdown-item" href="{% url 'ai_create' %}">Ai Project</a></li>
+          </ul>
+        </div>
         <button class="btn btn-light"><i class="bi bi-bell-fill me-1"></i></button>
         <a href="{% url 'profile_page' %}">{% if user.profile_pic %}
             <img src="{{ user.profile_pic.url }}"
@@ -45,7 +54,6 @@
 {% block content %}
 
 {% endblock %}
-
 {% block script %}
 
 {% endblock %}

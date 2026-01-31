@@ -32,14 +32,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class Language(models.Model):
-    name = models.CharField(max_length=20, unique=True)
 
-    class Meta:
-        verbose_name_plural = "Languages"
-
-    def __str__(self):
-        return self.name
 
 
 class User(AbstractUser):
@@ -65,4 +58,4 @@ class User(AbstractUser):
         verbose_name_plural = "Users"
 
     def __str__(self):
-        return self.email
+        return self.name
