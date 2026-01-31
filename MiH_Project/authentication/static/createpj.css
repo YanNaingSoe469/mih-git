@@ -1,0 +1,383 @@
+* {
+  margin: 0;
+  padding: 20;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f9fbfd;
+  color: #111;
+}
+
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 16px;
+  background: #E4F8FF;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-img {
+  width: 70px;
+  height: 70px;
+   border-radius: 50%;
+}
+
+nav a {
+  margin: 0 16px;
+  text-decoration: none;
+  color: #111;
+  font-size: 20px;
+}
+
+nav a:hover {
+  color: #004AAD;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+
+.profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.form-container {
+  text-align: center;
+  padding: 60px 50px;
+  margin-left: 300px;
+  margin-right: 300px;
+}
+
+.form-container h1 {
+  font-size: 42px;
+  margin-bottom: 50px;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.form-group label {
+  width: 120px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  flex: 1;
+  padding: 13px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  height: 100px;
+  resize: none;
+}
+
+.form-group input:focus, .form-group textarea:focus{
+  border-color: #004AAD;
+  outline: none;
+}
+
+input[type=number] {
+  -moz-appearance: number-input;
+  -webkit-appearance: number-input;
+  appearance: number-input;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
+  height: auto;
+}
+
+.upload-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  padding: 40px 20px;
+  width: 100%;
+  cursor: pointer;
+  height: 200px;
+}
+
+.upload-label {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: bold;
+  color: #004AAD;
+}
+
+.upload-icon {
+  font-size: 24px;
+}
+
+.type-options {
+  display: flex;
+  gap: 40px;
+  margin-left: 10px;
+}
+
+.nav-btn {
+    background-color: #ffffff;
+    color: #004AAD;
+    border: 2px solid #004AAD;
+    width: 140px;
+    height: 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-btn:hover {
+    background-color: #004AAD;
+    color: #ffffff;
+}
+
+.custom-dropdown {
+  position: relative;
+  width: 260px;
+}
+
+.dropdown-header {
+  border: 2px solid #004AAD;
+  padding: 14px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #004AAD;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+.dropdown-header i {
+  transition: transform 0.3s ease;
+}
+
+.custom-dropdown.active .dropdown-header i {
+  transform: rotate(180deg);
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 90%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 2px solid #004AAD;
+  border-radius: 0px 0px 10px 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  z-index: 100;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.dropdown-list li {
+  padding: 14px 20px;
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background: #E4F8FF;
+  border-radius: 10px;
+}
+
+.custom-dropdown.active .dropdown-list {
+  display: block;
+}
+
+/* Multi Select Tag */
+.mult-select-tag {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 10px;
+}
+
+.mult-select-tag .wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch;
+  width: 100%;
+  position: relative;
+  border: 2px solid #004AAD;
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.mult-select-tag .tags {
+  order: 1;
+  background-color: #E4F8FF;
+  color: #004AAD;
+  border-radius: 12px;
+  padding: 6px 10px;
+  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 80px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.mult-select-tag input {
+  order: 2;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  margin-top: 6px;
+}
+
+.mult-select-tag .tag .close {
+  margin-left: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #004AAD;
+}
+
+.mult-select-tag .item-container {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.mult-select-tag .wrapper::after {
+  content: "\f282";
+  font-family: "bootstrap-icons";
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  color: #004AAD;
+  pointer-events: none;
+  right: 16px;
+  bottom: 14px;
+}
+
+
+/* Algorithm checkbox */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: 190px 190px;
+  column-gap: 90px;
+  row-gap: 24px;
+}
+
+.checkbox-grid label {
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.checkbox-grid input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  min-width: 20px;
+  min-height: 20px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.checkbox-grid input[type="checkbox"]:checked {
+  background-color: #004AAD;
+  border-color: #004AAD;
+}
+
+.checkbox-grid input[type="checkbox"]:checked::after {
+  content: "✓";
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.software-form, .hardware-form, .ai-form {
+  display: none;
+}
+
+.software-form {
+  display: block;
+}
+
+.type-btn.active {
+  background-color: #004AAD;
+  color: #fff;
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+  padding: 0;
+}
+
+.btn-create, .btn-cancel {
+  width: 250px;
+  padding: 12px;
+  font-size: 20px;
+  border-radius: 20px;
+}
+
+.btn-create {
+  background-color:#004AAD;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-cancel {
+  background-color: #ffffff;
+  color: #004AAD;
+  border: 2px solid #004AAD;
+}
+
+.btn-create:hover {
+  background-color: #003080;
+  color: #ffffff;
+}
+
+.btn-cancel:hover {
+  background-color: #aeaeae;
+  color: #111;
+}
