@@ -1,14 +1,8 @@
 import os
-from pprint import pprint
 
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-
 from projects_app.forms import ProjectCreateForm, SoftwareCreateForm, HardwareCreateForm, AiCreateForm
-
 from projects_app.models import Project
-
 from projects_app.models import Software, Hardware, Ai
 
 
@@ -19,7 +13,7 @@ def create_software(request):
         if form.is_valid():
             form.save()
             return redirect('test_homepage')
-        return redirect('sw_create')
+        return render(request, 'sw-create.html', {'form': form})
     else:
         form = SoftwareCreateForm()
         return render(request, 'sw-create.html', {'form': form})
@@ -31,7 +25,7 @@ def create_hardware(request):
         if form.is_valid():
             form.save()
             return redirect('test_homepage')
-        return redirect('hw_create')
+        return render(request, 'hw-create.html', {'form': form})
     else:
         form = HardwareCreateForm()
         return render(request, 'hw-create.html', {'form': form})
@@ -43,7 +37,7 @@ def create_ai(request):
         if form.is_valid():
             form.save()
             return redirect('test_homepage')
-        return redirect('ai_create')
+        return render(request, 'ai-create.html', {'form': form})
     else:
         form = AiCreateForm()
         return render(request, 'ai-create.html', {'form': form})
@@ -78,7 +72,6 @@ def project_update(request, id):
     else:
         project = Ai.objects.get(id=id)
         FormClass = AiCreateForm
-
 
     if request.method == "POST":
         form = FormClass(request.POST, request.FILES, instance=project)
