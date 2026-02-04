@@ -27,6 +27,9 @@ urlpatterns = [
     path('project-detail/<int:id>/', project_views.project_detail, name="project_detail"),
     path('project-update/<int:id>/', project_views.project_update, name="project_update"),
     path('project-delete/<int:id>/', project_views.project_delete, name="project_delete"),
+
+    #test links
+    path("sample-page/", TemplateView.as_view(template_name="sample.html")),
 ]
 
 if settings.DEBUG:
