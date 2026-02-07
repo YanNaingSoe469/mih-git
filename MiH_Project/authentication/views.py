@@ -11,7 +11,7 @@ from .models import *
 # from .projects_app.models import Language, Framework, Focus, Algorithm
 
 
-#F1: Signup
+# F1: Signup
 def register(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
@@ -33,13 +33,13 @@ def register(request):
         return render(request, "sign-up.html", {"form": form})
 
 
-#Logout
+# Logout
 def signout(request):
     logout(request)
     return redirect("signin")
 
 
-#F2: Login
+# F2: Login
 def signin(request):
     if request.method == "POST":
         form = LoginForm(request.POST, data=request.POST)
@@ -54,7 +54,7 @@ def signin(request):
         return render(request, "login.html", {"form": form})
 
 
-#Direct to homepage (Test)
+# Direct to homepage (Test)
 def test_homepage(request):
     user = request.user
 
@@ -118,7 +118,7 @@ def test_homepage(request):
                   )
 
 
-#F3: View Profile
+# F3: View Profile
 def profile_page(request):
     user = request.user
     Project = apps.get_model('projects_app', 'Project')
@@ -126,7 +126,7 @@ def profile_page(request):
     return render(request, "profile.html", {"user": user, 'projects': projects})
 
 
-#F4: Update Profile
+# F4: Update Profile
 def update_profile(request, id):
     user = get_object_or_404(User, id=id)
     if request.method == "POST":
@@ -152,32 +152,17 @@ def update_profile(request, id):
     return render(request, "profile-update.html", {"form": form, "user": user})
 
 
-#F5: Change Password
+# F5: Change Password
 def change_password(request):
     user = request.user
-
     if request.method == "POST":
-        form = ChangePasswordForm(request.POST)
+        form = ChangePasswordForm(request.POST, user=request.user)
         if form.is_valid():
-            old_password = form.cleaned_data["old_password"]
-            new_password = form.cleaned_data["new_password"]
-            confirm_password = form.cleaned_data["confirm_password"]
-
-            if not user.check_password(old_password):
-                messages.error(request, "Old password is incorrect")
-            elif old_password == new_password:
-                messages.error(request, "Old password and new password are same")
-            elif new_password != confirm_password:
-                messages.error(
-                    request, "New password and confirm password do not match"
-                )
-            else:
-                user.set_password(new_password)
-                user.save()
-                update_session_auth_hash(request, user)
-                messages.success(request, "Password updated successfully!")
-                return redirect("change_password")
+            form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "Password updated successfully!")
+            return redirect("change_password")
     else:
-        form = ChangePasswordForm()
+        form = ChangePasswordForm(user=request.user)
 
     return render(request, "change-password.html", {"form": form})
