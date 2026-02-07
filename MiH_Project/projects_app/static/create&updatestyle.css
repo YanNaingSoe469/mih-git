@@ -12,6 +12,52 @@ body {
   padding: 20px;
 }
 
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 16px;
+  background: #E4F8FF;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-img {
+  width: 70px;
+  height: 70px;
+   border-radius: 50%;
+}
+
+nav a {
+  margin: 0 16px;
+  text-decoration: none;
+  color: #111;
+  font-size: 20px;
+}
+
+nav a:hover {
+  color: #004AAD;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+
+.profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
 .form-container {
   text-align: center;
   padding: 60px 50px;
@@ -72,9 +118,14 @@ input[type=number]::-webkit-outer-spin-button {
   align-items: center;
   justify-content: center;
   border: 2px dashed #ccc;
-  padding: 40px 20px;
   width: 100%;
-  height: 200px;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+.upload-box:hover .image-upload-icon {
+  opacity: 1;
 }
 
 .upload-label {
@@ -86,9 +137,47 @@ input[type=number]::-webkit-outer-spin-button {
   color: #004AAD;
 }
 
-.upload-icon {
-  font-size: 30px;
+.image-upload-icon {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.upload-box label{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-box img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.image-upload-icon:hover{
+  opacity: 1;
+}
+
+.image-upload-icon .upload-icon{
+  font-size: 32px;
+  color: #004AAD;
   cursor: pointer;
+  transform: translateY(20px);
+  transition: transform 0.4s ease;
+}
+
+.upload-box:hover .upload-icon {
+  transform: translateY(0);
 }
 
 .type-options {
