@@ -1,28 +1,377 @@
 {% extends 'master.html' %}
 
-{% block title %}Project Create{% endblock %}
-
+{% block title %}Update Project{% endblock %}
+{% load static %}
 {% block style %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@4.0.1/dist/css/multi-select-tag.min.css">
+<link rel="stylesheet" href="{% static 'create&updatestyle.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@4.0.1/dist/js/multi-select-tag.min.js"></script>
 
 {% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="my-3 p-4">Project Update</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Update">
+<div class="updatedpj" style="padding-bottom: 50px;">
+  <section class="softwarepj">
+    <div class="form-container" id="projects"  style="padding-top: 100px;">
+      <h1>Software Project Information</h1>
+      <form>
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" value="Online Shopping">
+        </div>
+
+        <div class="form-group">
+          <label for="innovator">Innovator</label>
+          <input type="text" id="innovator" value="Mis. Emily Stone">
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description">This project is a web-based online shopping platform where users can browse products, add items to a cart, and make secure purchases, while admins manage products and orders efficiently. It is designed to provide a smooth, user-friendly, and convenient shopping experience.</textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="duration">Duration</label>
+          <input type="number" id="duration" value="1" min="0" style="width: 80px; margin-right: 8px;">
+          <span>month</span>
+        </div>
+
+        <div class="form-group">
+          <label for="image">Image</label>
+          <div class="upload-box" >
+            <img src="{% static 'shopping.jpg' %}" id="softwarePreview">
+            <label for="softwareImage" class="image-upload-icon">
+              <i class="bi bi-plus-circle-fill upload-icon"></i>
+            </label>
+            <input type="file" id="softwareImage" accept="image/*" hidden>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="language">Language</label>
+          <div class="custom-dropdown language-dropdown">
+            <div class="dropdown-header">Choose language <i class="bi bi-chevron-down"></i>
+            </div>
+            <ul class="dropdown-list">
+              <li>Python</li>
+              <li>Java</li>
+              <li>C++</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="framework">Framework</label>
+          <div class="custom-dropdown framework-dropdown">
+            <div class="dropdown-header">Choose framework <i class="bi bi-chevron-down"></i>
+            </div>
+            <ul class="dropdown-list">
+              <li>React</li>
+              <li>Flutter</li>
+              <li>.NET</li>
+              <li>Laravel</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="platform">Platform</label>
+          <div class="custom-dropdown platform-dropdown">
+            <div class="dropdown-header">Choose platform <i class="bi bi-chevron-down"></i>
+            </div>
+            <ul class="dropdown-list">
+              <li>Website</li>
+              <li>Android</li>
+              <li>IOS</li>
+              <li>Desktop</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="source">Source link</label>
+          <input type="text" id="source" value="https://www.onlineshopping.com">
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="hardwarepj">
+  <div class="form-container" id="projects"  style="padding-top: 100px;">
+    <h1>Hardware Project Information</h1>
+    <form>
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" value="Smart Plant Monitoring System">
+        </div>
+
+        <div class="form-group">
+            <label for="innovator">Innovator</label>
+            <input type="text" id="innovator" value="Mis. Emily Stone">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description">The Smart Plant Monitoring System is designed using Arduino Uno R3 to measure soil moisture, temperature, and humidity and display the data on an OLED SSD1306 display. The system provides visual LED alerts and a buzzer alarm when conditions become critical, helping users maintain optimal plant health.</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="duration">Duration</label>
+            <input type="number" id="duration" value="1" min="0" style="width: 80px; margin-right: 8px;">
+            <span>month</span>
+        </div>
+
+        <div class="form-group">
+          <label for="image">Image</label>
+          <div class="upload-box" >
+            <img src="{% static 'plant.png' %}" id="hardwarePreview">
+            <label for="hardwareImage" class="image-upload-icon">
+              <i class="bi bi-plus-circle-fill upload-icon"></i>
+            </label>
+            <input type="file" id="hardwareImage" accept="image/*" hidden>
+          </div>
+        </div>
+
+        <div class="form-group">
+            <label for="framework">Skill Level</label>
+            <div class="custom-dropdown skilllevel-dropdown">
+                <div class="dropdown-header">Choose level <i class="bi bi-chevron-down"></i>
+                </div>
+                <ul class="dropdown-list">
+                    <li>Easy</li>
+                    <li>Intermediate</li>
+                    <li>Advanced</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="components">Components</label>
+            <select id="components" name="components[]" multiple>
+                <option value="0">Microcontroller</option>
+                <option value="1" selected>Power Supply</option>
+                <option value="2">Sensors</option>
+                <option value="3">Actuators</option>
+                <option value="4">Breadboard</option>
+                <option value="5">Resistors</option>
+                <option value="6" selected>Display Modules</option>
+                <option value="7">Connecting Wires</option>
+                <option value="8">Capacitors</option>
+                <option value="9" selected>CPU</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="code">Code</label>
+            <input type="text" id="code" placeholder="Type here">
+        </div>
     </form>
+  </div>
+  </section>
+
+  <section class="aipj">
+  <div class="form-container" id="projects"  style="padding-top: 100px;">
+    <h1>AI Project Information</h1>
+      <form>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" value="ChatBots">
+          </div>
+
+          <div class="form-group">
+            <label for="innovator">Innovator</label>
+            <input type="text" id="innovator" value="Mis. Emily Stone">
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description">Chatbots AI is an intelligent conversational system designed to automate user interactions by understanding natural language and providing accurate, real-time responses. The chatbot enhances customer support, improves user engagement, and streamlines information delivery through AI-driven learning and adaptive communication.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="duration">Duration</label>
+            <input type="number" id="duration" value="1" min="0" style="width: 80px; margin-right: 8px;">
+            <span>month</span>
+          </div>
+
+          <div class="form-group">
+            <label for="image">Image</label>
+            <div class="upload-box" >
+              <img src="{% static 'chatbots.png' %}" id="aiPreview">
+              <label for="aiImage" class="image-upload-icon">
+                <i class="bi bi-plus-circle-fill upload-icon"></i>
+              </label>
+              <input type="file" id="aiImage" accept="image/*" hidden>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="framework">Focus</label>
+            <div class="custom-dropdown focus-dropdown">
+              <div class="dropdown-header">Choose focus <i class="bi bi-chevron-down"></i>
+              </div>
+              <ul class="dropdown-list">
+                <li>Machine Learning</li>
+                <li>Deep Learning</li>
+                <li>NLP</li>
+                <li>Computer Vision</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="algorithm">Algorithm</label>
+            <select id="algorithm" name="algorithm[]" multiple>
+                <option value="0" selected>Decision Tree</option>
+                <option value="1">Random Forest</option>
+                <option value="2">Linear Regression</option>
+                <option value="3">Transformer</option>
+                <option value="4">Logistic Regression</option>
+                <option value="5">SVM</option>
+                <option value="6">KNM</option>
+                <option value="7">LSTM</option>
+                <option value="8">Autoencoder</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dataset">Dataset</label>
+            <input type="text" id="dataset" value="Personal-Chat">
+          </div>
+
+          <div class="form-group">
+              <label for="source">Source link</label>
+              <input type="text" id="source" value="https://github.com/MyanmarInnoHub/ChatBots">
+          </div>
+      </form>
+    </div>
+  </section>
+
+  <div class="buttons">
+      <button type="submit" class="btn btn-update" id="updateBtn">Update</button>
+      <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>
+  </div>
+
+    <!-- Popup Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <img src="images/success-icon.png" alt="Success Icon" class="modal-icon">
+      <h3 class="modal-title">Success!</h3>
+      <p class="modal-text">Your project is successfully updated.</p>
+      <button id="modalBackBtn" class="btn btn-primary">Back</button>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
 {% block script %}
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.3.0/mdb.umd.min.js"
-></script>
 <script>
+  const dropdownHeaders = document.querySelectorAll(".dropdown-header");
+  dropdownHeaders.forEach(header => {
+    header.addEventListener("click", () => {
+      const parent = header.parentElement;
+      parent.classList.toggle("active");
+      dropdownHeaders.forEach(h => {
+        if(h !== header) h.parentElement.classList.remove("active");
+      });
+    });
+  });
+
+  const dropdownLists = document.querySelectorAll(".dropdown-list li");
+  dropdownLists.forEach(item => {
+    item.addEventListener("click", () => {
+      const dropdown = item.closest(".custom-dropdown");
+      const header = dropdown.querySelector(".dropdown-header");
+      header.childNodes[0].nodeValue = item.textContent + " ";
+      dropdown.classList.remove("active");
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if(!e.target.closest(".custom-dropdown")) {
+      dropdownHeaders.forEach(h => h.parentElement.classList.remove("active"));
+    }
+  });
+
+  document.querySelector(".language-dropdown .dropdown-header").childNodes[0].nodeValue = "Python ";
+  document.querySelector(".framework-dropdown .dropdown-header").childNodes[0].nodeValue = "React ";
+  document.querySelector(".platform-dropdown .dropdown-header").childNodes[0].nodeValue = "Website ";
+  document.querySelector(".skilllevel-dropdown .dropdown-header").childNodes[0].nodeValue = "Intermediate ";
+  document.querySelector(".focus-dropdown .dropdown-header").childNodes[0].nodeValue = "NLP ";
+
+
+
+  //Multi Select Tag//
+    const componentSelect = new MultiSelectTag('components', {
+        rounded: true,
+        shadow: true,
+        placeholder: 'Select Components',
+        tagColor: {
+            textColor: '#004AAD',
+            borderColor: '#004AAD',
+            bgColor: '#E4F8FF'
+        },
+        onChange: function(values) {
+            console.log(values);
+        }
+    });
+
+    //Multi Select Tag//
+    const algorithmSelect =new MultiSelectTag('algorithm', {
+        rounded: true,
+        shadow: true,
+        placeholder: 'Select Algorithms',
+        tagColor: {
+            textColor: '#004AAD',
+            borderColor: '#004AAD',
+            bgColor: '#E4F8FF'
+        },
+        onChange: function(values) {
+            console.log(values);
+        }
+    });
+
+
+// Models //
+    const updateBtn = document.getElementById("updateBtn");
+    const modal = document.getElementById("successModal");
+    const modalBackBtn = document.getElementById("modalBackBtn");
+    updateBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        modal.style.display = "flex";
+    });
+
+    modalBackBtn.addEventListener("click", function() {
+        window.location.href = "Website_Design/Myanmar InnoHub/Homepage/index.html";
+    });
+
+    const cancelBtn = document.getElementById("cancelBtn");
+    cancelBtn.addEventListener("click", function(){
+        window.location.href = "Website_Design/Myanmar InnoHub/Homepage/index.html";
+    });
+
+    window.addEventListener("click", function(event) {
+        if(event.target == modal){
+            modal.style.display = "none";
+        }
+    });
+
+    // IMAGE PREVIEW FOR UPLOAD BOXES
+     function bindImageUpload(inputId, previewId) {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
+
+        input.addEventListener("change", () => {
+            if (input.files && input.files[0]) {
+                preview.src = URL.createObjectURL(input.files[0]);
+            }
+        });
+     }
+
+    bindImageUpload("softwareImage", "softwarePreview");
+    bindImageUpload("hardwareImage", "hardwarePreview");
+    bindImageUpload("aiImage", "aiPreview");
 
 </script>
 

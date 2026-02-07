@@ -28,7 +28,7 @@ def create_hardware(request):
         return render(request, 'hw-create.html', {'form': form})
     else:
         form = HardwareCreateForm()
-        return render(request, 'hw-create.html', {'form': form})
+        return render(request, 'create-hardwarepj.html', {'form': form})
 
 
 def create_ai(request):
@@ -40,7 +40,7 @@ def create_ai(request):
         return render(request, 'ai-create.html', {'form': form})
     else:
         form = AiCreateForm()
-        return render(request, 'ai-create.html', {'form': form})
+        return render(request, 'create-aipj.html', {'form': form})
 
 
 def project_detail(request, id):
