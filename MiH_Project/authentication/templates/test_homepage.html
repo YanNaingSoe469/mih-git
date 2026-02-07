@@ -9,12 +9,15 @@
 <section class="hero" id="projects" style="padding-top: 100px;">
     <a href="#projects" class="nav-link"></a>
     <h1>Innovation of Myanmar</h1>
-    <div class="search-wrapper">
-        <div class="search-icon">
-            <i class="bi bi-search"></i>
+    <form method="get" action="{% url 'search_project' %}">
+        <div class="search-wrapper">
+            <input type="text" name="key" class="search-input" placeholder="Search"/>
+            <div class="search-icon">
+                <button type="submit" class="btn"><i class="bi bi-search"></i></button>
+            </div>
         </div>
-        <input type="text" class="search-input" placeholder="Search"/>
-    </div>
+
+    </form>
 
 
     <div class="tabs mb-4 d-flex gap-3">
@@ -28,73 +31,78 @@
 </section>
 
 <!-- SOFTWARE DROPDOWN FILTERS -->
-<div class="software-filter-wrapper" id="softwareFilters">
+<div class="software-filter-wrapper" style="padding: 0;" id="softwareFilters">
 
     <div class="software-filters">
+        <form method="get" action="{% url 'test_homepage' %}">
+            <div class="d-flex gap-4">
+                <select class="form-select " name="platform" id="">
+                    <option value="">Choose Platform</option>
+                    <option value="WEB">Web</option>
+                    <option value="MOB">Mobile</option>
+                    <option value="DES">Desktop</option>
+                    <option value="CRS">Cross Platform</option>
+                </select>
+    
+                <select class="form-select " name="language" id="">
+                    <option value="">Choose Language</option>
+                    {% for language in languages %}
+                        <option value="{{ language.id }}">{{ language.name }}</option>
+                    {% endfor %}
+                </select>
+    
+                <select class="form-select " name="framework" id="">
+                    <option value="">Choose Framework</option>
+                    {% for framework in frameworks %}
+                        <option value="{{ framework.id }}">{{ framework.name }}</option>
+                    {% endfor %}
+                </select>
 
-        <div class="custom-dropdown">
-            <div class="dropdown-header">
-                Choose platform <i class="bi bi-chevron-down"></i>
+                <input class="btn btn-outline-danger" type="submit" value="Find">
             </div>
-            <ul class="dropdown-list">
-                <li>Website</li>
-                <li>Android</li>
-                <li>IOS</li>
-                <li>Desktop</li>
-            </ul>
-        </div>
+        </form>
+    </div>
+</div>
 
-        <div class="custom-dropdown">
-            <div class="dropdown-header">
-                Choose language <i class="bi bi-chevron-down"></i>
-            </div>
-            <ul class="dropdown-list">
-                <li>Python</li>
-                <li>Java</li>
-                <li>C++</li>
-            </ul>
-        </div>
+<div class="hw-filter-wrapper justify-content-center align-items-center"  id="hwFilters">
+    <div class="hw-filters">
+        <form method="get" action="{% url 'test_homepage' %}">
+            <div class="d-flex gap-3">
+                <select class="form-select " name="level" id="">
+                    <option value="">Choose Level</option>
+                    <option value="BEG">Beginner</option>
+                    <option value="INT">Intermediate</option>
+                    <option value="ADV">Advanced</option>
+                </select>
 
-        <div class="custom-dropdown">
-            <div class="dropdown-header">
-                Choose framework <i class="bi bi-chevron-down"></i>
+                <input class="btn btn-outline-danger" type="submit" value="Find">
             </div>
-            <ul class="dropdown-list">
-                <li>React</li>
-                <li>Flutter</li>
-                <li>.NET</li>
-                <li>Laravel</li>
-            </ul>
-        </div>
+        </form>
     </div>
 </div>
 
 <div class="ai-filter-wrapper" id="aiFilters">
 
     <div class="ai-filters">
-        <div class="custom-dropdown">
-            <div class="dropdown-header">
-                Choose focus <i class="bi bi-chevron-down"></i>
-            </div>
-            <ul class="dropdown-list">
-                <li>Machine Learning</li>
-                <li>Deep Learning</li>
-                <li>NLP</li>
-                <li>Computer Vision</li>
-            </ul>
-        </div>
+        <form method="get" action="{% url 'test_homepage' %}">
+            <div class="d-flex gap-3">
+                <select class="form-select " name="focus" id="">
+                    <option value="">Choose Focus</option>
+                    {% for focus in focuses %}
+                        <option value="{{ focus.id }}">{{ focus.name }}</option>
+                    {% endfor %}
+                </select>
 
-        <div class="custom-dropdown">
-            <div class="dropdown-header">
-                Choose algorithm <i class="bi bi-chevron-down"></i>
+                <select class="form-select w-100" name="algorithm" id="">
+                    <option value="">Choose Algorithms</option>
+                    {% for algorithm in algorithms %}
+                        <option value="{{ algorithm.id }}">{{ algorithm.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <input class="btn btn-outline-danger" type="submit" value="Find">
             </div>
-            <ul class="dropdown-list">
-                <li>Decision Tree</li>
-                <li>Random Forest</li>
-                <li>Linear Regression</li>
-                <li>Transformer</li>
-            </ul>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -102,7 +110,8 @@
 <!-- PROJECTS -->
 <section class="projects">
 
-    {% for project in projects %}
+    {% if projects %}
+        {% for project in projects %}
         <a href="{% url 'project_detail' project.id %}">
             <div class="card">
                 <span class="tag {{project.type}}">{{project.type}}</span>
@@ -111,7 +120,10 @@
                 <img src="{{project.cover_photo.url}}" alt="{{project.title}}"/>
             </div>
         </a>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <h2 class="text-muted text-center">No such projects in MiH.</h2>
+    {% endif %}
 
 
 </section>
@@ -182,12 +194,14 @@
     window.addEventListener("DOMContentLoaded", () => {
         const softwareFilters = document.getElementById("softwareFilters");
         const aiFilters = document.getElementById("aiFilters");
+        const hwFilters = document.getElementById("hwFilters");
         const filterButtons = document.querySelectorAll(".filter-btn");
-        const projectCards = document.querySelectorAll(".projects .card");
+        const projectCards = document.querySelectorAll(".projects a");
         const dropdownHeaders = document.querySelectorAll(".dropdown-header");
 
         softwareFilters.style.display = "none";
         aiFilters.style.display = "none";
+        hwFilters.style.display = "none";
 
         dropdownHeaders.forEach(header => {
             header.addEventListener("click", () => {
@@ -220,17 +234,18 @@
                 const category = button.dataset.category;
                 filterButtons.forEach(btn => btn.classList.remove("active"));
                 button.classList.add("active");
-                projectCards.forEach(card => {
-                    const tag = card.querySelector(".tag");
+                projectCards.forEach(link => {
+                    const tag = link.querySelector(".tag");
                     if (category === "all") {
-                        card.style.display = "block";
+                        link.style.display = "block";
                     } else {
-                        card.style.display = tag.classList.contains(category) ? "block" : "none";
+                        link.style.display = tag.classList.contains(category) ? "block" : "none";
                     }
                 });
 
-                softwareFilters.style.display = category === "software" ? "flex" : "none";
-                aiFilters.style.display = category === "ai" ? "flex" : "none";
+                softwareFilters.style.display = category === "SW" ? "flex" : "none";
+                hwFilters.style.display = category === "HW" ? "flex" : "none";
+                aiFilters.style.display = category === "AI" ? "flex" : "none";
                 dropdownHeaders.forEach(h => h.parentElement.classList.remove("active"));
             });
         });

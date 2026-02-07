@@ -12,7 +12,7 @@ from projects_app.models import Project
 from projects_app.models import Software, Hardware, Ai
 
 
-# Create your views here.
+#F7.1 Create Project (Software)
 def create_software(request):
     if request.method == "POST":
         form = SoftwareCreateForm(request.POST, request.FILES)
@@ -25,6 +25,7 @@ def create_software(request):
         return render(request, 'sw-create.html', {'form': form})
 
 
+#F7.1 Create Project (Hardware)
 def create_hardware(request):
     if request.method == "POST":
         form = HardwareCreateForm(request.POST, request.FILES)
@@ -37,6 +38,7 @@ def create_hardware(request):
         return render(request, 'hw-create.html', {'form': form})
 
 
+#F7.1 Create Project (AI)
 def create_ai(request):
     if request.method == "POST":
         form = AiCreateForm(request.POST, request.FILES)
@@ -49,6 +51,7 @@ def create_ai(request):
         return render(request, 'ai-create.html', {'form': form})
 
 
+#View project detail
 def project_detail(request, id):
     project_id = id
     if request.method == "GET":
@@ -65,6 +68,7 @@ def project_detail(request, id):
     return redirect('test_homepage')
 
 
+#F7.2 Update Project
 def project_update(request, id):
     project_id = id
     base = Project.objects.get(id=id)
@@ -79,7 +83,6 @@ def project_update(request, id):
         project = Ai.objects.get(id=id)
         FormClass = AiCreateForm
 
-
     if request.method == "POST":
         form = FormClass(request.POST, request.FILES, instance=project)
         if form.is_valid():
@@ -93,9 +96,18 @@ def project_update(request, id):
         return render(request, 'project-update.html', {'form': form})
 
 
+#F7.3 Delete Project
 def project_delete(request, id):
     project = Project.objects.get(id=id)
     cover_photo_path = project.cover_photo.path
     os.remove(cover_photo_path)
     project.delete()
     return redirect('profile_page')
+
+
+#F6.1 Search Project
+def search_project(request):
+    search_key = request.GET.get('key')
+    projects = Project.objects.filter(title__contains=search_key)
+    return render(request, 'test_homepage.html', {'projects': projects})
+
