@@ -21,9 +21,9 @@ urlpatterns = [
     path("change-password/", authentication_views.change_password, name="change_password"),
 
     #project_app routes
-    path("sw-create/", project_views.create_software, name="sw_create"),
-    path("hw-create/", project_views.create_hardware, name="hw_create"),
-    path("ai-create/", project_views.create_ai, name="ai_create"),
+    path("create-softwarepj/", project_views.create_software, name="sw_create"),
+    path("create-hardwarepj/", project_views.create_hardware, name="hw_create"),
+    path("create-aipj/", project_views.create_ai, name="ai_create"),
     path('project-detail/<int:id>/', project_views.project_detail, name="project_detail"),
     path('project-update/<int:id>/', project_views.project_update, name="project_update"),
     path('project-delete/<int:id>/', project_views.project_delete, name="project_delete"),
