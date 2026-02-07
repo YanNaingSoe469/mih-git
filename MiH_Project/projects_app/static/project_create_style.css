@@ -59,7 +59,6 @@ nav a:hover {
 }
 
 .form-container {
-  text-align: center;
   padding: 60px 50px;
   margin-left: 300px;
   margin-right: 300px;
@@ -71,9 +70,8 @@ nav a:hover {
 }
 
 .form-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
+
+  margin-bottom: 20px;
 }
 
 .form-group label {

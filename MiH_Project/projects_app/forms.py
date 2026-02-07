@@ -51,6 +51,7 @@ class SoftwareCreateForm(ProjectValidationMixin, forms.ModelForm):
     class Meta:
         model = Software
         fields = '__all__'
+        exclude = ['innovator']
 
     def clean_source_link(self):
         source_link = self.cleaned_data.get("source_link")

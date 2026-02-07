@@ -11,38 +11,56 @@
 {% block content %}
 
 <div class="form-container" id="projects" style="padding-top: 100px;">
-    <h1>Software Project Information</h1>
-    <form method="post" enctype="multipart/form-data">
+    <h2 class="text-center">Software Project Information</h2>
+    <form method="post" action="{% url 'sw_create' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
-            <label for="title">Title</label>
-            <input name="title" type="text" id="title" placeholder="Type here">
+            <label for="title" class="">Title</label>
+            <div class="w-100">
+                <input name="title" type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}"
+                       id="title" placeholder="Type here">
+                <div class="text-danger">
+                    {{ form.title.errors }}
+                </div>
+            </div>
         </div>
-
-        <!--    <div class="form-group">-->
-        <!--      <label for="innovator">Innovator</label>-->
-        <input name="innovator" disabled type="hidden" id="innovator" value="{{user.id}}">
-        <!--    </div>-->
 
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea name="description" id="description" placeholder="Type here"></textarea>
+            <div class="w-100">
+                <textarea class="form-control" name="description" id="description"
+                          class="form-control {% if form.description.errors %}is-invalid{% endif %}"
+                          placeholder="Type here"></textarea>
+                <div class="text-danger">
+                    {{ form.description.errors }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group d-flex">
+            <label for="duration">Duration (Weeks)</label>
+            <div class="w-100">
+                <input name="duration" type="number" step="any" id="duration"
+                       class="form-control {% if form.duration.errors %}is-invalid{% endif %}" value="0" min="0"
+                       style="width: 80px; margin-right: 8px;">
+                <div class="text-danger">
+                    {{ form.duration.errors }}
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="duration">Duration</label>
-            <input name="duration" type="number" step="any" id="duration" value="0" min="0"
-                   style="width: 80px; margin-right: 8px;">
-            <span>weeks</span>
-        </div>
-
-        <div class="form-group">
-            <label for="image">Image</label>
+            <label for="image">Cover photo</label>
             <div class="upload-box" style=" flex: 1; padding: 13px;">
                 <label for="image-upload" class="upload-label">Upload
                     <i class="bi bi-plus-circle-fill upload-icon"></i>
                 </label>
                 <input name="cover_photo" type="file" id="image-upload" style="display: none;">
+                <div id="file-name" class="small text-muted mt-2"></div>
+                <img id="preview" style="max-width:50%; margin-top:10px; display:none;">
+            </div>
+            <div class="text-danger">
+                {{ form.cover_photo.errors }}
             </div>
         </div>
 
@@ -56,6 +74,9 @@
                 <option value="{{value}}">{{label}}</option>
                 {% endfor %}
             </select>
+            <div class="text-danger">
+                {{ form.language.errors }}
+            </div>
         </div>
 
         <div class="form-group">
@@ -66,6 +87,9 @@
                 <option value="{{value}}">{{label}}</option>
                 {% endfor %}
             </select>
+            <div class="text-danger">
+                {{ form.framework.errors }}
+            </div>
         </div>
 
         <div class="form-group">
@@ -76,17 +100,31 @@
                 <option value="{{value}}">{{label}}</option>
                 {% endfor %}
             </select>
+            <div class="text-danger">
+                {{ form.platform.errors }}
+            </div>
         </div>
 
         <div class="form-group">
             <label for="source">Source link</label>
-            <input name="source_link" type="text" id="source" placeholder="Type here">
+            <input name="source_link" class="form-control {% if form.source_link.errors %}is-invalid{% endif %}"
+                   type="text" id="source" placeholder="Type here">
+            <div class="text-danger">
+                {{ form.source_link.errors }}
+            </div>
         </div>
 
-        <div class="buttons">
-            <button type="submit" class="btn btn-create" id="createBtn">Create</button>
-            <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ form.non_field_errors }}
         </div>
+        {% endif %}
+
+        <!--        <div class="buttons">-->
+        <!--            <button type="submit" class="btn btn-create" id="createBtn">Create</button>-->
+        <!--            <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>-->
+        <!--        </div>-->
+        <input type="submit" class="btn btn-primary" value="Submit">
 
     </form>
 
@@ -134,6 +172,31 @@
     document.addEventListener("click", (e) => {
         if (!e.target.closest(".custom-dropdown")) {
             dropdownHeaders.forEach(h => h.parentElement.classList.remove("active"));
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById("image-upload");
+        const fileNameDisplay = document.getElementById("file-name");
+        const preview = document.getElementById("preview");
+
+        if (fileInput) {
+            fileInput.addEventListener("change", function () {
+                if (this.files.length > 0) {
+                    const file = this.files[0];
+
+                    if(fileNameDisplay){
+                        fileNameDisplay.textContent = "Selected: " + file.name;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = "block";
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
         }
     });
 

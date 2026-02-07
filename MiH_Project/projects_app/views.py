@@ -17,9 +17,13 @@ def create_software(request):
     if request.method == "POST":
         form = SoftwareCreateForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            software = form.save(commit=False)
+            software.innovator = request.user
+            software.save()
             return redirect('test_homepage')
-        return redirect('sw_create')
+        else:
+            print(form.errors)
+            return render(request, 'sw-create.html', {'form': form})
     else:
         form = SoftwareCreateForm()
         return render(request, 'sw-create.html', {'form': form})
