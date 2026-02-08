@@ -4,6 +4,7 @@
 {% block title %}Edit Profile | {{ user.name }}{% endblock %}
 
 {% block style %}
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
@@ -55,108 +56,338 @@
 {% endblock %}
 
 {% block content %}
-
-
+<!-- Software Project Section -->
 <section class="softwarepj">
+  <div class="container mt-3">
+    <img src="{% static 'default-project.jpg' %}" class="img-fluid rounded" alt="Hero">
+  </div>
 
-<div class="container mt-3">
-  <img src="{% static 'image.png' %}" class="img-fluid rounded" alt="Hero">
-</div>
+  <div class="container bg-white rounded p-4 mt-4">
+    <div class="row">
+      <div class="col-md-5 no-padding">
+        <h5>About the project</h5>
+        <div class="h-line"></div>
+        <p>Created at - <b>15/01/2025</b><br>10:00 AM</p>
+        <div class="h-line"></div>
+        <p>Duration - <b>1 month</b></p>
+      </div>
 
-<div class="container bg-white rounded p-4 mt-4">
-  <div class="row">
-    <div class="col-md-5 no-padding">
-      <h5>About the project</h5>
-      <div class="h-line"></div>
-      <p>Created at - <b>15/01/2025</b><br>10:00 AM</p>
-      <div class="h-line"></div>
-      <p>Duration - <b>1 month</b></p>
-    </div>
+      <div class="col-md-1 d-flex justify-content-center">
+        <div class="v-line"></div>
+      </div>
 
-    <div class="col-md-1 d-flex justify-content-center">
-      <div class="v-line"></div>
-    </div>
-
-    <div class="col-md-6 no-padding">
-      <h5>Online Shopping</h5>
-      <p>
-        Web-based platform allowing users to browse products,
-        add items to cart, and make secure purchases.
-      </p>
+      <div class="col-md-6 no-padding">
+        <h5>Online Shopping</h5>
+        <p>
+          Web-based platform allowing users to browse products,
+          add items to cart, and make secure purchases.
+        </p>
+      </div>
     </div>
   </div>
-</div>
 
+  <div class="container bg-white rounded p-4 mt-4">
+    <div class="row align-items-stretch">
+      <div class="col-md-4 d-flex justify-content-center align-items-center no-padding">
+        <div class="innovator-box text-center">
+          <h6 class="mb-3">Innovator</h6>
+          <img src="{% static 'profile.jpg' %}" class="rounded-circle mb-2" width="80">
+          <p class="mb-2"><b>Mrs. Emily</b></p>
+          <button class="btn btn-outline-primary btn-sm px-4">
+            View
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-1 d-flex justify-content-center no-padding">
+        <div class="v-line"></div>
+      </div>
+
+       <div class="col-md-6">
+      <div class="row text-center">
+      <p> Type - <b>Software</b></p>
+      <div class="h-line"></div>
+
+      <div class="row text-center">
+        <div class="col">
+          <b>React</b>
+          <p class="text-muted">Framework</p>
+        </div>
+        <div class="col">
+          <b>Website</b>
+          <p class="text-muted">Platform</p>
+        </div>
+      </div>
+
+      <div class="h-line"></div>
+      <p class="text-center">Language - <b>Java</b></p>
+    </div> </div>
+    </div>
+
+  <div class="container mt-4">
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="card-box text-center h-100">
+          <h5>Source -</h5>
+          <button class="btn btn-outline-primary btn-sm mt-2">
+            View Source
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card-box text-center h-100">
+          <h5>Rating</h5>
+          <div class="mt-3">
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="card-box text-center">
+          <h5>Comments</h5>
+          <textarea class="form-control mt-2" rows="3" placeholder="Message"></textarea>
+
+          <div class="buttons text-center">
+            <button class="btn btn-primary btn-sm mt-3">
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 </section>
 
 
 <section class="hardwarepj">
+  <div class="container mt-3">
+    <img src="{% static 'plant.png' %}" class="img-fluid rounded" alt="Hero">
+  </div>
+  <div class="container bg-white rounded p-4 mt-4">
+    <div class="row">
+      <div class="col-md-5 no-padding">
+        <h5>About the project</h5>
+        <div class="h-line"></div>
+        <p>Created at - <b>15/01/2025</b><br>10:00 AM</p>
+        <div class="h-line"></div>
+        <p>Duration - <b>1 month</b></p>
+      </div>
 
-<div class="container mt-3">
-  <img src="{% static 'plant.png' %}" class="img-fluid rounded" alt="Hero">
-</div>
+      <div class="col-md-1 d-flex justify-content-center">
+        <div class="v-line"></div>
+      </div>
 
-<div class="container bg-white rounded p-4 mt-4">
-  <div class="row">
-    <div class="col-md-5 no-padding">
-      <h5>About the project</h5>
-      <div class="h-line"></div>
-      <p>Created at - <b>15/01/2025</b><br>10:00 AM</p>
-      <div class="h-line"></div>
-      <p>Duration - <b>1 month</b></p>
-    </div>
-
-    <div class="col-md-1 d-flex justify-content-center">
-      <div class="v-line"></div>
-    </div>
-
-    <div class="col-md-6 no-padding">
-      <h5>Smart Plant Monitoring System</h5>
-      <p>
-        Uses sensors to monitor soil moisture, temperature,
-        humidity, and light conditions automatically.
-      </p>
+      <div class="col-md-6 no-padding">
+        <h5>Smart Plant Monitoring System</h5>
+        <p>
+          Uses sensors to monitor soil moisture, temperature,
+          humidity, and light conditions automatically.
+        </p>
+      </div>
     </div>
   </div>
-</div>
 
+  <div class="container bg-white rounded p-4 mt-4">
+    <div class="row align-items-stretch">
+      <div class="col-md-4 d-flex justify-content-center align-items-center no-padding">
+        <div class="innovator-box text-center">
+          <h6 class="mb-3">Innovator</h6>
+          <img src="{% static 'profile.jpg' %}" class="rounded-circle mb-2" width="80">
+          <p class="mb-2"><b>Mis. Emily</b></p>
+          <button class="btn btn-outline-primary btn-sm px-4">
+            View
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-1 d-flex justify-content-center no-padding">
+        <div class="v-line"></div>
+      </div>
+
+      <div class="col-md-7">
+        <div class="row text-center">
+          <p>Type - <b>Hardware</b></p>
+          <div class="h-line"></div>
+
+          <div class="row text-center">
+            <b class="text-nowrap">Display Modules, CPU, Power Supply</b>
+            <p class="text-muted">Component</p>
+          </div>
+        </div>
+
+        <div class="h-line"></div>
+        <p class="text-center">Skill level- <b>Intermediate</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="card-box text-center h-100">
+          <h5>Source -</h5>
+          <button class="btn btn-outline-primary btn-sm mt-2">
+            View Source
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card-box text-center h-100">
+          <h5>Rating</h5>
+          <div class="mt-3">
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="card-box text-center">
+          <h5>Comments</h5>
+          <textarea class="form-control mt-2" rows="3" placeholder="Message"></textarea>
+
+          <div class="buttons text-center">
+            <button class="btn btn-primary btn-sm mt-3">
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-
 
 <section class="AIpj">
+  <div class="container mt-3">
+    <img src="{% static 'image1.png' %}" class="img-fluid rounded" alt="Hero">
+  </div>
+  <div class="container bg-white rounded p-4 mt-4">
+    <div class="row">
+      <div class="col-md-5 no-padding">
+        <h5>About the project</h5>
+        <div class="h-line"></div>
+        <p>Created at - <b>15/01/2025</b><br>10:00 AM</p>
+        <div class="h-line"></div>
+        <p>Duration - <b>1 month</b></p>
+      </div>
 
-<div class="container mt-3">
-  <img src="{% static 'image1.png' %}" class="img-fluid rounded" alt="Hero">
-</div>
+      <div class="col-md-1 d-flex justify-content-center">
+        <div class="v-line"></div>
+      </div>
 
-<div class="container bg-white rounded p-4 mt-4">
-  <div class="row">
-    <div class="col-md-5 no-padding">
-      <h5>About the project</h5>
-      <div class="h-line"></div>
-      <p>Created at - <b>15/01/2025</b><br>10:00 AM</p>
-      <div class="h-line"></div>
-      <p>Duration - <b>1 month</b></p>
-    </div>
-
-    <div class="col-md-1 d-flex justify-content-center">
-      <div class="v-line"></div>
-    </div>
-
-    <div class="col-md-6 no-padding">
-      <h5>ChatBots</h5>
-      <p>
-        AI-powered chatbots using NLP and machine learning
-        to simulate human conversation.
-      </p>
+      <div class="col-md-6 no-padding">
+        <h5>ChatBots</h5>
+        <p>
+          Chatbots AI are computer programs powered by artificial intelligence designed to simulate human conversation through text or voice. They use technologies like natural language processing (NLP), machine learning, and sometimes deep learning to understand user input and generate appropriate responses.
+        </p>
+      </div>
     </div>
   </div>
-</div>
 
+  <div class="container bg-white rounded p-4 mt-4">
+    <div class="row align-items-stretch">
+      <div class="col-md-4 d-flex justify-content-center align-items-center no-padding">
+        <div class="innovator-box text-center">
+          <h6 class="mb-3">Innovator</h6>
+          <img src="image/profile.jpg" class="rounded-circle mb-2" width="80">
+          <p class="mb-2"><b>Mis. Emily</b></p>
+          <button class="btn btn-outline-primary btn-sm px-4">
+            View
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-1 d-flex justify-content-center no-padding">
+        <div class="v-line"></div>
+      </div>
+
+      <div class="col-md-7">
+        <div class="row text-center">
+          <p>Type - <b>AI</b></p>
+          <div class="h-line"></div>
+
+          <div class="row text-center">
+            <div class="col">
+              <b>NLP</b>
+              <p class="text-muted">Focus</p>
+            </div>
+            <div class="col">
+              <b>Decision Tree</b>
+              <p class="text-muted">Algorithm</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-line"></div>
+        <p class="text-center">Dataset - <b>Personal-Chat</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="row g-4">
+
+
+      <div class="col-md-4">
+        <div class="card-box text-center mb4">
+          <h5>Source -</h5>
+          <button class="btn btn-outline-primary btn-sm mt-2">
+            View Source
+          </button>
+        </div>
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="card-box text-center">
+          <h5>Rating</h5>
+          <div class="mt-3">
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+            <span class="star checked">★</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-9">
+        <div class="card-box text-center">
+          <h5>Comments</h5>
+          <textarea class="form-control mt-2" rows="4" placeholder="Message"></textarea>
+
+          <div class="buttons text-center">
+            <button class="btn btn-primary btn-sm mt-3">
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<div class="text-center my-4">
-  <button class="btn btn-primary btn-sm">Update Project</button>
+<!-- Update Project Button -->
+<div class="buttons">
+  <div class="buttons text-center">
+    <div class="text-center my-4">
+      <button class="btn btn-primary btn-sm">Update Project</button>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
