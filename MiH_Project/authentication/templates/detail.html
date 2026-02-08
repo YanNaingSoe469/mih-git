@@ -1,0 +1,162 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block title %}Edit Profile | {{ user.name }}{% endblock %}
+
+{% block style %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  .v-line {
+    width: 2px;
+    background: #004AAD;
+    align-self: stretch;
+  }
+  .h-line {
+    height: 2px;
+    background: #004AAD;
+    width: 100%;
+    margin: 10px 0;
+  }
+  .no-padding {
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+  }
+  .card-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .star {
+    font-size: 24px;
+    color: #dcdcdc;
+  }
+  .star.checked {
+    color: #FFD700;
+  }
+  textarea {
+    resize: none;
+  }
+  .innovator-box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 85%;
+    margin: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  .innovator-box img {
+    border: 3px solid #004AAD;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+<section class="softwarepj">
+
+<div class="container mt-3">
+  <img src="{% static 'image.png' %}" class="img-fluid rounded" alt="Hero">
+</div>
+
+<div class="container bg-white rounded p-4 mt-4">
+  <div class="row">
+    <div class="col-md-5 no-padding">
+      <h5>About the project</h5>
+      <div class="h-line"></div>
+      <p>Created at - <b>15/01/2025</b><br>10:00 AM</p>
+      <div class="h-line"></div>
+      <p>Duration - <b>1 month</b></p>
+    </div>
+
+    <div class="col-md-1 d-flex justify-content-center">
+      <div class="v-line"></div>
+    </div>
+
+    <div class="col-md-6 no-padding">
+      <h5>Online Shopping</h5>
+      <p>
+        Web-based platform allowing users to browse products,
+        add items to cart, and make secure purchases.
+      </p>
+    </div>
+  </div>
+</div>
+
+</section>
+
+
+<section class="hardwarepj">
+
+<div class="container mt-3">
+  <img src="{% static 'plant.png' %}" class="img-fluid rounded" alt="Hero">
+</div>
+
+<div class="container bg-white rounded p-4 mt-4">
+  <div class="row">
+    <div class="col-md-5 no-padding">
+      <h5>About the project</h5>
+      <div class="h-line"></div>
+      <p>Created at - <b>15/01/2025</b><br>10:00 AM</p>
+      <div class="h-line"></div>
+      <p>Duration - <b>1 month</b></p>
+    </div>
+
+    <div class="col-md-1 d-flex justify-content-center">
+      <div class="v-line"></div>
+    </div>
+
+    <div class="col-md-6 no-padding">
+      <h5>Smart Plant Monitoring System</h5>
+      <p>
+        Uses sensors to monitor soil moisture, temperature,
+        humidity, and light conditions automatically.
+      </p>
+    </div>
+  </div>
+</div>
+
+</section>
+
+
+<section class="AIpj">
+
+<div class="container mt-3">
+  <img src="{% static 'image1.png' %}" class="img-fluid rounded" alt="Hero">
+</div>
+
+<div class="container bg-white rounded p-4 mt-4">
+  <div class="row">
+    <div class="col-md-5 no-padding">
+      <h5>About the project</h5>
+      <div class="h-line"></div>
+      <p>Created at - <b>15/01/2025</b><br>10:00 AM</p>
+      <div class="h-line"></div>
+      <p>Duration - <b>1 month</b></p>
+    </div>
+
+    <div class="col-md-1 d-flex justify-content-center">
+      <div class="v-line"></div>
+    </div>
+
+    <div class="col-md-6 no-padding">
+      <h5>ChatBots</h5>
+      <p>
+        AI-powered chatbots using NLP and machine learning
+        to simulate human conversation.
+      </p>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<div class="text-center my-4">
+  <button class="btn btn-primary btn-sm">Update Project</button>
+</div>
+
+{% endblock %}
