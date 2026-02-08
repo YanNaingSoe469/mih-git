@@ -22,7 +22,6 @@ def create_software(request):
             software.save()
             return redirect('test_homepage')
         else:
-            print(form.errors)
             return render(request, 'sw-create.html', {'form': form})
     else:
         form = SoftwareCreateForm()
@@ -34,12 +33,17 @@ def create_hardware(request):
     if request.method == "POST":
         form = HardwareCreateForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            hardware = form.save(commit=False)
+            hardware.innovator = request.user
+            hardware.save()
+            form.save_m2m()
             return redirect('test_homepage')
-        return redirect('hw_create')
+        else:
+            print(form.errors)
+            return render(request, 'hw_create.html', {'form': form})
     else:
         form = HardwareCreateForm()
-        return render(request, 'create-hardwarepj.html', {'form': form})
+        return render(request, 'hw_create.html', {'form': form})
 
 
 #F7.1 Create Project (AI)
@@ -47,12 +51,17 @@ def create_ai(request):
     if request.method == "POST":
         form = AiCreateForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            ai = form.save(commit=False)
+            ai.innovator = request.user
+            ai.save()
+            form.save_m2m()
             return redirect('test_homepage')
-        return redirect('ai_create')
+        else:
+            print(form.errors)
+            return render(request, 'ai_create.html', {'form': form})
     else:
         form = AiCreateForm()
-        return render(request, 'create-aipj.html', {'form': form})
+        return render(request, 'ai_create.html', {'form': form})
 
 
 #View project detail

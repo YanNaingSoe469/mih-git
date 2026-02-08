@@ -21,6 +21,8 @@ urlpatterns = [
     path("change-password/", authentication_views.change_password, name="change_password"),
 
     #project_app routes
+    path('samp-detail/', TemplateView.as_view(template_name="test_detail.html"), name="samp_detail"),
+    path('samp-update/', TemplateView.as_view(template_name="updatepj.html")),
     path("sw-create/", project_views.create_software, name="sw_create"),
     path("hw-create/", project_views.create_hardware, name="hw_create"),
     path("ai-create/", project_views.create_ai, name="ai_create"),
