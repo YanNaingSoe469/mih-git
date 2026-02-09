@@ -124,3 +124,59 @@ def search_project(request):
     projects = Project.objects.filter(title__contains=search_key)
     return render(request, 'test_homepage.html', {'projects': projects})
 
+def update_software(request, id):
+    software = Software.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = SoftwareCreateForm(request.POST, request.FILES, instance=software)
+
+        old_cover_photo_path = software.cover_photo.path
+        if form.is_valid():
+            if 'cover_photo' in request.FILES:
+                os.remove(old_cover_photo_path)
+            form.save()
+            return redirect('project_detail', software.id)
+        else:
+            print(form.errors)
+            return render(request, 'sw_update.html', {'form': form})
+    else:
+        form = SoftwareCreateForm(instance=software)
+        return render(request, 'sw_update.html', {'form': form})
+
+def update_hardware(request, id):
+    hardware = Hardware.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = HardwareCreateForm(request.POST, request.FILES, instance=hardware)
+
+        old_cover_photo_path = hardware.cover_photo.path
+        if form.is_valid():
+            if 'cover_photo' in request.FILES:
+                os.remove(old_cover_photo_path)
+            form.save()
+            return redirect('project_detail', hardware.id)
+        else:
+            print(form.errors)
+            return render(request, 'hw_update.html', {'form': form})
+    else:
+        form = HardwareCreateForm(instance=hardware)
+        return render(request, 'hw_update.html', {'form': form})
+
+def update_ai(request, id):
+    ai = Ai.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = AiCreateForm(request.POST, request.FILES, instance=ai)
+
+        old_cover_photo_path = ai.cover_photo.path
+        if form.is_valid():
+            if 'cover_photo' in request.FILES:
+                os.remove(old_cover_photo_path)
+            form.save()
+            return redirect('project_detail', ai.id)
+        else:
+            print(form.errors)
+            return render(request, 'ai_update.html', {'form': form})
+    else:
+        form = AiCreateForm(instance=ai)
+        return render(request, 'ai_update.html', {'form': form})
