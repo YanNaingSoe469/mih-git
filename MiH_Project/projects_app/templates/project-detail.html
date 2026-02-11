@@ -1,66 +1,475 @@
 {% extends 'master.html' %}
+{% load static %}
 
-{% block title %}Project Create{% endblock %}
+{% block title %}Edit Profile | {{ user.name }}{% endblock %}
 
 {% block style %}
+<style>
+    .v-line {
+        width: 2px;
+        background: #004AAD;
+        align-self: stretch;
+    }
 
+    .h-line {
+        height: 2px;
+        background: #004AAD;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .no-padding {
+        padding-left: 0;
+        padding-right: 0;
+        margin: 0;
+    }
+
+    .card-box {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .star {
+        font-size: 24px;
+        color: #dcdcdc;
+    }
+
+    .star.checked {
+        color: #FFD700;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    .innovator-box {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        width: 85%;
+        margin: auto;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .innovator-box img {
+        border: 3px solid #004AAD;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="my-3 p-4"> {{project.type}} Project</h1>
-    <ul>
-        <li>{{project.title}}</li>
-        <li>{{project.innovator}}</li>
-        <img class="w-25" src="{{project.cover_photo.url}}" alt="hey">
-        <li>{{project.description}}</li>
-        <li>{{project.duration}} Weeks</li>
-        <li>{{project.created_at}}</li>
 
-        {% if project.type == "SW" %}
-            <li>{{project.source_link}}</li>
-            <li>{{project.language}}</li>
-            <li>{{project.framework}}</li>
-            <li>{{project.platform}}</li>
-        {% endif %}
+<!-- Software Project Section -->
+{% if project.type == 'SW' %}
+<section class="softwarepj">
+    <div class="container mt-5">
+        <img src="{{project.cover_photo.url}}" style="width: 100%; height: 400px;" class="img-fluid rounded" alt="Hero">
+    </div>
 
-        {% if project.type == "HW" %}
-            <li>{{project.code}}</li>
-            <li>
-                {% for component in project.components.all %}
-                    {{component}},
-                {% endfor %}
-            </li>
-            <li>{{project.skill_level}}</li>
-        {% endif %}
+    <div class="container bg-white rounded p-4 mt-4">
+        <div class="row">
+            <div class="col-md-5 no-padding">
+                <h5>About the project</h5>
+                <div class="h-line"></div>
+                <p>Created at <b>{{project.created_at}}</b>
+                <div class="h-line"></div>
+                <p>Duration <b>{{project.duration}} weeks</b></p>
+            </div>
 
-        {% if project.type == "AI" %}
-            <li>{{project.dataset_link}}</li>
-            <li>{{project.notebook_source_link}}</li>
-            <li>
-                {% for algorithm in project.algorithms.all %}
-                    {{algorithm}},
-                {% endfor %}
-            </li>
-            <li>{{project.focus}}</li>
-        {% endif %}
+            <div class="col-md-1 d-flex justify-content-center">
+                <div class="v-line"></div>
+            </div>
 
-        {% if project.innovator.id == user.id %}
-            <a href="{% url 'project_update' project.id %}">Update Project</a> |
-            <a href="{% url 'project_delete' project.id %}">Delete Project</a>
-        {% endif %}
+            <div class="col-md-6 no-padding">
+                <h5>{{project.title}}</h5>
+                <p>{{project.description}}</p>
+            </div>
+        </div>
+    </div>
 
-    </ul>
-</div>
-{% endblock %}
+    <div class="container bg-white rounded p-4 mt-4">
+        <div class="row align-items-stretch">
+            <div class="col-md-4 d-flex justify-content-center align-items-center no-padding">
+                <div class="innovator-box text-center">
+                    <h6 class="mb-3">Innovator</h6>
+                    {% if project.innovator.profile_pic %}
+                    <img src="{{project.innovator.profile_pic.url}}" class="rounded-circle mb-2"
+                         style="width:80px; height: 80px;">
+                    {% else %}
+                    <img src="{% static 'assets/default-profile.png' %}" class="rounded-circle mb-2"
+                         style="width:80px; height: 80px;">
+                    {% endif %}
+                    <p class="mb-2"><b>{{project.innovator}}</b></p>
+                    <!--                    <button class="btn btn-outline-primary btn-sm px-4">-->
+                    <!--                        View-->
+                    <!--                    </button>-->
+                </div>
+            </div>
 
-{% block script %}
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.3.0/mdb.umd.min.js"
-></script>
-<script>
+            <div class="col-md-1 d-flex justify-content-center no-padding">
+                <div class="v-line"></div>
+            </div>
 
-</script>
+            <div class="col-md-6">
+                <div class="row text-center">
+                    <p> Type <b>Software</b></p>
+                    <div class="h-line"></div>
+
+                    <div class="row text-center">
+                        <div class="col">
+                            <b>{{project.framework}}</b>
+                            <p class="text-muted">Framework</p>
+                        </div>
+                        <div class="col">
+                            <b>
+                                {% if project.platform == 'WEB'%}
+                                Web Platform
+                                {% elif project.platform == 'MOB' %}
+                                Mobile Platform
+                                {% elif project.platform == 'DES' %}
+                                Desktop Platform
+                                {% else %}
+                                Cross-platform
+                                {% endif %}
+                            </b>
+                            <p class="text-muted">Target Platform</p>
+                        </div>
+                    </div>
+
+                    <div class="h-line"></div>
+                    <p class="text-center">Language <b>{{project.language}}</b></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <div class="row g-4">
+
+                <div class="col-md-4">
+                    <div class="card-box text-center h-100">
+                        <h5>Source -</h5>
+                        <a class="btn btn-outline-primary btn-sm mt-2" href="{{project.source_link}}">
+                            View Source
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card-box text-center h-100">
+                        <h5>Rating</h5>
+                        <div class="mt-3">
+                            <span class="star checked">★</span>
+                            <span class="star checked">★</span>
+                            <span class="star checked">★</span>
+                            <span class="star checked">★</span>
+                            <span class="star checked">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="card-box text-center">
+                        <h5>Comments</h5>
+                        <textarea class="form-control mt-2" rows="3" placeholder="Message"></textarea>
+
+                        <div class="buttons text-center">
+                            <button class="btn btn-primary btn-sm mt-3">
+                                Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Project Button -->
+    {% if project.innovator.id == user.id %}
+    <div class="buttons">
+        <div class="buttons text-center">
+            <div class="text-center my-4">
+                <a href="{% url 'sw_update' id=project.id %}" class="btn btn-primary btn-sm">Update Project</a>
+                <a href="{% url 'project_delete' id=project.id %}" class="btn btn-danger btn-sm">Delete Project</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endif %}
+
+{% if project.type == 'HW' %}
+<section class="hardwarepj">
+    <div class="container mt-5">
+        <img src="{{project.cover_photo.url}}" style="width: 100%; height: 400px;" class="img-fluid rounded" alt="Hero">
+    </div>
+
+    <div class="container bg-white rounded p-4 mt-4">
+        <div class="row">
+            <div class="col-md-5 no-padding">
+                <h5>About the project</h5>
+                <div class="h-line"></div>
+                <p>Created at <b>{{project.created_at}}</b>
+                <div class="h-line"></div>
+                <p>Duration <b>{{project.duration}} weeks</b></p>
+            </div>
+
+            <div class="col-md-1 d-flex justify-content-center">
+                <div class="v-line"></div>
+            </div>
+
+            <div class="col-md-6 no-padding">
+                <h5>{{project.title}}</h5>
+                <p>{{project.description}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container bg-white rounded p-4 mt-4">
+        <div class="row align-items-stretch">
+            <div class="col-md-4 d-flex justify-content-center align-items-center no-padding">
+                <div class="innovator-box text-center">
+                    <h6 class="mb-3">Innovator</h6>
+                    {% if project.innovator.profile_pic %}
+                    <img src="{{project.innovator.profile_pic.url}}" class="rounded-circle mb-2"
+                         style="width:80px; height: 80px;">
+                    {% else %}
+                    <img src="{% static 'assets/default-profile.png' %}" class="rounded-circle mb-2"
+                         style="width:80px; height: 80px;">
+                    {% endif %}
+                    <p class="mb-2"><b>{{project.innovator}}</b></p>
+                    <!--                    <button class="btn btn-outline-primary btn-sm px-4">-->
+                    <!--                        View-->
+                    <!--                    </button>-->
+                </div>
+            </div>
+
+            <div class="col-md-1 d-flex justify-content-center no-padding">
+                <div class="v-line"></div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="row ">
+                    <p class="text-center">Type <b>Hardware</b></p>
+                    <div class="h-line"></div>
+
+                    <div class="row mx-2">
+                        <div>
+                            <p class="text-muted">Components</p>
+                            <ul class="mx-4">
+                                {% for component in project.components.all %}
+                                <li>{{component}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="h-line"></div>
+                <p class="text-center">Skill level
+                    <b>
+                        {% if project.skill_level == 'BEG'%}
+                        Beginner
+                        {% elif project.skill_level == 'INT' %}
+                        Intermediate
+                        {% elif project.skill_level == 'ADV' %}
+                        Advanced
+                        {% else %}
+                        Cross-platform
+                        {% endif %}
+                    </b>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="card-box text-center h-100">
+                    <h5>Source </h5>
+                    <a href="{{project.code}}" class="btn btn-outline-primary btn-sm mt-2">
+                        View Source
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card-box text-center h-100">
+                    <h5>Rating</h5>
+                    <div class="mt-3">
+                        <span class="star checked">★</span>
+                        <span class="star checked">★</span>
+                        <span class="star checked">★</span>
+                        <span class="star checked">★</span>
+                        <span class="star checked">★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="card-box text-center">
+                    <h5>Comments</h5>
+                    <textarea class="form-control mt-2" rows="3" placeholder="Message"></textarea>
+
+                    <div class="buttons text-center">
+                        <button class="btn btn-primary btn-sm mt-3">
+                            Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Project Button -->
+    {% if project.innovator.id == user.id %}
+    <div class="buttons">
+        <div class="buttons text-center">
+            <div class="text-center my-4">
+                <a href="{% url 'hw_update' id=project.id %}" class="btn btn-primary btn-sm">Update Project</a>
+                <a href="{% url 'project_delete' id=project.id %}" class="btn btn-danger btn-sm">Delete Project</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endif %}
+
+{% if project.type == 'AI' %}
+<section class="AIpj">
+    <div class="container mt-5">
+        <img src="{{project.cover_photo.url}}" style="width: 100%; height: 400px;" class="img-fluid rounded" alt="Hero">
+    </div>
+
+    <div class="container bg-white rounded p-4 mt-4">
+        <div class="row">
+            <div class="col-md-5 no-padding text-center">
+                <h5>About the project</h5>
+                <div class="h-line"></div>
+                <p>Created at <b>{{project.created_at}}</b>
+                <div class="h-line"></div>
+                <p>Duration <b>{{project.duration}} weeks</b></p>
+            </div>
+
+            <div class="col-md-1 d-flex justify-content-center">
+                <div class="v-line"></div>
+            </div>
+
+            <div class="col-md-6 no-padding">
+                <h5>{{project.title}}</h5>
+                <p>{{project.description}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container bg-white rounded p-4 mt-4">
+        <div class="row align-items-stretch">
+            <div class="col-md-4 d-flex justify-content-center align-items-center no-padding">
+                <div class="innovator-box text-center shadow-lg">
+                    <h6 class="mb-3">Innovator</h6>
+                    {% if project.innovator.profile_pic %}
+                    <img src="{{project.innovator.profile_pic.url}}" class="rounded-circle mb-2"
+                         style="width:80px; height: 80px;">
+                    {% else %}
+                    <img src="{% static 'assets/default-profile.png' %}" class="rounded-circle mb-2"
+                         style="width:80px; height: 80px;">
+                    {% endif %}
+                    <p class="mb-2"><b>{{project.innovator}}</b></p>
+                    <!--                    <button class="btn btn-outline-primary btn-sm px-4">-->
+                    <!--                        View-->
+                    <!--                    </button>-->
+                </div>
+            </div>
+
+            <div class="col-md-1 d-flex justify-content-center no-padding">
+                <div class="v-line"></div>
+            </div>
+
+            <div class="col-md-7 text-center">
+                <div class="row text-center">
+                    <p>Type <b>AI</b></p>
+                    <div class="h-line"></div>
+
+                    <div class="row text-center">
+                        <div class="col">
+                            <b>{{project.focus}}</b>
+                            <p class="text-muted">Focus</p>
+                        </div>
+                        <div class="col">
+                            <p class=""><b>Algorithms</b></p>
+                            <ul class="mx-4">
+                                {% for algorithm in project.algorithms.all %}
+                                <li>{{algorithm}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="h-line"></div>
+                <span>Source dataset</span>
+                <a class="btn btn-sm btn-outline-primary" href="{{project.code}}">Dataset Link</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card-box text-center mb4">
+                    <h5>Analyzed Notebook</h5>
+                    <a href="{{project.notebook_source_link}}" class="btn btn-outline-primary btn-sm mt-2">
+                        View Source
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="card-box text-center">
+                    <h5>Rating</h5>
+                    <div class="mt-3">
+                        <span class="star checked">★</span>
+                        <span class="star checked">★</span>
+                        <span class="star checked">★</span>
+                        <span class="star checked">★</span>
+                        <span class="star checked">★</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-9">
+                <div class="card-box text-center">
+                    <h5>Comments</h5>
+                    <textarea class="form-control mt-2" rows="4" placeholder="Message"></textarea>
+
+                    <div class="buttons text-center">
+                        <button class="save-button"
+                                style="background-color: #004AAD; color: white; padding: 5px 15px; border-radius: 10px; border:none; margin-top: 10px;">
+                            Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Update Project Button -->
+    {% if project.innovator.id == user.id %}
+    <div class="buttons">
+        <div class="buttons text-center">
+            <div class="text-center my-4">
+                <a href="{% url 'ai_update' id=project.id %}" class="btn btn-primary btn-sm">Update Project</a>
+                <a href="{% url 'project_delete' id=project.id %}" class="btn btn-danger btn-sm">Delete Project</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endif %}
 
 {% endblock %}

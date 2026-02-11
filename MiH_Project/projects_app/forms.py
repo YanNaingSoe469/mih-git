@@ -51,6 +51,7 @@ class SoftwareCreateForm(ProjectValidationMixin, forms.ModelForm):
     class Meta:
         model = Software
         fields = '__all__'
+        exclude = ['innovator']
 
     def clean_source_link(self):
         source_link = self.cleaned_data.get("source_link")
@@ -74,6 +75,7 @@ class HardwareCreateForm(ProjectValidationMixin, forms.ModelForm):
     class Meta:
         model = Hardware
         fields = '__all__'
+        exclude = ['innovator']
 
     def clean_code(self):
         code = self.cleaned_data.get("code")
@@ -105,6 +107,7 @@ class AiCreateForm(ProjectValidationMixin, forms.ModelForm):
     class Meta:
         model = Ai
         fields = '__all__'
+        exclude = ['innovator']
 
     def clean_algorithms(self):
         algorithms = self.cleaned_data.get("algorithms")

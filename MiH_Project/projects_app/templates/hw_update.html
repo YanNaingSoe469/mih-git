@@ -5,20 +5,22 @@
 {% load static %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'project_create_style.css' %}"/>
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@4.0.1/dist/css/multi-select-tag.min.css">
+<link rel="stylesheet" href="{% static 'create&updatestyle.css' %}">
 {% endblock %}
 
 {% block content %}
 
 <div class="form-container" id="projects" style="padding-top: 100px;">
-    <h2 class="text-center">Software Project Information</h2>
-    <form method="post" action="{% url 'sw_create' %}" enctype="multipart/form-data">
+    <h2 class="text-center">Hardware Project Information</h2>
+    <form method="post" action="{% url 'hw_update' id=form.instance.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <label for="title" class="">Title</label>
             <div class="w-100">
                 <input name="title" type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}"
-                       id="title" placeholder="Type here">
+                       id="title" placeholder="Type here" value="{{form.title.value}}">
                 <div class="text-danger">
                     {{ form.title.errors }}
                 </div>
@@ -30,7 +32,7 @@
             <div class="w-100">
                 <textarea class="form-control" name="description" id="description"
                           class="form-control {% if form.description.errors %}is-invalid{% endif %}"
-                          placeholder="Type here"></textarea>
+                          placeholder="Type here">{{form.description.value}}</textarea>
                 <div class="text-danger">
                     {{ form.description.errors }}
                 </div>
@@ -41,7 +43,8 @@
             <label for="duration">Duration (Weeks)</label>
             <div class="w-100">
                 <input name="duration" type="number" step="any" id="duration"
-                       class="form-control {% if form.duration.errors %}is-invalid{% endif %}" value="0" min="0"
+                       class="form-control {% if form.duration.errors %}is-invalid{% endif %}"
+                       value="{{form.duration.value}}" min="0"
                        style="width: 80px; margin-right: 8px;">
                 <div class="text-danger">
                     {{ form.duration.errors }}
@@ -57,72 +60,60 @@
                 </label>
                 <input name="cover_photo" type="file" id="image-upload" style="display: none;">
                 <div id="file-name" class="small text-muted mt-2"></div>
-                <img id="preview" style="max-width:50%; margin-top:10px; display:none;">
+                <img id="preview" src="{{form.instance.cover_photo.url}}" style="max-width:50%; margin-top:10px;">
             </div>
             <div class="text-danger">
                 {{ form.cover_photo.errors }}
             </div>
         </div>
 
-        <input name="type" type="hidden" value="SW">
+
+        <input name="type" type="hidden" value="HW">
 
         <div class="form-group">
-            <label for="language">Language</label>
-            <select name="language" class="form-select" id="language">
-                <option value="">Choose Language</option>
-                {% for value, label in form.language.field.choices %}
-                <option value="{{value}}">{{label}}</option>
-                {% endfor %}
+            <label for="skill_level">Skill level</label>
+            <select name="skill_level" class="form-select" id="skill_level">
+                <option value="">Choose level</option>
+                <option {% if form.skill_level.value == 'BEG' %} selected {% endif %} value="BEG">Beginner</option>
+                <option {% if form.skill_level.value == 'INT' %} selected {% endif %} value="INT">Intermediate</option>
+                <option {% if form.skill_level.value == 'ADV' %} selected {% endif %} value="ADV">Advanced</option>
             </select>
             <div class="text-danger">
-                {{ form.language.errors }}
+                {{ form.skill_level.errors }}
             </div>
         </div>
 
         <div class="form-group">
-            <label for="framework">Framework</label>
-            <select name="framework" class="form-select" id="framework">
-                <option value="">Choose Framework</option>
-                {% for value, label in form.framework.field.choices %}
-                <option value="{{value}}">{{label}}</option>
+            <label for="components">Components</label>
+            <select id="components" name="components" multiple>
+                {% for value, label in form.components.field.choices %}
+                <option value="{{ value }}"
+                        {% if value in form.components.value %}
+                        selected
+                        {% endif %}
+                >
+                    {{ label }}
+                </option>
                 {% endfor %}
             </select>
+
             <div class="text-danger">
-                {{ form.framework.errors }}
+                {{ form.components.errors }}
             </div>
         </div>
 
         <div class="form-group">
-            <label for="platform">Platform</label>
-            <select name="platform" class="form-select" id="platform">
-                <option value="">Choose Platform</option>
-                {% for value, label in form.platform.field.choices %}
-                <option value="{{value}}">{{label}}</option>
-                {% endfor %}
-            </select>
+            <label for="code">Code</label>
+            <input name="code" type="text" class="form-control {% if form.code.errors %}is-invalid{% endif %}" id="code"
+                   placeholder="Code URL" value="{{form.code.value}}">
             <div class="text-danger">
-                {{ form.platform.errors }}
+                {{ form.code.errors }}
             </div>
         </div>
-
-        <div class="form-group">
-            <label for="source">Source link</label>
-            <input name="source_link" class="form-control {% if form.source_link.errors %}is-invalid{% endif %}"
-                   type="text" id="source" placeholder="Type here">
-            <div class="text-danger">
-                {{ form.source_link.errors }}
-            </div>
-        </div>
-
-        {% if form.non_field_errors %}
-        <div class="alert alert-danger">
-            {{ form.non_field_errors }}
-        </div>
-        {% endif %}
 
         <!--        <div class="buttons">-->
         <!--            <button type="submit" class="btn btn-create" id="createBtn">Create</button>-->
-        <!--            <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>-->
+        <!--            <button type="cancel" class="btn btn-cancel" id="cancelBtn">Cancel</button>-->
         <!--        </div>-->
         <input type="submit" class="btn btn-primary" value="Submit">
 
@@ -147,6 +138,7 @@
         type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.3.0/mdb.umd.min.js"
 ></script>
+<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@4.0.1/dist/js/multi-select-tag.min.js"></script>
 <script>
     const dropdownHeaders = document.querySelectorAll(".dropdown-header");
     dropdownHeaders.forEach(header => {
@@ -169,12 +161,6 @@
         });
     });
 
-    document.addEventListener("click", (e) => {
-        if (!e.target.closest(".custom-dropdown")) {
-            dropdownHeaders.forEach(h => h.parentElement.classList.remove("active"));
-        }
-    });
-
     document.addEventListener("DOMContentLoaded", function () {
         const fileInput = document.getElementById("image-upload");
         const fileNameDisplay = document.getElementById("file-name");
@@ -185,7 +171,7 @@
                 if (this.files.length > 0) {
                     const file = this.files[0];
 
-                    if(fileNameDisplay){
+                    if (fileNameDisplay) {
                         fileNameDisplay.textContent = "Selected: " + file.name;
                     }
 
@@ -200,6 +186,27 @@
         }
     });
 
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".custom-dropdown")) {
+            dropdownHeaders.forEach(h => h.parentElement.classList.remove("active"));
+        }
+    });
+
+    //Multi Select Tag//
+    const componentSelect = document.getElementById('components');
+    const multiSelect = new MultiSelectTag('components', {
+        rounded: true,
+        shadow: true,
+        placeholder: 'Select Components',
+        tagColor: {
+            textColor: '#004AAD',
+            borderColor: '#004AAD',
+            bgColor: '#E4F8FF'
+        },
+        onChange: function (values) {
+            console.log(values);
+        }
+    });
 
     // Models //
     const createBtn = document.getElementById("createBtn");
@@ -211,12 +218,12 @@
     });
 
     modalBackBtn.addEventListener("click", function () {
-        window.location.href = "{% url 'test_homepage' %}";
+        window.location.href = "Website_Design/Myanmar InnoHub/Homepage/index.html";
     });
 
     const cancelBtn = document.getElementById("cancelBtn");
     cancelBtn.addEventListener("click", function () {
-        window.location.href = "{% url 'test_homepage' %}";
+        window.location.href = "Website_Design/Myanmar InnoHub/Homepage/index.html";
     });
 
     window.addEventListener("click", function (event) {
@@ -224,6 +231,7 @@
             modal.style.display = "none";
         }
     });
+
 </script>
 
 

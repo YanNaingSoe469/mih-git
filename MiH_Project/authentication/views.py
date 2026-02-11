@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegistrationForm, LoginForm
 from .forms import UpdateProfileForm, ChangePasswordForm
 from .models import *
+# from .projects_app.models import Language, Framework, Focus, Algorithm
 
 
 # F1: Signup
@@ -56,9 +57,65 @@ def signin(request):
 # Direct to homepage (Test)
 def test_homepage(request):
     user = request.user
+
+    key = request.GET.get('key', '')
+    language = request.GET.get('language', '')
+    framework = request.GET.get('framework', '')
+    platform = request.GET.get('platform', '')
+
+    level = request.GET.get('level', '')
+
+    focus = request.GET.get('focus', '')
+    algorithm = request.GET.get('algorithm', '')
+
     Project = apps.get_model('projects_app', 'Project')
-    projects = Project.objects.all()
-    return render(request, "test_homepage.html", {"user": user, 'projects': projects})
+    Software = apps.get_model('projects_app', 'Software')
+    Hardware = apps.get_model('projects_app', 'Hardware')
+    Ai = apps.get_model('projects_app', 'Ai')
+
+    Language = apps.get_model('projects_app', 'Language')
+    Framework = apps.get_model('projects_app', 'Framework')
+    Focus = apps.get_model('projects_app', 'Focus')
+    Algorithm = apps.get_model('projects_app', 'Algorithm')
+
+    #software filtering
+    if platform:
+        projects = Software.objects.filter(platform=platform)
+    elif language:
+        projects = Software.objects.filter(language=language)
+    elif framework:
+        projects = Software.objects.filter(framework=framework)
+
+    #hardware filtering
+    elif level:
+        projects = Hardware.objects.filter(skill_level=level)
+
+    #ai filtering
+    elif focus:
+        projects = Ai.objects.filter(focus=focus)
+    elif algorithm:
+        projects = Ai.objects.filter(algorithms=algorithm)
+
+    #searching
+    elif key:
+        projects = Project.objects.filter(title__icontains=key)
+    else:
+        projects = Project.objects.all()
+
+    languages = Language.objects.all()
+    frameworks = Framework.objects.all()
+    focuses = Focus.objects.all()
+    algorithms = Algorithm.objects.all()
+    return render(request, "test_homepage.html",
+                  {
+                    "user": user,
+                    'projects': projects,
+                      'languages': languages,
+                      'frameworks': frameworks,
+                      'focuses': focuses,
+                      'algorithms': algorithms,
+                   }
+                  )
 
 
 # F3: View Profile

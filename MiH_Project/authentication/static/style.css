@@ -252,6 +252,21 @@ nav a:hover {
   flex-wrap: wrap;
 }
 
+.hw-filter-wrapper {
+  width: 100%;
+  margin: 30px 0 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.hw-filters {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
 .ai-filter-wrapper {
   display: none;
   width: 100%;

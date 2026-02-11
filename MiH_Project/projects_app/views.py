@@ -1,48 +1,70 @@
 import os
+from pprint import pprint
 
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+
 from projects_app.forms import ProjectCreateForm, SoftwareCreateForm, HardwareCreateForm, AiCreateForm
+
 from projects_app.models import Project
+
 from projects_app.models import Software, Hardware, Ai
 
 
-# Create your views here.
+#F7.1 Create Project (Software)
 def create_software(request):
     if request.method == "POST":
         form = SoftwareCreateForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            software = form.save(commit=False)
+            software.innovator = request.user
+            software.save()
             return redirect('test_homepage')
-        return render(request, 'sw-create.html', {'form': form})
+        else:
+            return render(request, 'sw-create.html', {'form': form})
     else:
         form = SoftwareCreateForm()
         return render(request, 'sw-create.html', {'form': form})
 
 
+#F7.1 Create Project (Hardware)
 def create_hardware(request):
     if request.method == "POST":
         form = HardwareCreateForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            hardware = form.save(commit=False)
+            hardware.innovator = request.user
+            hardware.save()
+            form.save_m2m()
             return redirect('test_homepage')
-        return render(request, 'hw-create.html', {'form': form})
+        else:
+            print(form.errors)
+            return render(request, 'hw_create.html', {'form': form})
     else:
         form = HardwareCreateForm()
-        return render(request, 'create-hardwarepj.html', {'form': form})
+        return render(request, 'hw_create.html', {'form': form})
 
 
+#F7.1 Create Project (AI)
 def create_ai(request):
     if request.method == "POST":
         form = AiCreateForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            ai = form.save(commit=False)
+            ai.innovator = request.user
+            ai.save()
+            form.save_m2m()
             return redirect('test_homepage')
-        return render(request, 'ai-create.html', {'form': form})
+        else:
+            print(form.errors)
+            return render(request, 'ai_create.html', {'form': form})
     else:
         form = AiCreateForm()
-        return render(request, 'create-aipj.html', {'form': form})
+        return render(request, 'ai_create.html', {'form': form})
 
 
+#View project detail
 def project_detail(request, id):
     project_id = id
     if request.method == "GET":
@@ -58,37 +80,79 @@ def project_detail(request, id):
         return render(request, 'project-detail.html', {'project': project})
     return redirect('test_homepage')
 
-
-def project_update(request, id):
-    project_id = id
-    base = Project.objects.get(id=id)
-
-    if base.type == "SW":
-        project = Software.objects.get(id=id)
-        FormClass = SoftwareCreateForm
-    elif base.type == "HW":
-        project = Hardware.objects.get(id=id)
-        FormClass = HardwareCreateForm
-    else:
-        project = Ai.objects.get(id=id)
-        FormClass = AiCreateForm
-
-    if request.method == "POST":
-        form = FormClass(request.POST, request.FILES, instance=project)
-        if form.is_valid():
-            form.save()
-            return redirect('project_detail', project_id)
-        else:
-            return render(request, 'project-update.html', {'form': form})
-    else:
-        form = FormClass(instance=project)
-        print(form.errors)
-        return render(request, 'project-update.html', {'form': form})
-
-
+#F7.3 Delete Project
 def project_delete(request, id):
     project = Project.objects.get(id=id)
     cover_photo_path = project.cover_photo.path
     os.remove(cover_photo_path)
     project.delete()
     return redirect('profile_page')
+
+
+#F6.1 Search Project
+def search_project(request):
+    search_key = request.GET.get('key')
+    projects = Project.objects.filter(title__contains=search_key)
+    return render(request, 'test_homepage.html', {'projects': projects})
+
+#F7.2 Update Project (Software)
+def update_software(request, id):
+    software = Software.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = SoftwareCreateForm(request.POST, request.FILES, instance=software)
+
+        old_cover_photo_path = software.cover_photo.path
+        if form.is_valid():
+            if 'cover_photo' in request.FILES:
+                os.remove(old_cover_photo_path)
+            form.save()
+            return redirect('project_detail', software.id)
+        else:
+            print(form.errors)
+            return render(request, 'sw_update.html', {'form': form})
+    else:
+        form = SoftwareCreateForm(instance=software)
+        return render(request, 'sw_update.html', {'form': form})
+
+
+#F7.2 Update Project (Hardware)
+def update_hardware(request, id):
+    hardware = Hardware.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = HardwareCreateForm(request.POST, request.FILES, instance=hardware)
+
+        old_cover_photo_path = hardware.cover_photo.path
+        if form.is_valid():
+            if 'cover_photo' in request.FILES:
+                os.remove(old_cover_photo_path)
+            form.save()
+            return redirect('project_detail', hardware.id)
+        else:
+            print(form.errors)
+            return render(request, 'hw_update.html', {'form': form})
+    else:
+        form = HardwareCreateForm(instance=hardware)
+        return render(request, 'hw_update.html', {'form': form})
+
+
+#F7.2 Update Project (AI)
+def update_ai(request, id):
+    ai = Ai.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = AiCreateForm(request.POST, request.FILES, instance=ai)
+
+        old_cover_photo_path = ai.cover_photo.path
+        if form.is_valid():
+            if 'cover_photo' in request.FILES:
+                os.remove(old_cover_photo_path)
+            form.save()
+            return redirect('project_detail', ai.id)
+        else:
+            print(form.errors)
+            return render(request, 'ai_update.html', {'form': form})
+    else:
+        form = AiCreateForm(instance=ai)
+        return render(request, 'ai_update.html', {'form': form})
