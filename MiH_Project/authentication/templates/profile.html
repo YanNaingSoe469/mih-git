@@ -35,10 +35,11 @@
         <div class="d-flex flex-column align-items-center">
             <div class="d-flex justify-content-center gap-4 mb-4">
                 <a href="{% url 'update_profile' id=user.id %}">
-                    <button class="btn profile-btn px-4">Edit Profile</button> </a>
-                    <a href="{% url 'change_password' %}">
-                        <button class="btn profile-btn px-4">Change Password</button>
-                    </a>
+                    <button class="btn profile-btn px-4">Edit Profile</button>
+                </a>
+                <a href="{% url 'change_password' %}">
+                    <button class="btn profile-btn px-4">Change Password</button>
+                </a>
             </div>
 
             <div class="details-card">
@@ -57,22 +58,33 @@
             </div>
         </div>
     </div>
-
     <section class="projects">
         <div>
-            <h2 class="section-title">{{user.name}}'s Projects</h2>
-        <div class="project-grid">
-        {% for project in projects %}
-            <a href="{% url 'project_detail' project.id %}">
-                <div class="card">
-                    <span class="tag software">{{project.type}}</span>
-                    <h3>{{project.title}}</h3>
-                    <p>by {{project.innovator}}</p>
-                    <img src="{{project.cover_photo.url}}" alt="{{project.title}}"/>
+            <h2 class="section-title">{{ user.name }}'s Projects</h2>
+
+            <div class="project-grid">
+                {% for project in projects %}
+                <a href="{% url 'project_detail' project.id %}">
+                    <div class="card">
+                        <span class="tag software">{{ project.type }}</span>
+                        <h3>{{ project.title }}</h3>
+                        <p>by {{ project.innovator }}</p>
+                        <img src="{{ project.cover_photo.url }}" alt="{{ project.title }}"/>
+                    </div>
+                </a>
+
+                {% empty %}
+                <div class="card text-center w-100 py-5">
+                    <h4 class="text-muted">No projects yet</h4>
+                    <p class="text-muted">Start by creating your first project.</p>
+                    <div class="d-flex justify-content-center mt-3">
+                        <a href="{% url 'sw_create' %}" class="btn btn-primary btn-sm">
+                            Create Project
+                        </a>
+                    </div>
                 </div>
-            </a>
-        {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
 
