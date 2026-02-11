@@ -80,35 +80,6 @@ def project_detail(request, id):
         return render(request, 'project-detail.html', {'project': project})
     return redirect('test_homepage')
 
-
-#F7.2 Update Project
-def project_update(request, id):
-    project_id = id
-    base = Project.objects.get(id=id)
-
-    if base.type == "SW":
-        project = Software.objects.get(id=id)
-        FormClass = SoftwareCreateForm
-    elif base.type == "HW":
-        project = Hardware.objects.get(id=id)
-        FormClass = HardwareCreateForm
-    else:
-        project = Ai.objects.get(id=id)
-        FormClass = AiCreateForm
-
-    if request.method == "POST":
-        form = FormClass(request.POST, request.FILES, instance=project)
-        if form.is_valid():
-            form.save()
-            return redirect('project_detail', project_id)
-        else:
-            return render(request, 'project-update.html', {'form': form})
-    else:
-        form = FormClass(instance=project)
-        print(form.errors)
-        return render(request, 'project-update.html', {'form': form})
-
-
 #F7.3 Delete Project
 def project_delete(request, id):
     project = Project.objects.get(id=id)
@@ -124,6 +95,7 @@ def search_project(request):
     projects = Project.objects.filter(title__contains=search_key)
     return render(request, 'test_homepage.html', {'projects': projects})
 
+#F7.2 Update Project (Software)
 def update_software(request, id):
     software = Software.objects.get(id=id)
 
@@ -143,6 +115,8 @@ def update_software(request, id):
         form = SoftwareCreateForm(instance=software)
         return render(request, 'sw_update.html', {'form': form})
 
+
+#F7.2 Update Project (Hardware)
 def update_hardware(request, id):
     hardware = Hardware.objects.get(id=id)
 
@@ -162,6 +136,8 @@ def update_hardware(request, id):
         form = HardwareCreateForm(instance=hardware)
         return render(request, 'hw_update.html', {'form': form})
 
+
+#F7.2 Update Project (AI)
 def update_ai(request, id):
     ai = Ai.objects.get(id=id)
 

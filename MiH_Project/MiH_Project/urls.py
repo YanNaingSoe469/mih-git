@@ -21,19 +21,18 @@ urlpatterns = [
     path("change-password/", authentication_views.change_password, name="change_password"),
 
     #project_app routes
-    path('samp-detail/', TemplateView.as_view(template_name="test_detail.html"), name="samp_detail"),
-    path('samp-update/', TemplateView.as_view(template_name="updatepj.html")),
     path("sw-create/", project_views.create_software, name="sw_create"),
     path("hw-create/", project_views.create_hardware, name="hw_create"),
     path("ai-create/", project_views.create_ai, name="ai_create"),
+
     path('project-detail/<int:id>/', project_views.project_detail, name="project_detail"),
-    path('project-update/<int:id>/', project_views.project_update, name="project_update"),
+    path('project-search/', authentication_views.test_homepage, name="search_project"),
 
     path('sw-update/<int:id>', project_views.update_software, name="sw_update"),
     path('hw-update/<int:id>', project_views.update_hardware, name="hw_update"),
     path('ai-update/<int:id>', project_views.update_ai, name="ai_update"),
+
     path('project-delete/<int:id>/', project_views.project_delete, name="project_delete"),
-    path('project-search/', authentication_views.test_homepage, name="search_project"),
 ]
 
 if settings.DEBUG:
