@@ -39,6 +39,8 @@ urlpatterns = [
     path("user-list/", authentication_views.user_list, name="user_list"),
     path("project-list/", admin_views.project_list, name="project_list"),
     path("project-stats/", admin_views.project_stats, name="project_stats"),
+    path('grant-admin/<int:id>/', admin_views.grant_admin, name="grant_admin"),
+    path('revoke-admin/<int:id>/', admin_views.revoke_admin, name="revoke_admin"),
 ]
 
 if settings.DEBUG:

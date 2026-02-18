@@ -42,8 +42,13 @@
         <td>{{user_item.address}}</td>
         {% if user.role == 'rootadmin' %}
         <td>
-            <a class="btn btn-success" href="#">Grant Admin</a>
-            <a class="btn btn-danger" href="#">Revoke Admin</a>
+            {% if user_item.role == 'user' %}
+            <a class="btn btn-success" href="{% url 'grant_admin' id=user_item.id %}">Grant Admin</a>
+            {% endif %}
+
+            {% if user_item.role == 'admin' %}
+            <a class="btn btn-danger" href="{% url 'revoke_admin' id=user_item.id %}">Revoke Admin</a>
+            {% endif %}
         </td>
         {% endif %}
     </tr>
