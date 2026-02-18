@@ -1,0 +1,239 @@
+{% extends 'dashboard.html' %}
+
+{% block title %}Project Create{% endblock %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'project_create_style.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="form-container" id="projects" style="padding-top: 100px;">
+    <h2 class="text-center">Software Project Information</h2>
+    <form method="post" action="{% url 'sw_update' id=form.instance.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title" class="">Title</label>
+            <div class="w-100">
+                <input name="title" type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}"
+                       id="title" placeholder="Type here" value="{{form.title.value}}">
+                <div class="text-danger">
+                    {{ form.title.errors }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <div class="w-100">
+                <textarea class="form-control" name="description" id="description"
+                          class="form-control {% if form.description.errors %}is-invalid{% endif %}"
+                          placeholder="Type here">{{form.description.value}}</textarea>
+                <div class="text-danger">
+                    {{ form.description.errors }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group d-flex">
+            <label for="duration">Duration (Weeks)</label>
+            <div class="w-100">
+                <input name="duration" type="number" step="any" id="duration"
+                       class="form-control {% if form.duration.errors %}is-invalid{% endif %}" value="{{form.duration.value}}" min="0"
+                       style="width: 80px; margin-right: 8px;">
+                <div class="text-danger">
+                    {{ form.duration.errors }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Cover photo</label>
+            <div class="upload-box" style=" flex: 1; padding: 13px;">
+                <label for="image-upload" class="upload-label">Upload
+                    <i class="bi bi-plus-circle-fill upload-icon"></i>
+                </label>
+                <input name="cover_photo" type="file" id="image-upload" style="display: none;">
+                <div id="file-name" class="small text-muted mt-2"></div>
+                <img id="preview" src="{{form.instance.cover_photo.url}}" style="max-width:50%; margin-top:10px;">
+            </div>
+            <div class="text-danger">
+                {{ form.cover_photo.errors }}
+            </div>
+        </div>
+
+        <input name="type" type="hidden" value="SW">
+
+        <div class="form-group">
+            <label for="language">Language</label>
+            <select name="language" class="form-select" id="language">
+                <option value="">Choose Language</option>
+                {% for value, label in form.language.field.choices %}
+                {% if value == form.language.value %}
+                <option value="{{value}}" selected>{{label}}</option>
+                {% endif %}
+                <option value="{{value}}">{{label}}</option>
+                {% endfor %}
+            </select>
+            <div class="text-danger">
+                {{ form.language.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="framework">Framework</label>
+            <select name="framework" class="form-select" id="framework">
+                <option value="">Choose Framework</option>
+                {% for value, label in form.framework.field.choices %}
+                {% if value == form.framework.value %}
+                <option value="{{value}}" selected>{{label}}</option>
+                {% endif %}
+                <option value="{{value}}">{{label}}</option>
+                {% endfor %}
+            </select>
+            <div class="text-danger">
+                {{ form.framework.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="platform">Platform</label>
+            <select name="platform" class="form-select" id="platform">
+                <option value="">Choose Platform</option>
+                {% for value, label in form.platform.field.choices %}
+                {% if value == form.platform.value %}
+                <option value="{{value}}" selected>{{label}}</option>
+                {% endif %}
+                <option value="{{value}}">{{label}}</option>
+                {% endfor %}
+            </select>
+            <div class="text-danger">
+                {{ form.platform.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="source">Source link</label>
+            <input name="source_link" class="form-control {% if form.source_link.errors %}is-invalid{% endif %}"
+                   type="text" id="source" placeholder="Type here" value="{{form.source_link.value}}">
+            <div class="text-danger">
+                {{ form.source_link.errors }}
+            </div>
+        </div>
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <!--        <div class="buttons">-->
+        <!--            <button type="submit" class="btn btn-create" id="createBtn">Create</button>-->
+        <!--            <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>-->
+        <!--        </div>-->
+        <input type="submit" class="btn btn-primary" value="Submit">
+
+    </form>
+
+    <!-- Popup Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <img src="{% static 'icons/success-icon.png' %}" alt="Success Icon" class="modal-icon">
+            <h3 class="modal-title">Success!</h3>
+            <p class="modal-text">Your project is successfully changed.</p>
+            <button id="modalBackBtn" class="btn btn-primary">Back</button>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.3.0/mdb.umd.min.js"
+></script>
+<script>
+    const dropdownHeaders = document.querySelectorAll(".dropdown-header");
+    dropdownHeaders.forEach(header => {
+        header.addEventListener("click", () => {
+            const parent = header.parentElement;
+            parent.classList.toggle("active");
+            dropdownHeaders.forEach(h => {
+                if (h !== header) h.parentElement.classList.remove("active");
+            });
+        });
+    });
+
+    const dropdownLists = document.querySelectorAll(".dropdown-list li");
+    dropdownLists.forEach(item => {
+        item.addEventListener("click", () => {
+            const dropdown = item.closest(".custom-dropdown");
+            const header = dropdown.querySelector(".dropdown-header");
+            header.childNodes[0].nodeValue = item.textContent + " ";
+            dropdown.classList.remove("active");
+        });
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".custom-dropdown")) {
+            dropdownHeaders.forEach(h => h.parentElement.classList.remove("active"));
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById("image-upload");
+        const fileNameDisplay = document.getElementById("file-name");
+        const preview = document.getElementById("preview");
+
+        if (fileInput) {
+            fileInput.addEventListener("change", function () {
+                if (this.files.length > 0) {
+                    const file = this.files[0];
+
+                    if(fileNameDisplay){
+                        fileNameDisplay.textContent = "Selected: " + file.name;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = "block";
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+
+
+    // Models //
+    const createBtn = document.getElementById("createBtn");
+    const modal = document.getElementById("successModal");
+    const modalBackBtn = document.getElementById("modalBackBtn");
+    createBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        modal.style.display = "flex";
+    });
+
+    modalBackBtn.addEventListener("click", function () {
+        window.location.href = "{% url 'project_detail' id=form.instance.id%}";
+    });
+
+    const cancelBtn = document.getElementById("cancelBtn");
+    cancelBtn.addEventListener("click", function () {
+        window.location.href = "{% url 'project_detail' id=form.instance.id%}";
+    });
+
+    window.addEventListener("click", function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
+</script>
+
+
+{% endblock %}

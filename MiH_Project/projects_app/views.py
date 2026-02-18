@@ -20,7 +20,7 @@ def create_software(request):
             software = form.save(commit=False)
             software.innovator = request.user
             software.save()
-            return redirect('test_homepage')
+            return redirect('user_homepage')
         else:
             return render(request, 'sw-create.html', {'form': form})
     else:
@@ -37,7 +37,7 @@ def create_hardware(request):
             hardware.innovator = request.user
             hardware.save()
             form.save_m2m()
-            return redirect('test_homepage')
+            return redirect('user_homepage')
         else:
             print(form.errors)
             return render(request, 'hw_create.html', {'form': form})
@@ -55,7 +55,7 @@ def create_ai(request):
             ai.innovator = request.user
             ai.save()
             form.save_m2m()
-            return redirect('test_homepage')
+            return redirect('user_homepage')
         else:
             print(form.errors)
             return render(request, 'ai_create.html', {'form': form})
@@ -66,6 +66,7 @@ def create_ai(request):
 
 #View project detail
 def project_detail(request, id):
+    user = request.user
     project_id = id
     if request.method == "GET":
         project = Project.objects.get(id=project_id)
@@ -74,11 +75,14 @@ def project_detail(request, id):
             project = Software.objects.get(id=project_id)
         elif project.type == "HW":
             project = Hardware.objects.get(id=project_id)
-        elif project.type == "AI":
+        else:
             project = Ai.objects.get(id=project_id)
 
-        return render(request, 'project-detail.html', {'project': project})
-    return redirect('test_homepage')
+        if user.role == 'user':
+            return render(request, 'user-project-detail.html', {'project': project})
+        else:
+            return render(request, 'admin-project-detail.html', {'project': project})
+    return redirect('user_homepage')
 
 #F7.3 Delete Project
 def project_delete(request, id):
@@ -93,7 +97,7 @@ def project_delete(request, id):
 def search_project(request):
     search_key = request.GET.get('key')
     projects = Project.objects.filter(title__contains=search_key)
-    return render(request, 'test_homepage.html', {'projects': projects})
+    return render(request, 'user_homepage.html', {'projects': projects})
 
 #F7.2 Update Project (Software)
 def update_software(request, id):
@@ -110,10 +114,16 @@ def update_software(request, id):
             return redirect('project_detail', software.id)
         else:
             print(form.errors)
-            return render(request, 'sw_update.html', {'form': form})
+            if request.user.role == 'user':
+                return render(request, 'user-sw-update.html', {'form': form})
+            else:
+                return render(request, 'admin-sw-update.html', {'form': form})
     else:
         form = SoftwareCreateForm(instance=software)
-        return render(request, 'sw_update.html', {'form': form})
+        if request.user.role == 'user':
+            return render(request, 'user-sw-update.html', {'form': form})
+        else:
+            return render(request, 'admin-sw-update.html', {'form': form})
 
 
 #F7.2 Update Project (Hardware)
@@ -131,10 +141,16 @@ def update_hardware(request, id):
             return redirect('project_detail', hardware.id)
         else:
             print(form.errors)
-            return render(request, 'hw_update.html', {'form': form})
+            if request.user.role == 'user':
+                return render(request, 'user-hw-update.html', {'form': form})
+            else:
+                return render(request, 'admin-hw-update.html', {'form': form})
     else:
         form = HardwareCreateForm(instance=hardware)
-        return render(request, 'hw_update.html', {'form': form})
+        if request.user.role == 'user':
+            return render(request, 'user-hw-update.html', {'form': form})
+        else:
+            return render(request, 'admin-hw-update.html', {'form': form})
 
 
 #F7.2 Update Project (AI)
@@ -152,7 +168,13 @@ def update_ai(request, id):
             return redirect('project_detail', ai.id)
         else:
             print(form.errors)
-            return render(request, 'ai_update.html', {'form': form})
+            if request.user.role == 'user':
+                return render(request, 'user-ai-update.html', {'form': form})
+            else:
+                return render(request, 'admin-ai-update.html', {'form': form})
     else:
         form = AiCreateForm(instance=ai)
-        return render(request, 'ai_update.html', {'form': form})
+        if request.user.role == 'user':
+            return render(request, 'user-ai-update.html', {'form': form})
+        else:
+            return render(request, 'admin-ai-update.html', {'form': form})

@@ -1,0 +1,238 @@
+{% extends 'dashboard.html' %}
+
+{% block title %}Project Create{% endblock %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@4.0.1/dist/css/multi-select-tag.min.css">
+<link rel="stylesheet" href="{% static 'create&updatestyle.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="form-container" id="projects" style="padding-top: 100px;">
+    <h2 class="text-center">Hardware Project Information</h2>
+    <form method="post" action="{% url 'hw_update' id=form.instance.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title" class="">Title</label>
+            <div class="w-100">
+                <input name="title" type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}"
+                       id="title" placeholder="Type here" value="{{form.title.value}}">
+                <div class="text-danger">
+                    {{ form.title.errors }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <div class="w-100">
+                <textarea class="form-control" name="description" id="description"
+                          class="form-control {% if form.description.errors %}is-invalid{% endif %}"
+                          placeholder="Type here">{{form.description.value}}</textarea>
+                <div class="text-danger">
+                    {{ form.description.errors }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group d-flex">
+            <label for="duration">Duration (Weeks)</label>
+            <div class="w-100">
+                <input name="duration" type="number" step="any" id="duration"
+                       class="form-control {% if form.duration.errors %}is-invalid{% endif %}"
+                       value="{{form.duration.value}}" min="0"
+                       style="width: 80px; margin-right: 8px;">
+                <div class="text-danger">
+                    {{ form.duration.errors }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Cover photo</label>
+            <div class="upload-box" style=" flex: 1; padding: 13px;">
+                <label for="image-upload" class="upload-label">Upload
+                    <i class="bi bi-plus-circle-fill upload-icon"></i>
+                </label>
+                <input name="cover_photo" type="file" id="image-upload" style="display: none;">
+                <div id="file-name" class="small text-muted mt-2"></div>
+                <img id="preview" src="{{form.instance.cover_photo.url}}" style="max-width:50%; margin-top:10px;">
+            </div>
+            <div class="text-danger">
+                {{ form.cover_photo.errors }}
+            </div>
+        </div>
+
+
+        <input name="type" type="hidden" value="HW">
+
+        <div class="form-group">
+            <label for="skill_level">Skill level</label>
+            <select name="skill_level" class="form-select" id="skill_level">
+                <option value="">Choose level</option>
+                <option {% if form.skill_level.value == 'BEG' %} selected {% endif %} value="BEG">Beginner</option>
+                <option {% if form.skill_level.value == 'INT' %} selected {% endif %} value="INT">Intermediate</option>
+                <option {% if form.skill_level.value == 'ADV' %} selected {% endif %} value="ADV">Advanced</option>
+            </select>
+            <div class="text-danger">
+                {{ form.skill_level.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="components">Components</label>
+            <select id="components" name="components" multiple>
+                {% for value, label in form.components.field.choices %}
+                <option value="{{ value }}"
+                        {% if value in form.components.value %}
+                        selected
+                        {% endif %}
+                >
+                    {{ label }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <div class="text-danger">
+                {{ form.components.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="code">Code</label>
+            <input name="code" type="text" class="form-control {% if form.code.errors %}is-invalid{% endif %}" id="code"
+                   placeholder="Code URL" value="{{form.code.value}}">
+            <div class="text-danger">
+                {{ form.code.errors }}
+            </div>
+        </div>
+
+        <!--        <div class="buttons">-->
+        <!--            <button type="submit" class="btn btn-create" id="createBtn">Create</button>-->
+        <!--            <button type="cancel" class="btn btn-cancel" id="cancelBtn">Cancel</button>-->
+        <!--        </div>-->
+        <input type="submit" class="btn btn-primary" value="Submit">
+
+    </form>
+
+    <!-- Popup Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <img src="{% static 'icons/success-icon.png' %}" alt="Success Icon" class="modal-icon">
+            <h3 class="modal-title">Success!</h3>
+            <p class="modal-text">Your project is successfully changed.</p>
+            <button id="modalBackBtn" class="btn btn-primary">Back</button>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.3.0/mdb.umd.min.js"
+></script>
+<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@4.0.1/dist/js/multi-select-tag.min.js"></script>
+<script>
+    const dropdownHeaders = document.querySelectorAll(".dropdown-header");
+    dropdownHeaders.forEach(header => {
+        header.addEventListener("click", () => {
+            const parent = header.parentElement;
+            parent.classList.toggle("active");
+            dropdownHeaders.forEach(h => {
+                if (h !== header) h.parentElement.classList.remove("active");
+            });
+        });
+    });
+
+    const dropdownLists = document.querySelectorAll(".dropdown-list li");
+    dropdownLists.forEach(item => {
+        item.addEventListener("click", () => {
+            const dropdown = item.closest(".custom-dropdown");
+            const header = dropdown.querySelector(".dropdown-header");
+            header.childNodes[0].nodeValue = item.textContent + " ";
+            dropdown.classList.remove("active");
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById("image-upload");
+        const fileNameDisplay = document.getElementById("file-name");
+        const preview = document.getElementById("preview");
+
+        if (fileInput) {
+            fileInput.addEventListener("change", function () {
+                if (this.files.length > 0) {
+                    const file = this.files[0];
+
+                    if (fileNameDisplay) {
+                        fileNameDisplay.textContent = "Selected: " + file.name;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = "block";
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".custom-dropdown")) {
+            dropdownHeaders.forEach(h => h.parentElement.classList.remove("active"));
+        }
+    });
+
+    //Multi Select Tag//
+    const componentSelect = document.getElementById('components');
+    const multiSelect = new MultiSelectTag('components', {
+        rounded: true,
+        shadow: true,
+        placeholder: 'Select Components',
+        tagColor: {
+            textColor: '#004AAD',
+            borderColor: '#004AAD',
+            bgColor: '#E4F8FF'
+        },
+        onChange: function (values) {
+            console.log(values);
+        }
+    });
+
+    // Models //
+    const createBtn = document.getElementById("createBtn");
+    const modal = document.getElementById("successModal");
+    const modalBackBtn = document.getElementById("modalBackBtn");
+    createBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        modal.style.display = "flex";
+    });
+
+    modalBackBtn.addEventListener("click", function () {
+        window.location.href = "{% url 'project_detail' id=form.instance.id %}";
+    });
+
+    const cancelBtn = document.getElementById("cancelBtn");
+    cancelBtn.addEventListener("click", function () {
+        window.location.href = "{% url 'project_detail' id=form.instance.id %}";
+    });
+
+    window.addEventListener("click", function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
+
+</script>
+
+
+{% endblock %}

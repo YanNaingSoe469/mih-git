@@ -1,0 +1,53 @@
+{% extends 'dashboard.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1 class="text-center">User List</h1>
+
+<!-- search bar !-->
+<form method="get" action="{% url 'user_list' %}">
+    <div class="d-flex gap-2 align-items-center justify-content-center">
+        <input type="text" name="key" class="form-control w-25 my-3" placeholder="email or username" id="searchbar">
+        <select class="form-select w-25" name="role" id="">
+            <option value="">Filter by role</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+            <option value="rootadmin">Root Admin</option>
+        </select>
+        <input type="submit" class="btn btn-primary h-100" value="Search">
+    </div>
+</form>
+
+<table class="table border table-striped table-hover">
+    <thead>
+    <th>User ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Phone</th>
+    <th>Address</th>
+    {% if user.role == 'rootadmin' %}
+    <th>Action</th>
+    {% endif %}
+    </thead>
+    <tbody>
+    {% for user_item in users %}
+    <tr>
+        <td>{{user_item.id}}</td>
+        <td>{{user_item.name}}</td>
+        <td>{{user_item.email}}</td>
+        <td>{{user_item.role}}</td>
+        <td>{{user_item.phone}}</td>
+        <td>{{user_item.address}}</td>
+        {% if user.role == 'rootadmin' %}
+        <td>
+            <a class="btn btn-success" href="#">Grant Admin</a>
+            <a class="btn btn-danger" href="#">Revoke Admin</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
