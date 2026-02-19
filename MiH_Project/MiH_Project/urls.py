@@ -21,7 +21,7 @@ urlpatterns = [
     path("update-profile/<int:id>/", authentication_views.update_profile, name="update_profile"),
     path("change-password/", authentication_views.change_password, name="change_password"),
 
-    #project_app routes
+    # project_app routes
     path("sw-create/", project_views.create_software, name="sw_create"),
     path("hw-create/", project_views.create_hardware, name="hw_create"),
     path("ai-create/", project_views.create_ai, name="ai_create"),
@@ -35,12 +35,37 @@ urlpatterns = [
 
     path('project-delete/<int:id>/', project_views.project_delete, name="project_delete"),
 
-    #admin routes
+    # admin routes
     path("user-list/", authentication_views.user_list, name="user_list"),
     path("project-list/", admin_views.project_list, name="project_list"),
     path("project-stats/", admin_views.project_stats, name="project_stats"),
     path('grant-admin/<int:id>/', admin_views.grant_admin, name="grant_admin"),
     path('revoke-admin/<int:id>/', admin_views.revoke_admin, name="revoke_admin"),
+
+    # language operations
+    path('language-create/', admin_views.create_language, name="create_language"),
+    path('language-update/<int:id>/', admin_views.update_language, name="update_language"),
+    path('language-delete/<int:id>/', admin_views.delete_language, name="delete_language"),
+
+    # framework operations
+    path('framework-create/', admin_views.create_framework, name="create_framework"),
+    path('framework-update/<int:id>/', admin_views.update_framework, name="update_framework"),
+    path('framework-delete/<int:id>/', admin_views.delete_framework, name="delete_framework"),
+
+    # component operations
+    path('component-create/', admin_views.create_component, name="create_component"),
+    path('component-update/<int:id>/', admin_views.update_component, name="update_component"),
+    path('component-delete/<int:id>/', admin_views.delete_component, name="delete_component"),
+
+    # focus operations
+    path('focus-create/', admin_views.create_focus, name="create_focus"),
+    path('focus-update/<int:id>/', admin_views.update_focus, name="update_focus"),
+    path('focus-delete/<int:id>/', admin_views.delete_focus, name="delete_focus"),
+
+    # algorithm operations
+    path('algorithm-create/', admin_views.create_algorithm, name="create_algorithm"),
+    path('algorithm-update/<int:id>/', admin_views.update_algorithm, name="update_algorithm"),
+    path('algorithm-delete/<int:id>/', admin_views.delete_algorithm, name="delete_algorithm"),
 ]
 
 if settings.DEBUG:

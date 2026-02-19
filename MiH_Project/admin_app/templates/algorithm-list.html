@@ -1,0 +1,69 @@
+{% extends 'dashboard.html' %}
+
+{% block title %}Algorithms{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Algorithms</h1>
+<div class="row mx-4 my-4">
+    <div class="col-4">
+        <form method="POST" action="{% url 'create_algorithm' %}" class="d-flex flex-column">
+            {% csrf_token %}
+            <label for="add">Add new algorithm</label>
+            <input type="text" name="name" id="add" class="form-control mt-2">
+            <span class="text-danger">
+                    {{ form.name.errors }}
+                </span>
+            <input type="submit" value="Add" class="btn w-25 btn-primary align-self-end mt-2">
+        </form>
+    </div>
+    <div class="col-8 px-4">
+        <table class="table table-hover w-80">
+            <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Action</th>
+            </thead>
+            <tbody>
+            {% for algorithm in algorithms %}
+            <tr>
+                <td>{{algorithm.id}}</td>
+                <td>{{algorithm.name}}</td>
+                <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#algorithm{{algorithm.id}}">
+                        Update
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="algorithm{{algorithm.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Change Algorithm Name</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <form method="post" action="{% url 'update_algorithm' id=algorithm.id %}">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <input type="text" name="name" id="" class="form-control" value="{{algorithm.name}}">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{% url 'delete_algorithm' id=algorithm.id %}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

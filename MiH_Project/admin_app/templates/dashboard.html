@@ -10,33 +10,45 @@
 </head>
 <body>
 
-    <ul style="list-style: none;" class="d-flex nav gap-4 justify-content-center mt-3">
-        <li>
-            <a class="btn btn-success" href="{% url 'project_stats' %}">Overview</a>
-        </li>
-        <li>
-            <a class="btn btn-success" href="{% url 'project_list' %}">Projects</a>
-        </li>
-        <li>
-            <a class="btn btn-success" href="#">Data Management</a>
-        </li>
-        <li>
-            <a class="btn btn-success" href="{% url 'user_list' %}">User Management</a>
-        </li>
-        <li>
-            <a class="btn btn-success" href="#">Contacts</a>
-        </li>
-        <li>
-            <a class="btn btn-success" href="#">Announcements</a>
-        </li>
-        <li>
-            <a class="btn btn-primary" href="{% url 'profile_page' %}">Profile</a>
-        </li>
-    </ul>
-    <a class="btn btn-outline-danger" href="{% url 'signout' %}">Logout</a>
-    <div class="container-fluid">
-        {% block content %}{% endblock %}
-    </div>
-    {% block script %}{% endblock %}
+<ul style="list-style: none;" class="d-flex nav gap-4 justify-content-center mt-3">
+    <li>
+        <a class="btn btn-success" href="{% url 'project_stats' %}">Overview</a>
+    </li>
+    <li>
+        <a class="btn btn-success" href="{% url 'project_list' %}">Projects</a>
+    </li>
+    <li>
+        <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Data Management
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'create_language' %}">Programming Languages</a></li>
+                <li><a class="dropdown-item" href="{% url 'create_framework' %}">Frameworks</a></li>
+                <li><a class="dropdown-item" href="{% url 'create_component' %}">Components</a></li>
+                <li><a class="dropdown-item" href="{% url 'create_focus' %}">Focus Areas</a></li>
+                <li><a class="dropdown-item" href="{% url 'create_algorithm' %}">Algorithms</a></li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <a class="btn btn-success" href="{% url 'user_list' %}">User Management</a>
+    </li>
+    <li>
+        <a class="btn btn-success" href="#">Contacts</a>
+    </li>
+    <li>
+        <a class="btn btn-success" href="#">Announcements</a>
+    </li>
+    <li>
+        <a class="btn btn-primary" href="{% url 'profile_page' %}">Profile</a>
+    </li>
+</ul>
+<a class="btn btn-outline-danger" href="{% url 'signout' %}">Logout</a>
+<div class="container-fluid">
+    {% block content %}{% endblock %}
+</div>
+{% block script %}{% endblock %}
 </body>
 </html>
