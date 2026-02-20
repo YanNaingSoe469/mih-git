@@ -1,69 +1,95 @@
 {% extends 'dashboard.html' %}
 
-{% block title %}Frameworks{% endblock %}
+{% block title %}Programming Languages{% endblock %}
 
 {% block content %}
-<h1 class="text-center">Frameworks</h1>
-<div class="row mx-4 my-4">
-    <div class="col-4">
-        <form method="POST" action="{% url 'create_framework' %}" class="d-flex flex-column">
-            {% csrf_token %}
-            <label for="add">Add new framework</label>
-            <input type="text" name="name" id="add" class="form-control mt-2">
-            <span class="text-danger">
-                    {{ form.name.errors }}
-                </span>
-            <input type="submit" value="Add" class="btn w-25 btn-primary align-self-end mt-2">
-        </form>
-    </div>
-    <div class="col-8 px-4">
-        <table class="table table-hover w-80">
-            <thead>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Action</th>
-            </thead>
-            <tbody>
-            {% for framework in frameworks %}
-            <tr>
-                <td>{{framework.id}}</td>
-                <td>{{framework.name}}</td>
-                <td>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#framework{{framework.id}}">
-                        Update
-                    </button>
+<div class="container-fluid mt-4">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0">Frameworks</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="row mx-4">
+                <div class="col-4 py-4">
+                    <form method="POST" action="{% url 'create_framework' %}" class="d-flex flex-column">
+                        {% csrf_token %}
+                        <label for="add">Add new framework</label>
+                        <input type="text" name="name" id="add" class="form-control mt-2">
+                        <span class="text-danger">
+                            {{ form.name.errors }}
+                        </span>
+                        <input type="submit" value="+ Add"
+                               class="btn btn-sm w-25 btn-primary align-self-end mt-2">
+                    </form>
+                </div>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="framework{{framework.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Change Framework Name</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <form method="post" action="{% url 'update_framework' id=framework.id %}">
-                                    {% csrf_token %}
-                                    <div class="modal-body">
-                                        <input type="text" name="name" id="" class="form-control" value="{{framework.name}}">
+                <div class="col-8 px-5">
+                    <div class="table-responsive">
+                        <table class="table table-hover w-75 mb-0" style="border: 1px solid #004AAD !important;">
+                            <thead>
+                            <tr>
+                                <th style="background-color: #004AAD; color: #fff;">Name</th>
+                                <th class="text-center" style="background-color: #004AAD; color: #fff;">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for framework in frameworks %}
+                            <tr class="align-middle">
+                                <td class="fw-bold">{{framework.name}}</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-outline-success py-1 px-2 rounded-1"
+                                            style=" font-size: 0.75rem;" data-bs-toggle="modal"
+                                            data-bs-target="#framework{{framework.id}}">
+                                        <i class="fa-solid fa-pen-to-square"></i>Update
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="framework{{framework.id}}" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Change Framework
+                                                        Name</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <form method="post" action="{% url 'update_framework' id=framework.id %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-body">
+                                                        <input type="text" name="name" id="" class="form-control"
+                                                               value="{{framework.name}}">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-sm btn-secondary"
+                                                                data-bs-dismiss="modal">Close
+                                                        </button>
+                                                        <button type="submit" class="btn btn-sm btn-primary">Save
+                                                            changes
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
-                                        </button>
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+
+                                    <a href="{% url 'delete_framework' id=framework.id %}"
+                                       class="btn btn-danger py-1 px-2 rounded-1"
+                                       style="background-color: #fff; color: #dc3545; border: 1px solid #dc3545; font-size: 0.75rem;"
+                                       title="Delete language"><i class="fa fa-trash"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </tbody>
+                        </table>
                     </div>
-                    <a href="{% url 'delete_framework' id=framework.id %}" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
