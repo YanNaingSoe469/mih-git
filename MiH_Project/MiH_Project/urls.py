@@ -1,11 +1,11 @@
 from authentication import views as authentication_views
-from projects_app import views as project_views
-
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
+from feedback_app import views as feedback_views
+from projects_app import views as project_views
 
 urlpatterns = [
 
@@ -20,7 +20,7 @@ urlpatterns = [
     path("update-profile/<int:id>/", authentication_views.update_profile, name="update_profile"),
     path("change-password/", authentication_views.change_password, name="change_password"),
 
-    #project_app routes
+    # project_app routes
     path("sw-create/", project_views.create_software, name="sw_create"),
     path("hw-create/", project_views.create_hardware, name="hw_create"),
     path("ai-create/", project_views.create_ai, name="ai_create"),
@@ -33,6 +33,11 @@ urlpatterns = [
     path('ai-update/<int:id>', project_views.update_ai, name="ai_update"),
 
     path('project-delete/<int:id>/', project_views.project_delete, name="project_delete"),
+
+    # feedback_app routes
+    path('add-comment/<int:project_id>/', feedback_views.add_comment, name="add_comment"),
+    path('comment/delete/<int:comment_id>/', feedback_views.delete_comment, name='delete_comment'),
+    path('add-rating/<int:project_id>/', feedback_views.add_rating, name="add_rating"),
 ]
 
 if settings.DEBUG:

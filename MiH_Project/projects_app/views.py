@@ -1,18 +1,15 @@
 import os
-from pprint import pprint
 
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.db.models import Avg, Count
 from django.shortcuts import render, redirect
-
+from feedback_app.forms import CommentForm, RatingForm
+from feedback_app.models import Rating
 from projects_app.forms import ProjectCreateForm, SoftwareCreateForm, HardwareCreateForm, AiCreateForm
-
 from projects_app.models import Project
-
 from projects_app.models import Software, Hardware, Ai
 
 
-#F7.1 Create Project (Software)
+# F7.1 Create Project (Software)
 def create_software(request):
     if request.method == "POST":
         form = SoftwareCreateForm(request.POST, request.FILES)
@@ -28,7 +25,7 @@ def create_software(request):
         return render(request, 'sw-create.html', {'form': form})
 
 
-#F7.1 Create Project (Hardware)
+# F7.1 Create Project (Hardware)
 def create_hardware(request):
     if request.method == "POST":
         form = HardwareCreateForm(request.POST, request.FILES)
@@ -46,7 +43,7 @@ def create_hardware(request):
         return render(request, 'hw_create.html', {'form': form})
 
 
-#F7.1 Create Project (AI)
+# F7.1 Create Project (AI)
 def create_ai(request):
     if request.method == "POST":
         form = AiCreateForm(request.POST, request.FILES)
@@ -64,7 +61,7 @@ def create_ai(request):
         return render(request, 'ai_create.html', {'form': form})
 
 
-#View project detail
+# View project detail
 def project_detail(request, id):
     project_id = id
     if request.method == "GET":
@@ -77,10 +74,38 @@ def project_detail(request, id):
         elif project.type == "AI":
             project = Ai.objects.get(id=project_id)
 
-        return render(request, 'project-detail.html', {'project': project})
+        comments = project.comments.all()
+
+        average_rating = project.ratings.aggregate(
+            Avg("count")
+        )["count__avg"]
+
+        rounded_rating = round(average_rating) if average_rating else 0
+
+        rating_count = project.ratings.aggregate(
+            Count("id")
+        )["id__count"]
+
+        user_rating = None
+        if request.user.is_authenticated:
+            user_rating = project.ratings.filter(user=request.user).first()
+
+        context = {
+            "project": project,
+            "comments": comments,
+            "comment_form": CommentForm(),
+            "rating_form": RatingForm(instance=user_rating),
+            "average_rating": average_rating,
+            "rounded_rating": rounded_rating,
+            "rating_count": rating_count,
+            "user_rating": user_rating,
+        }
+
+        return render(request, "project-detail.html", context)
     return redirect('test_homepage')
 
-#F7.3 Delete Project
+
+# F7.3 Delete Project
 def project_delete(request, id):
     project = Project.objects.get(id=id)
     cover_photo_path = project.cover_photo.path
@@ -89,13 +114,14 @@ def project_delete(request, id):
     return redirect('profile_page')
 
 
-#F6.1 Search Project
+# F6.1 Search Project
 def search_project(request):
     search_key = request.GET.get('key')
     projects = Project.objects.filter(title__contains=search_key)
     return render(request, 'test_homepage.html', {'projects': projects})
 
-#F7.2 Update Project (Software)
+
+# F7.2 Update Project (Software)
 def update_software(request, id):
     software = Software.objects.get(id=id)
 
@@ -116,7 +142,7 @@ def update_software(request, id):
         return render(request, 'sw_update.html', {'form': form})
 
 
-#F7.2 Update Project (Hardware)
+# F7.2 Update Project (Hardware)
 def update_hardware(request, id):
     hardware = Hardware.objects.get(id=id)
 
@@ -137,7 +163,7 @@ def update_hardware(request, id):
         return render(request, 'hw_update.html', {'form': form})
 
 
-#F7.2 Update Project (AI)
+# F7.2 Update Project (AI)
 def update_ai(request, id):
     ai = Ai.objects.get(id=id)
 
