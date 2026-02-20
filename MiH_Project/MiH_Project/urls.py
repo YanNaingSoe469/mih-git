@@ -66,6 +66,10 @@ urlpatterns = [
     path('algorithm-create/', admin_views.create_algorithm, name="create_algorithm"),
     path('algorithm-update/<int:id>/', admin_views.update_algorithm, name="update_algorithm"),
     path('algorithm-delete/<int:id>/', admin_views.delete_algorithm, name="delete_algorithm"),
+
+    #test pages
+    path('new-dash/', TemplateView.as_view(template_name="admin-master.html"), name="dashboard"),
+    path('new-stats/', TemplateView.as_view(template_name="multi.html"), name="new_stats"),
 ]
 
 if settings.DEBUG:

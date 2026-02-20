@@ -1,11 +1,73 @@
 {% extends 'dashboard.html' %}
 
 {% block content %}
-<h1>Overview</h1>
-<ul>
-    <li>Total Projects: {{project_count}}</li>
-    <li>Software: {{sw_count}}</li>
-    <li>Hardware: {{hw_count}}</li>
-    <li>Ai: {{ai_count}}</li>
-</ul>
+<div class="card border-0 shadow-sm p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h5 class="fw-bold mb-0">Overview</h5>
+                        </div>
+
+                    </div>
+
+                    <div class="row g-3">
+
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <div class="stat-card p-4 text-center h-100">
+                                <div class="text-primary mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                        class="bi bi-envelope" viewBox="0 0 16 16">
+                                        <path
+                                            d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
+                                    </svg>
+                                </div>
+                                <div class="stat-number">{{project_count}}</div>
+                                <div class="stat-label">Total Projects</div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <div class="stat-card p-4 text-center h-100">
+                                <div class="text-warning mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                        class="bi bi-send-plus" viewBox="0 0 16 16">
+                                        <path
+                                            d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855a.75.75 0 0 0-.124 1.329l4.995 3.178 1.531 2.406a.5.5 0 0 0 .844-.536L6.637 10.07l7.494-7.494-1.895 4.738a.5.5 0 1 0 .928.372l2.8-7Zm-2.54 1.183L5.93 9.363 1.591 6.602z" />
+                                    </svg>
+                                </div>
+                                <div class="stat-number">{{sw_count}}</div>
+                                <div class="stat-label">Software Projects Count</div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <div class="stat-card p-4 text-center h-100">
+                                <div class="text-success mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                        class="bi bi-check-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                        <path
+                                            d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
+                                    </svg>
+                                </div>
+                                <div class="stat-number">{{hw_count}}</div>
+                                <div class="stat-label">Hardware Projects Count</div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <div class="stat-card p-4 text-center h-100">
+                                <div class="text-info mb-3" style="color: #6f42c1 !important;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                        class="bi bi-envelope-open" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8.47 1.318a1 1 0 0 0-.94 0l-6 3.2A1 1 0 0 0 1 5.4v.817l5.75 3.45L8 8.917l1.25.75L15 6.217V5.4a1 1 0 0 0-.53-.882zM15 7.383l-4.778 2.867L15 13.117zm-.035 6.88L8 10.082l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738ZM1 13.116l4.778-2.867L1 7.383v5.734ZM7.059.435a2 2 0 0 1 1.882 0l6 3.2A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765z" />
+                                    </svg>
+                                </div>
+                                <div class="stat-number">{{ai_count}}</div>
+                                <div class="stat-label">AI Projects Count</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
 {% endblock %}

@@ -3,56 +3,87 @@
 {% load static %}
 
 {% block content %}
-<h1 class="text-center">User List</h1>
+<div class="container-fluid mt-4">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3 d-flex justify-content-between">
+            <h5 class="fw-bold mb-0 align-items-center">User List</h5>
+        </div>
+        <form method="get" action="{% url 'user_list' %}">
+            <div class="d-flex gap-2 align-items-center ">
+                <input type="text" name="key" class="form-control w-25 my-3" placeholder="email or username"
+                       id="searchbar">
+                <select class="form-select w-25" name="role" id="">
+                    <option value="">Filter by role</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                    <option value="rootadmin">Root Admin</option>
+                </select>
+                <input type="submit" class="btn btn-primary h-100" value="Search">
+            </div>
+        </form>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover custom-table mb-0" style="border: 1px solid #004AAD !important;">
+                    <thead>
+                    <tr>
+                        <th style="background-color: #004AAD; color: #fff;">ID</th>
+                        <th style="background-color: #004AAD; color: #fff;">Name</th>
+                        <th style="background-color: #004AAD; color: #fff;">Email</th>
+                        <th style="background-color: #004AAD; color: #fff;">Role</th>
+                        <th style="background-color: #004AAD; color: #fff;">Phone</th>
+                        {% if user.role == 'rootadmin' %}
+                        <th class="text-center" style="background-color: #004AAD; color: #fff;">Actions</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
 
-<!-- search bar !-->
-<form method="get" action="{% url 'user_list' %}">
-    <div class="d-flex gap-2 align-items-center justify-content-center">
-        <input type="text" name="key" class="form-control w-25 my-3" placeholder="email or username" id="searchbar">
-        <select class="form-select w-25" name="role" id="">
-            <option value="">Filter by role</option>
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
-            <option value="rootadmin">Root Admin</option>
-        </select>
-        <input type="submit" class="btn btn-primary h-100" value="Search">
+                    {% for person in users %}
+                    <tr class="align-middle">
+                        <td class="ps-2 py-3 text-muted">{{person.id}}</td>
+                        <td class="py-3">
+                            <div class="d-flex align-items-center">
+                                {% if person.profile_pic %}
+                                <img src="{{person.profile_pic.url}}" class="rounded-circle me-2" width="32">
+                                {% else %}
+                                <img src="{% static 'assets/default-profile.png' %}" class="rounded-circle me-2"
+                                     width="32">
+                                {% endif %}
+                                <span class="fw-bold text-dark">{{person.name}}</span>
+                            </div>
+                        </td>
+                        <td>{{person.email}}</td>
+                        <td><span class="badge px-3 py-2" style="background-color: #9EDFF5; color: #111;">{{person.role}}</span>
+                        </td>
+                        <td>{{person.phone}}</td>
+
+                        {% if user.role == 'rootadmin' %}
+                        <td class="text-end pe-4">
+
+                            {% if person.role == 'user' %}
+                            <a href="{% url 'grant_admin' id=person.id %}"
+                               class="btn btn-outline-success py-1 px-2 rounded-1 me-1"
+                               style="font-size: 0.75rem;">
+                                <i class="fa fa-check-circle"></i> Grant Admin
+                            </a>
+                            {% endif %}
+
+                            {% if person.role == 'admin' %}
+                            <a href="{% url 'revoke_admin' id=person.id %}" class="btn btn-danger py-1 px-2 rounded-1"
+                               style="background-color: #fff; color: #dc3545; border: 1px solid #dc3545; font-size: 0.75rem;"
+                               title="Revoke Admin">
+                                <i class="fa fa-times-circle"></i> Revoke Admin
+                            </a>
+                            {% endif %}
+
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</form>
-
-<table class="table border table-striped table-hover">
-    <thead>
-    <th>User ID</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Role</th>
-    <th>Phone</th>
-    <th>Address</th>
-    {% if user.role == 'rootadmin' %}
-    <th>Action</th>
-    {% endif %}
-    </thead>
-    <tbody>
-    {% for user_item in users %}
-    <tr>
-        <td>{{user_item.id}}</td>
-        <td>{{user_item.name}}</td>
-        <td>{{user_item.email}}</td>
-        <td>{{user_item.role}}</td>
-        <td>{{user_item.phone}}</td>
-        <td>{{user_item.address}}</td>
-        {% if user.role == 'rootadmin' %}
-        <td>
-            {% if user_item.role == 'user' %}
-            <a class="btn btn-success" href="{% url 'grant_admin' id=user_item.id %}">Grant Admin</a>
-            {% endif %}
-
-            {% if user_item.role == 'admin' %}
-            <a class="btn btn-danger" href="{% url 'revoke_admin' id=user_item.id %}">Revoke Admin</a>
-            {% endif %}
-        </td>
-        {% endif %}
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+</div>
 {% endblock %}

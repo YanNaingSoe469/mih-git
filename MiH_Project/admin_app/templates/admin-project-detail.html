@@ -63,9 +63,10 @@
 {% block content %}
 
 <!-- Software Project Section -->
+<a href="javascript:history.back()" class="btn btn-sm btn-outline-primary mx-3 mt-3 mb-0" style="text-decoration:none;"><i class="fa-solid fa-chevron-left"></i> Back</a>
 {% if project.type == 'SW' %}
 <section class="softwarepj">
-    <div class="container mt-5">
+    <div class="container mt-2">
         <img src="{{project.cover_photo.url}}" style="width: 100%; height: 400px;" class="img-fluid rounded" alt="Hero">
     </div>
 
@@ -188,7 +189,7 @@
 
 {% if project.type == 'HW' %}
 <section class="hardwarepj">
-    <div class="container mt-5">
+    <div class="container mt-2">
         <img src="{{project.cover_photo.url}}" style="width: 100%; height: 400px;" class="img-fluid rounded" alt="Hero">
     </div>
 
@@ -311,7 +312,7 @@
 
 {% if project.type == 'AI' %}
 <section class="AIpj">
-    <div class="container mt-5">
+    <div class="container mt-2">
         <img src="{{project.cover_photo.url}}" style="width: 100%; height: 400px;" class="img-fluid rounded" alt="Hero">
     </div>
 
