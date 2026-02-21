@@ -1,0 +1,63 @@
+{% extends 'dashboard.html' %}
+
+{% block title %}{{user.name}}'s Profile{% endblock %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'profile-style.css' %}">
+{% endblock %}
+
+{% block content %}
+<a href="javascript:history.back()" class="btn btn-sm btn-outline-primary mx-3 mt-3 mb-0" style="text-decoration:none;"><i class="fa-solid fa-chevron-left"></i> Back</a>
+<h1 class="text-center mb-4" style="padding-top: 0; margin-top: 2px;">Admin Profile</h1>
+<div class="row justify-content-center align-items-stretch gx-0 gy-1">
+
+    <!-- LEFT PROFILE CARD -->
+    <div class="col-md-4">
+        <div class="profile-card text-center">
+            {% if user.profile_pic %}
+            <img src="{{ user.profile_pic.url }}"
+                 class="profile-img"
+                 alt="Profile Picture">
+            {% else %}
+            <img src="{% static 'assets/default-profile.png' %}"
+                 class="profile-img"
+                 alt="Default Profile">
+            {% endif %}
+            <h5 class="mt-3 fw-bold">{{user.name}}</h5>
+            <a href="{% url 'signout' %}">
+                <button type="button" class="btn btn-logout">Log Out</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="d-flex flex-column align-items-center">
+            <div class="d-flex justify-content-center gap-4 mb-4">
+                <a href="{% url 'update_profile' id=user.id %}">
+                    <button class="btn profile-btn px-4">Edit Profile</button> </a>
+                    <a href="{% url 'change_password' %}">
+                        <button class="btn profile-btn px-4">Change Password</button>
+                    </a>
+            </div>
+
+            <div class="details-card">
+                <div class="label"><b>Email</b></div>
+                <div class="value">{{user.email}}</div>
+            </div>
+
+            <div class="details-card">
+                <div class="label"><b>Phone</b></div>
+                <div class="value">{{user.phone}}</div>
+            </div>
+
+            <div class="details-card">
+                <div class="label"><b>Address</b></div>
+                <div class="value">{{user.address}}</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

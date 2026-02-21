@@ -1,4 +1,4 @@
-{% extends 'master.html' %}
+{% extends 'dashboard.html' %}
 
 {% block title %}Project Create{% endblock %}
 
@@ -12,13 +12,13 @@
 
 <div class="form-container" id="projects" style="padding-top: 100px;">
     <h2 class="text-center">Software Project Information</h2>
-    <form method="post" action="{% url 'sw_create' %}" enctype="multipart/form-data">
+    <form method="post" action="{% url 'sw_update' id=form.instance.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <label for="title" class="">Title</label>
             <div class="w-100">
                 <input name="title" type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}"
-                       id="title" placeholder="Type here">
+                       id="title" placeholder="Type here" value="{{form.title.value}}">
                 <div class="text-danger">
                     {{ form.title.errors }}
                 </div>
@@ -30,7 +30,7 @@
             <div class="w-100">
                 <textarea class="form-control" name="description" id="description"
                           class="form-control {% if form.description.errors %}is-invalid{% endif %}"
-                          placeholder="Type here"></textarea>
+                          placeholder="Type here">{{form.description.value}}</textarea>
                 <div class="text-danger">
                     {{ form.description.errors }}
                 </div>
@@ -41,7 +41,7 @@
             <label for="duration">Duration (Weeks)</label>
             <div class="w-100">
                 <input name="duration" type="number" step="any" id="duration"
-                       class="form-control {% if form.duration.errors %}is-invalid{% endif %}" value="0" min="0"
+                       class="form-control {% if form.duration.errors %}is-invalid{% endif %}" value="{{form.duration.value}}" min="0"
                        style="width: 80px; margin-right: 8px;">
                 <div class="text-danger">
                     {{ form.duration.errors }}
@@ -57,7 +57,7 @@
                 </label>
                 <input name="cover_photo" type="file" id="image-upload" style="display: none;">
                 <div id="file-name" class="small text-muted mt-2"></div>
-                <img id="preview" style="max-width:50%; margin-top:10px; display:none;">
+                <img id="preview" src="{{form.instance.cover_photo.url}}" style="max-width:50%; margin-top:10px;">
             </div>
             <div class="text-danger">
                 {{ form.cover_photo.errors }}
@@ -71,6 +71,9 @@
             <select name="language" class="form-select" id="language">
                 <option value="">Choose Language</option>
                 {% for value, label in form.language.field.choices %}
+                {% if value == form.language.value %}
+                <option value="{{value}}" selected>{{label}}</option>
+                {% endif %}
                 <option value="{{value}}">{{label}}</option>
                 {% endfor %}
             </select>
@@ -84,6 +87,9 @@
             <select name="framework" class="form-select" id="framework">
                 <option value="">Choose Framework</option>
                 {% for value, label in form.framework.field.choices %}
+                {% if value == form.framework.value %}
+                <option value="{{value}}" selected>{{label}}</option>
+                {% endif %}
                 <option value="{{value}}">{{label}}</option>
                 {% endfor %}
             </select>
@@ -97,6 +103,9 @@
             <select name="platform" class="form-select" id="platform">
                 <option value="">Choose Platform</option>
                 {% for value, label in form.platform.field.choices %}
+                {% if value == form.platform.value %}
+                <option value="{{value}}" selected>{{label}}</option>
+                {% endif %}
                 <option value="{{value}}">{{label}}</option>
                 {% endfor %}
             </select>
@@ -108,7 +117,7 @@
         <div class="form-group">
             <label for="source">Source link</label>
             <input name="source_link" class="form-control {% if form.source_link.errors %}is-invalid{% endif %}"
-                   type="text" id="source" placeholder="Type here">
+                   type="text" id="source" placeholder="Type here" value="{{form.source_link.value}}">
             <div class="text-danger">
                 {{ form.source_link.errors }}
             </div>
@@ -211,12 +220,12 @@
     });
 
     modalBackBtn.addEventListener("click", function () {
-        window.location.href = "{% url 'user_homepage' %}";
+        window.location.href = "{% url 'project_detail' id=form.instance.id%}";
     });
 
     const cancelBtn = document.getElementById("cancelBtn");
     cancelBtn.addEventListener("click", function () {
-        window.location.href = "{% url 'user_homepage' %}";
+        window.location.href = "{% url 'project_detail' id=form.instance.id%}";
     });
 
     window.addEventListener("click", function (event) {

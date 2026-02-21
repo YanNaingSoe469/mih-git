@@ -1,6 +1,7 @@
 import os
 
 from django.apps import apps
+from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.shortcuts import render, redirect, get_object_or_404
@@ -25,7 +26,7 @@ def register(request):
                 password=form.cleaned_data["password1"],
             )
             login(request, user)
-            return redirect("test_homepage")
+            return redirect("user_homepage")
         else:
             return render(request, "sign-up.html", {"form": form})
     else:
@@ -46,7 +47,10 @@ def signin(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect("test_homepage")
+            if user.role == 'admin' or user.role == 'rootadmin':
+                return redirect('project_stats')
+            else:
+                return redirect('user_homepage')
         else:
             return render(request, "login.html", {"form": form})
     else:
@@ -54,8 +58,8 @@ def signin(request):
         return render(request, "login.html", {"form": form})
 
 
-# Direct to homepage (Test)
-def test_homepage(request):
+# Direct to user homepage
+def user_homepage(request):
     user = request.user
 
     key = request.GET.get('key', '')
@@ -106,7 +110,7 @@ def test_homepage(request):
     frameworks = Framework.objects.all()
     focuses = Focus.objects.all()
     algorithms = Algorithm.objects.all()
-    return render(request, "test_homepage.html",
+    return render(request, "user_homepage.html",
                   {
                     "user": user,
                     'projects': projects,
@@ -118,12 +122,31 @@ def test_homepage(request):
                   )
 
 
+#Direct to user management page
+def user_list(request):
+    key = request.GET.get('key', '')
+    role = request.GET.get('role', '')
+
+    if key:
+        users = User.objects.filter(
+            Q(name__icontains=key) | Q(email__icontains=key)
+        ).order_by('name')
+    elif role:
+        users = User.objects.filter(role=role).order_by('name')
+    else:
+        users = User.objects.all().order_by('name')
+    return render(request, "user-management.html", {'users': users})
+
+
 # F3: View Profile
 def profile_page(request):
     user = request.user
-    Project = apps.get_model('projects_app', 'Project')
-    projects = Project.objects.filter(innovator_id=user.id)
-    return render(request, "profile.html", {"user": user, 'projects': projects})
+    if user.role == 'user':
+        Project = apps.get_model('projects_app', 'Project')
+        projects = Project.objects.filter(innovator_id=user.id)
+        return render(request, "user-profile.html", {"user": user, 'projects': projects})
+    else:
+        return render(request, "admin_profile.html", {"user": user})
 
 
 # F4: Update Profile
@@ -148,8 +171,10 @@ def update_profile(request, id):
             return redirect("update_profile", id=user.id)
     else:
         form = UpdateProfileForm(instance=user)
-
-    return render(request, "profile-update.html", {"form": form, "user": user})
+        if user.role == 'user':
+            return render(request, "user-profile-update.html", {"form": form, "user": user})
+        else:
+            return render(request, "admin-profile-update.html", {"form": form, "user": user})
 
 
 # F5: Change Password
@@ -164,5 +189,7 @@ def change_password(request):
             return redirect("change_password")
     else:
         form = ChangePasswordForm(user=request.user)
-
-    return render(request, "change-password.html", {"form": form})
+        if user.role == 'user':
+            return render(request, "user-change-password.html", {"form": form})
+        else:
+            return render(request, "admin-change-password.html", {"form": form})

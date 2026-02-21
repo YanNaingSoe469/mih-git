@@ -1,0 +1,70 @@
+{% extends 'dashboard.html' %}
+
+{% load static %}
+
+{% block content%}
+<div class="container-fluid mt-4">
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0 align-items-center">Project List</h5>
+            <div class="input-group border rounded-5 bg-white px-2" style="max-width: 300px;">
+                <span class="input-group-text bg-transparent border-0"><i
+                        class="fa-solid fa-magnifying-glass text-muted small"></i></span>
+                <input type="text" class="form-control bg-transparent border-0 rounded-5 py-1 small"
+                       style="max-width: 300px;" placeholder="Search projects...">
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0" style="border: 1px solid #004AAD !important;">
+                    <thead>
+                    <tr>
+                        <th style="background-color: #004AAD; color: #fff;">ID</th>
+                        <th style="background-color: #004AAD; color: #fff;">Title</th>
+                        <th style="background-color: #004AAD; color: #fff;">Innovator</th>
+                        <th style="background-color: #004AAD; color: #fff;">Duration</th>
+                        <th style="background-color: #004AAD; color: #fff;">Type</th>
+                        <th style="background-color: #004AAD; color: #fff;">Created At</th>
+                        <th class="text-center" style="background-color: #004AAD; color: #fff;"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for project in projects %}
+                    <tr class="align-middle">
+                        <td class="ps-3 py-3 text-muted">{{project.id}}</td>
+                        <td class="fw-bold text-dark">{{project.title}}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                {% if project.innovator.profile_pic %}
+                                <img src="{{project.innovator.profile_pic.url}}" class="rounded-circle me-2" width="32">
+                                {% else %}
+                                <img src="{% static 'assets/default-profile.png' %}" class="rounded-circle me-2"
+                                     width="32">
+                                {% endif %}
+                                <span class="small fw-bold">{{project.innovator}}</span>
+                            </div>
+                        </td>
+                        <td class="small text-secondary">{{project.duration}} weeks</td>
+                        <td>
+                            <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-normal">{{project.type}}</span>
+                        </td>
+                        <td>
+                           {{project.created_at|date:'M Y'}}
+                        </td>
+                        <td>
+                            <a href="{% url 'project_detail' id=project.id %}" class="btn btn-sm px-3 rounded-1 deny-btn"
+                                    style="background-color: #fff; color: #004AAD; border: 1px solid #004AAD; font-size: 0.75rem; font-weight: 600;">
+                                <i class="fa-solid fa-circle-info"></i> View Details
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

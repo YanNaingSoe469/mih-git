@@ -1,0 +1,150 @@
+* {
+  margin: 0;
+  padding: 20;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f9fbfd;
+  color: #111;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    width: 280px;
+    transition: margin .25s ease-out;
+}
+
+#sidebar-wrapper .list-group-item {
+    font-size: 0.9rem;
+    color: #111;
+    border: none !important;
+    padding: 12px 20px;
+    display: block;
+    width: auto;
+}
+
+#sidebar-wrapper .list-group-item:hover {
+    background-color: #eef2ff !important;
+    color: #004AAD;
+}
+
+.active-nav {
+    background-color: #eef2ff !important;
+    color: #004AAD !important;
+    font-weight: 600;
+}
+
+.profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.add-btn {
+  background-color: #004AAD;
+  color: #ffffff;
+  border: none;
+  font-size: small;
+  padding: 6px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.add-btn:hover{
+  background-color: #003080;
+}
+
+.btn:hover {
+    background-color: #004AAD !important;
+    color: #fff !important;
+}
+
+.btn-danger:hover{
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
+
+
+.stat-card {
+  border: 1px dashed #dee2e6;
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+  background: white;
+}
+.stat-card:hover {
+  border-style: solid;
+            border-color: #004AAD;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .icon-size {
+            font-size: 2rem;
+            width: 48px;
+            height: 48px;
+        }
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #212529;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+
+/* Contact Card Styling */
+.contact-hover {
+    transition: all 0.3s ease;
+    border-radius: 15px !important;
+}
+
+.contact-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Message Box Decoration */
+.contact-info-list .bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.border-start.border-4 {
+    border-radius: 4px 8px 8px 4px;
+}
+
+p.small {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.badge {
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+.btn-outline-danger:hover{
+  background-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+[aria-expanded="true"] .arrow-icon {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
+
+.arrow-icon {
+    transition: transform 0.3s ease;
+}
+
+#dataMngMenu .list-group-item {
+    background: transparent;
+    border-left: 2px solid #eef2ff !important;
+    margin-left: 1.5rem;
+}

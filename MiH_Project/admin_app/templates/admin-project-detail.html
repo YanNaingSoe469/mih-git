@@ -1,4 +1,4 @@
-{% extends 'master.html' %}
+{% extends 'dashboard.html' %}
 {% load static %}
 
 {% block title %}Edit Profile | {{ user.name }}{% endblock %}
@@ -69,6 +69,7 @@
 {% endblock %}
 
 {% block content %}
+<a href="javascript:history.back()" class="btn btn-sm btn-outline-primary mx-3 mt-3 mb-0" style="text-decoration:none;"><i class="fa-solid fa-chevron-left"></i> Back</a>
 
 <!-- Software Project Section -->
 {% if project.type == 'SW' %}
@@ -188,19 +189,6 @@
                         <p class="text-muted">No ratings yet</p>
                         {% endif %}
 
-                        <hr class="my-3">
-
-                        {% if user.is_authenticated %}
-                        <button class="btn btn-outline-primary btn-sm px-4"
-                                data-bs-toggle="modal"
-                                data-bs-target="#ratingModal">
-                            ⭐ Rate this project
-                        </button>
-                        {% else %}
-                        <p class="text-muted small mt-2">
-                            Login to rate
-                        </p>
-                        {% endif %}
                     </div>
                 </div>
 
@@ -295,17 +283,6 @@
                         <hr>
                         <br>
 
-                        <h5>Leave a comment🖋️</h5>
-                        <br>
-                        {% if user.is_authenticated %}
-                        <form method="POST" action="{% url 'add_comment' project.id %}">
-                            {% csrf_token %}
-                            {{ comment_form.message }}
-                            <button class="btn btn-primary btn-sm mt-3">Send</button>
-                        </form>
-                        {% else %}
-                        <p class="text-muted">Login to comment</p>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -444,19 +421,7 @@
                         <p class="text-muted">No ratings yet</p>
                         {% endif %}
 
-                        <hr class="my-3">
 
-                        {% if user.is_authenticated %}
-                        <button class="btn btn-outline-primary btn-sm px-4"
-                                data-bs-toggle="modal"
-                                data-bs-target="#ratingModal">
-                            ⭐ Rate this project
-                        </button>
-                        {% else %}
-                        <p class="text-muted small mt-2">
-                            Login to rate
-                        </p>
-                        {% endif %}
                     </div>
                 </div>
 
@@ -551,17 +516,6 @@
                         <hr>
                         <br>
 
-                        <h5>Leave a comment🖋️</h5>
-                        <br>
-                        {% if user.is_authenticated %}
-                        <form method="POST" action="{% url 'add_comment' project.id %}">
-                            {% csrf_token %}
-                            {{ comment_form.message }}
-                            <button class="btn btn-primary btn-sm mt-3">Send</button>
-                        </form>
-                        {% else %}
-                        <p class="text-muted">Login to comment</p>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -691,20 +645,6 @@
                         {% else %}
                         <p class="text-muted">No ratings yet</p>
                         {% endif %}
-
-                        <hr class="my-3">
-
-                        {% if user.is_authenticated %}
-                        <button class="btn btn-outline-primary btn-sm px-4"
-                                data-bs-toggle="modal"
-                                data-bs-target="#ratingModal">
-                            ⭐ Rate this project
-                        </button>
-                        {% else %}
-                        <p class="text-muted small mt-2">
-                            Login to rate
-                        </p>
-                        {% endif %}
                     </div>
                 </div>
 
@@ -799,17 +739,6 @@
                         <hr>
                         <br>
 
-                        <h5>Leave a comment🖋️</h5>
-                        <br>
-                        {% if user.is_authenticated %}
-                        <form method="POST" action="{% url 'add_comment' project.id %}">
-                            {% csrf_token %}
-                            {{ comment_form.message }}
-                            <button class="btn btn-primary btn-sm mt-3">Send</button>
-                        </form>
-                        {% else %}
-                        <p class="text-muted">Login to comment</p>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -834,7 +763,7 @@
 <div class="modal fade" id="ratingModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" action="{% url 'add_rating' project.id %}">
+            <form method="POST" action="{% url 'add_rating' project_id=project.id %}">
                 {% csrf_token %}
                 <div class="modal-header">
                     <h5 class="modal-title">Rate This Project</h5>
