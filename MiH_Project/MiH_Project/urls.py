@@ -1,6 +1,7 @@
 from authentication import views as authentication_views
 from projects_app import views as project_views
 from admin_app import views as admin_views
+from feedback_app import views as feedback_views
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -70,6 +71,11 @@ urlpatterns = [
     #test pages
     path('new-dash/', TemplateView.as_view(template_name="admin-master.html"), name="dashboard"),
     path('new-stats/', TemplateView.as_view(template_name="multi.html"), name="new_stats"),
+
+    # feedback_app routes
+    path('add-comment/<int:project_id>/', feedback_views.add_comment, name="add_comment"),
+    path('comment/delete/<int:comment_id>/', feedback_views.delete_comment, name='delete_comment'),
+    path('add-rating/<int:project_id>/', feedback_views.add_rating, name="add_rating"),
 ]
 
 if settings.DEBUG:

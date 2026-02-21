@@ -802,7 +802,7 @@
                         <h5>Leave a comment🖋️</h5>
                         <br>
                         {% if user.is_authenticated %}
-                        <form method="POST" action="{% url 'add_comment' project.id %}">
+                        <form method="POST" action="{% url 'add_comment' project_id=project.id %}">
                             {% csrf_token %}
                             {{ comment_form.message }}
                             <button class="btn btn-primary btn-sm mt-3">Send</button>
@@ -834,7 +834,7 @@
 <div class="modal fade" id="ratingModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" action="{% url 'add_rating' project.id %}">
+            <form method="POST" action="{% url 'add_rating' project_id=project.id %}">
                 {% csrf_token %}
                 <div class="modal-header">
                     <h5 class="modal-title">Rate This Project</h5>

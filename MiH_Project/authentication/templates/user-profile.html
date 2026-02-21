@@ -78,9 +78,16 @@
                     <h4 class="text-muted">No projects yet</h4>
                     <p class="text-muted">Start by creating your first project.</p>
                     <div class="d-flex justify-content-center mt-3">
-                        <a href="{% url 'sw_create' %}" class="btn btn-primary btn-sm">
-                            Create Project
-                        </a>
+                        <button class="btn btn-sm nav-right btn dropdown-toggle text-white" id="create-btn"
+                                style="background-color: #004AAD;" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            + Create Project
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'sw_create' %}">Software Project</a></li>
+                            <li><a class="dropdown-item" href="{% url 'hw_create' %}">Hardware Project</a></li>
+                            <li><a class="dropdown-item" href="{% url 'ai_create' %}">Ai Project</a></li>
+                        </ul>
                     </div>
                 </div>
                 {% endfor %}
