@@ -46,6 +46,8 @@ urlpatterns = [
     path('create-announcement/', admin_views.create_announcement, name="create_announcement"),
     path('delete-announcement/<int:id>/', admin_views.delete_announcement, name="delete_announcement"),
     path('update-announcement/<int:id>/', admin_views.update_announcement, name="update_announcement"),
+    path('create-contact/', admin_views.create_contact, name="create_contact"),
+    path('contact-list/', admin_views.contact_list, name="contact_list"),
 
     # language operations
     path('language-create/', admin_views.create_language, name="create_language"),

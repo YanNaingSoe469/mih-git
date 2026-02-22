@@ -3,8 +3,12 @@
 {% load static %}
 
 {% block title %}Myanmar InnoHub{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'profile-edit-style.css' %}">
+{% endblock %}
 
 {% block content %}
+<body data-update-success="{% if messages %}{% for message in messages %}{% if message.tags == 'success' %}true{% endif %}{% endfor %}{% endif %}">
 <!-- HERO -->
 <section class="hero" id="projects" style="padding:0; margin-top: 100px;">
     <a href="#projects" class="nav-link"></a>
@@ -130,16 +134,16 @@
 
 <!-- ABOUT SECTION -->
 <section id="about" class="d-flex align-items-center justify-content-center"
-         style="min-height: 100vh; background-color: #fff; padding: 200px 20px;">
-    <div class="container">
+         style="min-height: 100vh; background-color: #fff; padding: 10px 10px;">
+    <div class="container w-75">
         <h1 class="text-center fw-bold mb-5">About MiH</h1>
         <div class="row align-items-start gx-4 gy-4">
-            <div class="col-md-auto d-flex justify-content-center">
+            <div class="col-md-4 d-flex justify-content-end">
                 <img src="{% static 'MiH Logo.jpg'%}" alt="MiH Logo" class="rounded-circle"
                      style="width: 40%; height: 40%; object-fit: cover;"/>
             </div>
             <div class="col d-flex flex-column justify-content-center mt-100">
-                <h2 class="fw-semibold mb-3" style="color: #004AAD;">Myanmar InnoHub</h2>
+                <h2 class="fw-semibold mb-3 text-start" style="color: #004AAD;">Myanmar InnoHub</h2>
                 <p class="mb-0 text-secondary" padding-right="30px">
                     Myanmar InnoHub is a central portal for showcasing a variety of tech innovations of Burmese
                     innovators. This platform aims to honor the spirit of innovation and nation building using
@@ -153,7 +157,7 @@
 
 
 <!-- CONTACT SECTION -->
-<section id="contact" class="contact-wrapper" style="min-height: 100vh; padding-top: 200px;">
+<section id="contact" class="contact-wrapper" style="min-height: 100vh; padding-top: 20px;">
     <div class="contact-card">
         <div class="row g-0">
             <div class="col-lg-5 col-md-6 contact-left d-flex flex-column justify-content-center">
@@ -170,12 +174,14 @@
 
             <div class="col-lg-7 col-md-6 contact-right d-flex align-items-center">
                 <div class="card w-100 p-4" style="border: 4px solid #004AAD; border-radius: 8px;">
-                    <form>
+                    <form method="post" action="{% url 'create_contact' %}">
+                        {% csrf_token %}
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="title" placeholder="Title">
+                            <input name="title" type="text" class="form-control" id="title" placeholder="Title">
                         </div>
+                        <input type="hidden" name="sender" value="{{user.id}}">
                         <div class="mb-3">
-                            <textarea class="form-control" id="message" rows="4" placeholder="Message"
+                            <textarea name="message" class="form-control" id="message" rows="4" placeholder="Message"
                                       style="height: 200px;"></textarea>
                         </div>
                         <div class="contact-right d-flex justify-content-center">
@@ -187,6 +193,16 @@
         </div>
     </div>
 </section>
+
+<!-- Success Modal -->
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <img src="{% static 'assets/success-icon.png'%}" class="modal-icon" alt="success">
+        <h3 class="modal-title">Success!</h3>
+        <p class="modal-text">Your message is successfully sent to the admins.</p>
+        <button id="modalBackBtn">Back</button>
+    </div>
+</div>
 {% endblock %}
 
 {% block script %}
@@ -249,6 +265,32 @@
                 dropdownHeaders.forEach(h => h.parentElement.classList.remove("active"));
             });
         });
+    });
+
+    const modal = document.getElementById("successModal");
+    const modalBackBtn = document.getElementById("modalBackBtn");
+
+    // Check if success flag is set
+    const isSuccess = document.body.dataset.updateSuccess === "true";
+    if (isSuccess) {
+        modal.style.display = "flex";
+    }
+
+    modalBackBtn.addEventListener("click", function () {
+        window.location.href = "{% url 'user_homepage' %}";
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+    // Cancel button goes back
+    const cancelBtn = document.getElementById("cancelBtn");
+    cancelBtn.addEventListener("click", function () {
+        window.location.href = "{% url 'user_homepage' %}";
     });
 </script>
 {% endblock %}
