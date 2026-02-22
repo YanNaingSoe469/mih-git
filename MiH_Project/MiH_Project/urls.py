@@ -21,6 +21,7 @@ urlpatterns = [
     path("profile/", authentication_views.profile_page, name="profile_page"),
     path("update-profile/<int:id>/", authentication_views.update_profile, name="update_profile"),
     path("change-password/", authentication_views.change_password, name="change_password"),
+    path('announcements/', authentication_views.announcement_list, name="announcement_list"),
 
     # project_app routes
     path("sw-create/", project_views.create_software, name="sw_create"),
@@ -42,6 +43,11 @@ urlpatterns = [
     path("project-stats/", admin_views.project_stats, name="project_stats"),
     path('grant-admin/<int:id>/', admin_views.grant_admin, name="grant_admin"),
     path('revoke-admin/<int:id>/', admin_views.revoke_admin, name="revoke_admin"),
+    path('create-announcement/', admin_views.create_announcement, name="create_announcement"),
+    path('delete-announcement/<int:id>/', admin_views.delete_announcement, name="delete_announcement"),
+    path('update-announcement/<int:id>/', admin_views.update_announcement, name="update_announcement"),
+    path('create-contact/', admin_views.create_contact, name="create_contact"),
+    path('contact-list/', admin_views.contact_list, name="contact_list"),
 
     # language operations
     path('language-create/', admin_views.create_language, name="create_language"),

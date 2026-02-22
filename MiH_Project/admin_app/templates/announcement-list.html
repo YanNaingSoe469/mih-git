@@ -1,0 +1,132 @@
+{% extends 'dashboard.html' %}
+
+{% block title %}Announcement List{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+        <h5 class="fw-bold mb-0">Announcements Management</h5>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-xl-5 col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-white py-3 border-bottom">
+                    <h6 class="fw-bold mb-0" style="color: #004AAD;">
+                        <i class="fa-solid fa-plus-circle me-2"></i>New Announcement
+                    </h6>
+                </div>
+                <div class="card-body p-4">
+                    <form id="announcementForm" method="post" action="{% url 'create_announcement' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">Title</label>
+                            <input name="title" type="text" class="form-control border-light-subtle py-2"
+                                   placeholder="Enter title..." required>
+                        </div>
+                        <input type="hidden" name="admin" value="{{user.id}}">
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold text-muted">Message Content</label>
+                            <textarea name="message" class="form-control border-light-subtle" rows="8"
+                                      placeholder="Write your announcement details here..." required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="add-btn px-5 py-2 rounded-2 shadow-sm border-0">
+                                <i class="fa-solid fa-paper-plane me-2"></i> Post Now
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-7 col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                    <h6 class="fw-bold mb-0"><i class="fa-solid fa-clock-rotate-left me-2"
+                                                style="border-color: #004AAD;"></i>Recent Posts</h6>
+                    <!--                    <span class="small fw-bold px-2 py-1 rounded"-->
+                    <!--                          style="background-color: #fff; color: #004AAD; border: 1px solid #004AAD;">Total: 1</span>-->
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush overflow-auto" style="max-height: 500px;">
+                        {% for announcement in announcements %}
+                        <div class="list-group-item p-4 border-bottom-0 mb-2 mx-3 mt-3 rounded shadow-sm"
+                             style="border: 5px solid #D0EBFF;">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="fw-bold text-dark mb-0">{{announcement.title}}</h6>
+                                {% if user.id == announcement.admin.id %}
+                                <div>
+
+                                    <a class="btn btn-sm btn-outline-primary"
+                                            style=" font-size: 0.75rem;" data-bs-toggle="modal"
+                                            data-bs-target="#announcement{{announcement.id}}">
+                                        <i
+                                            class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="announcement{{announcement.id}}" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modify Announcement</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <form method="post" action="{% url 'update_announcement' id=announcement.id %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-body">
+                                                        <input type="text" name="title" id="" class="form-control"
+                                                               value="{{announcement.title}}">
+                                                        <textarea name="message" class="form-control my-2" id="" cols="30" rows="10">{{announcement.message}}</textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-sm btn-secondary"
+                                                                data-bs-dismiss="modal">Close
+                                                        </button>
+                                                        <button type="submit" class="btn btn-sm btn-primary">Save
+                                                            changes
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'delete_announcement' id=announcement.id %}"
+                                       class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <p class="text-secondary small mb-3">
+                                {{announcement.message}}
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="small text-muted">Posted by
+
+                                    {% if announcement.admin.profile_pic %}
+                                    <img src="{{announcement.admin.profile_pic.url}}" alt="MiH Logo"
+                                         class="logo-image"
+                                         style=" width: 30px; height: 30px; border-radius: 50%;">
+                                    {% else %}
+                                    <img {% load static %} src="{% static 'assets/default-profile.png' %}"
+                                         alt="MiH Logo"
+                                         class="logo-image"
+                                         style=" width: 30px; height: 30px; border-radius: 50%;">
+                                    {% endif %}
+                                    {{announcement.admin.name}}
+                                </div>
+                                <div class="small text-muted"><i class="fa-regular fa-clock me-1"></i>{{announcement.date_time}}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

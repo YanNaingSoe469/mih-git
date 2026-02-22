@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="form-container" id="projects" style="padding-top: 100px;">
+<a href="javascript:history.back()" class="btn btn-sm btn-outline-primary mx-3 mt-3 mb-0" style="text-decoration:none;"><i class="fa-solid fa-chevron-left"></i> Back</a>
+<div class="form-container" id="projects" style="padding-top: 10px;">
     <h2 class="text-center">Software Project Information</h2>
     <form method="post" action="{% url 'sw_update' id=form.instance.id %}" enctype="multipart/form-data">
         {% csrf_token %}

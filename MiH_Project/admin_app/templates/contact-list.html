@@ -1,0 +1,66 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+        <div>
+            <h5 class="fw-bold mb-1">Contacts Directory</h5>
+            <p class="text-muted small">Manage user contact information</p>
+        </div>
+    </div>
+
+
+<!--    <div class="input-group border rounded-5 bg-white shadow-sm mb-4 p-2" style="max-width: 400px;">-->
+<!--        <span class="input-group-text bg-transparent border-0"><i-->
+<!--                class="fa-solid fa-magnifying-glass text-muted"></i></span>-->
+<!--        <input type="text" class="form-control bg-transparent border-0 rounded-5 py-2"-->
+<!--               placeholder="Search by name or email...">-->
+<!--    </div>-->
+
+
+    <div class="row g-4">
+        {% for contact in contacts %}
+        <div class="col-xl-4 col-md-6">
+            <div class="card border-0 shadow-sm h-100 contact-hover position-relative">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 text-end">
+                    <div class="text-muted fw-bold" style="font-size: 0.7rem;">{{contact.date_time|date:'d M Y'}}</div>
+                    <div class="text-muted fw-bold" style="font-size: 0.75rem;">{{contact.date_time|date:'h:i A'}}</div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        {% if contact.sender.profile_pic %}
+                        <img src="{{contact.sender.profile_pic.url}}" class="rounded-circle border border-2 border-primary-subtle p-1"
+                             width="65" height="65" alt="user">
+                        {% else %}
+                        <img {% load static %} src="{% static 'assets/default-profile.png' %}" class="rounded-circle border border-2 border-primary-subtle p-1"
+                             width="65" height="65" alt="user">
+                        {% endif %}
+                        <div class="ms-3">
+                            <h6 class="fw-bold mb-1">{{contact.sender.name}}</h6>
+                            <span class="badge bg-success-subtle text-success px-3">{{contact.sender.role}}</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-list">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-light rounded p-2 me-3"><i class="fa-solid fa-envelope text-primary"></i>
+                            </div>
+                            <span class="small text-secondary fw-bold">{{contact.sender.email}}</span>
+                        </div>
+
+                        <div class="mt-3">
+                            <h5 class="mb-1 fw-bold">{{contact.title}}</h5>
+                            <div class="p-3 rounded-3 bg-light border-start border-4 border-primary shadow-sm">
+                                <p class="small text-secondary mb-0" style="line-height: 1.5;">
+                                   {{contact.message}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

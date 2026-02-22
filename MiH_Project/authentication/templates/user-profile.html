@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="h1" style="padding-top: 100px;">User Profile</h1>
+<h1 class="h1" style="margin-top: 80px; padding-bottom:0;">User Profile</h1>
 <div class="row justify-content-center align-items-stretch gx-0 gy-1">
 
     <!-- LEFT PROFILE CARD -->
@@ -58,14 +58,14 @@
             </div>
         </div>
     </div>
-    <section class="projects">
+    <section class="">
         <div>
             <h2 class="section-title">{{ user.name }}'s Projects</h2>
 
-            <div class="project-grid">
+            <div class="project-grid px-5" style="display: flex; flex-wrap: wrap;">
                 {% for project in projects %}
-                <a href="{% url 'project_detail' project.id %}">
-                    <div class="card">
+                <a href="{% url 'project_detail' project.id %}" class="text-decoration-none">
+                    <div class="card" style="width:300px;">
                         <span class="tag software">{{ project.type }}</span>
                         <h3>{{ project.title }}</h3>
                         <p>by {{ project.innovator }}</p>
