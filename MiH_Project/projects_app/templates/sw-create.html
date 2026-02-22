@@ -124,7 +124,10 @@
         <!--            <button type="submit" class="btn btn-create" id="createBtn">Create</button>-->
         <!--            <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>-->
         <!--        </div>-->
-        <input type="submit" class="btn btn-primary" value="Submit">
+        <div class="text-center">
+            <input type="submit" class="btn btn-primary" value="Submit">
+        <a href="javascript:history.back()" class="btn btn-secondary">Cancel</a>
+        </div>
 
     </form>
 
@@ -134,7 +137,7 @@
             <img src="{% static 'icons/success-icon.png' %}" alt="Success Icon" class="modal-icon">
             <h3 class="modal-title">Success!</h3>
             <p class="modal-text">Your project is successfully changed.</p>
-            <button id="modalBackBtn" class="btn btn-primary">Back</button>
+            <a href="javascript:history.back()" id="modalBackBtn" class="btn btn-primary">Back</a>
         </div>
     </div>
 </div>

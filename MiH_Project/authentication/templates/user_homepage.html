@@ -6,7 +6,7 @@
 
 {% block content %}
 <!-- HERO -->
-<section class="hero" id="projects" style="padding-top: 100px;">
+<section class="hero" id="projects" style="padding:0; margin-top: 100px;">
     <a href="#projects" class="nav-link"></a>
     <h1>Innovation of Myanmar</h1>
     <form method="get" action="{% url 'search_project' %}">
@@ -108,12 +108,12 @@
 
 
 <!-- PROJECTS -->
-<section class="projects">
+<section class="projects" style="display: flex; flex-wrap: wrap">
 
     {% if projects %}
         {% for project in projects %}
-        <a href="{% url 'project_detail' project.id %}">
-            <div class="card">
+        <a href="{% url 'project_detail' project.id %}" style="text-decoration: none; width: 300px;">
+            <div class="card" style="width:300px;">
                 <span class="tag {{project.type}}">{{project.type}}</span>
                 <h3>{{project.title}}</h3>
                 <p>by {{project.innovator.name}}</p>

@@ -8,13 +8,21 @@
     <div class="card border-0 shadow-sm">
         <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
             <h5 class="fw-bold mb-0 align-items-center">Project List</h5>
-            <div class="input-group border rounded-5 bg-white px-2" style="max-width: 300px;">
-                <span class="input-group-text bg-transparent border-0"><i
-                        class="fa-solid fa-magnifying-glass text-muted small"></i></span>
-                <input type="text" class="form-control bg-transparent border-0 rounded-5 py-1 small"
-                       style="max-width: 300px;" placeholder="Search projects...">
-            </div>
+
         </div>
+        <form method="get" action="{% url 'project_list' %}">
+            <div class="d-flex gap-2 align-items-center ">
+                <input type="text" name="key" class="form-control w-25 my-3" placeholder="Enter title or innovator"
+                       id="searchbar">
+                <select class="form-select w-25" name="type" id="">
+                    <option value="">Choose type</option>
+                    <option value="SW">Software</option>
+                    <option value="HW">Hardware</option>
+                    <option value="AI">Ai</option>
+                </select>
+                <input type="submit" class="btn btn-primary h-100" value="Search">
+            </div>
+        </form>
 
         <div class="card-body p-0">
             <div class="table-responsive">
