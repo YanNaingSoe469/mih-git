@@ -58,11 +58,11 @@
             </div>
         </div>
     </div>
-    <section class="projects">
+    <section class="">
         <div>
             <h2 class="section-title">{{ user.name }}'s Projects</h2>
 
-            <div class="project-grid" style="display: flex; flex-wrap: wrap">
+            <div class="project-grid px-5" style="display: flex; flex-wrap: wrap;">
                 {% for project in projects %}
                 <a href="{% url 'project_detail' project.id %}" class="text-decoration-none">
                     <div class="card" style="width:300px;">

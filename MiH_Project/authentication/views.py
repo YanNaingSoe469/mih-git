@@ -9,6 +9,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegistrationForm, LoginForm
 from .forms import UpdateProfileForm, ChangePasswordForm
 from .models import *
+from admin_app.models import Announcement
+
+
 # from .projects_app.models import Language, Framework, Focus, Algorithm
 
 
@@ -193,3 +196,7 @@ def change_password(request):
             return render(request, "user-change-password.html", {"form": form})
         else:
             return render(request, "admin-change-password.html", {"form": form})
+
+def announcement_list(request):
+    announcements = Announcement.objects.all().order_by('-date_time')
+    return render(request, 'announcements.html', {"announcements": announcements})

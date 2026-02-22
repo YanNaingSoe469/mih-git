@@ -39,7 +39,7 @@
             <li><a class="dropdown-item" href="{% url 'ai_create' %}">Ai Project</a></li>
           </ul>
         </div>
-        <button class="btn btn-light"><i class="bi bi-bell-fill me-1"></i></button>
+        <a href="{% url 'announcement_list' %}" class="btn btn-light"><i class="bi bi-bell-fill me-1"></i></a>
         <a href="{% url 'profile_page' %}">{% if user.profile_pic %}
             <img src="{{ user.profile_pic.url }}"
                  class="profile"

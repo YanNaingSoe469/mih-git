@@ -1,5 +1,6 @@
 from django import forms
 from projects_app.models import Language, Framework, Component, Focus, Algorithm
+from admin_app.models import Announcement
 
 
 class CreateLanguageForm(forms.ModelForm):
@@ -25,4 +26,9 @@ class CreateFocusForm(forms.ModelForm):
 class CreateAlgorithmForm(forms.ModelForm):
     class Meta:
         model = Algorithm
+        fields = "__all__"
+
+class CreateAnnouncementForm(forms.ModelForm):
+    class Meta:
+        model = Announcement
         fields = "__all__"
