@@ -2,6 +2,7 @@ import os
 
 from django.apps import apps
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.shortcuts import render, redirect, get_object_or_404
@@ -13,7 +14,8 @@ from admin_app.models import Announcement
 
 
 # from .projects_app.models import Language, Framework, Focus, Algorithm
-
+def admin_required(view_func):
+    return user_passes_test(lambda u: u.role == 'admin' or u.role == 'rootadmin')(view_func)
 
 # F1: Signup
 def register(request):
@@ -61,6 +63,7 @@ def signin(request):
         return render(request, "login.html", {"form": form})
 
 
+@login_required
 # Direct to user homepage
 def user_homepage(request):
     user = request.user
@@ -113,7 +116,7 @@ def user_homepage(request):
     frameworks = Framework.objects.all()
     focuses = Focus.objects.all()
     algorithms = Algorithm.objects.all()
-    return render(request, "user_homepage.html",
+    return render(request, "user-homepage.html",
                   {
                     "user": user,
                     'projects': projects,
@@ -124,7 +127,8 @@ def user_homepage(request):
                    }
                   )
 
-
+@login_required
+@admin_required
 #Direct to user management page
 def user_list(request):
     key = request.GET.get('key', '')
@@ -140,7 +144,7 @@ def user_list(request):
         users = User.objects.all().order_by('name')
     return render(request, "user-management.html", {'users': users})
 
-
+@login_required
 # F3: View Profile
 def profile_page(request):
     user = request.user
@@ -149,9 +153,9 @@ def profile_page(request):
         projects = Project.objects.filter(innovator_id=user.id)
         return render(request, "user-profile.html", {"user": user, 'projects': projects})
     else:
-        return render(request, "admin_profile.html", {"user": user})
+        return render(request, "admin-profile.html", {"user": user})
 
-
+@login_required
 # F4: Update Profile
 def update_profile(request, id):
     user = get_object_or_404(User, id=id)
@@ -180,6 +184,7 @@ def update_profile(request, id):
             return render(request, "admin-profile-update.html", {"form": form, "user": user})
 
 
+@login_required
 # F5: Change Password
 def change_password(request):
     user = request.user
@@ -197,6 +202,8 @@ def change_password(request):
         else:
             return render(request, "admin-change-password.html", {"form": form})
 
+
+@login_required
 def announcement_list(request):
     announcements = Announcement.objects.all().order_by('-date_time')
     return render(request, 'announcements.html', {"announcements": announcements})

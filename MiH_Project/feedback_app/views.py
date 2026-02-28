@@ -27,7 +27,7 @@ def delete_comment(request, comment_id):
     if request.user == comment.user:
         comment.delete()
 
-    return redirect(request.META.get('HTTP_REFERER', 'test_homepage'))
+    return redirect(request.META.get('HTTP_REFERER', 'user_homepage'))
 
 
 # F9 Add Rating
