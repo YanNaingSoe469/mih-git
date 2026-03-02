@@ -16,6 +16,7 @@ from feedback_app.forms import CommentForm, RatingForm
 
 
 # F7.1 Create Project (Software)
+@login_required
 def create_software(request):
     if request.method == "POST":
         form = SoftwareCreateForm(request.POST, request.FILES)
@@ -32,6 +33,7 @@ def create_software(request):
 
 
 # F7.1 Create Project (Hardware)
+@login_required
 def create_hardware(request):
     if request.method == "POST":
         form = HardwareCreateForm(request.POST, request.FILES)
@@ -43,13 +45,14 @@ def create_hardware(request):
             return redirect('user_homepage')
         else:
             print(form.errors)
-            return render(request, 'hw_create.html', {'form': form})
+            return render(request, 'hw-create.html', {'form': form})
     else:
         form = HardwareCreateForm()
-        return render(request, 'hw_create.html', {'form': form})
+        return render(request, 'hw-create.html', {'form': form})
 
 
 # F7.1 Create Project (AI)
+@login_required
 def create_ai(request):
     if request.method == "POST":
         form = AiCreateForm(request.POST, request.FILES)
@@ -68,6 +71,7 @@ def create_ai(request):
 
 
 # View project detail
+@login_required
 def project_detail(request, id):
     user = request.user
     project_id = id
@@ -116,6 +120,7 @@ def project_detail(request, id):
 
 
 # F7.3 Delete Project
+@login_required
 def project_delete(request, id):
     project = Project.objects.get(id=id)
     cover_photo_path = project.cover_photo.path
@@ -125,13 +130,15 @@ def project_delete(request, id):
 
 
 # F6.1 Search Project
+@login_required
 def search_project(request):
     search_key = request.GET.get('key')
     projects = Project.objects.filter(title__contains=search_key)
-    return render(request, 'user_homepage.html', {'projects': projects})
+    return render(request, 'user-homepage.html', {'projects': projects})
 
 
 # F7.2 Update Project (Software)
+@login_required
 def update_software(request, id):
     software = Software.objects.get(id=id)
 

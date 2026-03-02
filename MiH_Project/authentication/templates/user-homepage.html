@@ -177,12 +177,12 @@
                     <form method="post" action="{% url 'create_contact' %}">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <input name="title" type="text" class="form-control" id="title" placeholder="Title">
+                            <input name="title" type="text" class="form-control" id="title" placeholder="Title" required>
                         </div>
                         <input type="hidden" name="sender" value="{{user.id}}">
                         <div class="mb-3">
                             <textarea name="message" class="form-control" id="message" rows="4" placeholder="Message"
-                                      style="height: 200px;"></textarea>
+                                      style="height: 200px;" required></textarea>
                         </div>
                         <div class="contact-right d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary px-4">Send</button>

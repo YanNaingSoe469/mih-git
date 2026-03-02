@@ -81,7 +81,7 @@
 
         <div class="form-group">
             <label for="algorithms">Algorithms used</label>
-            <select id="algorithms" name="algorithms" multiple>
+            <select id="algorithms" class="" name="algorithms" multiple>
                 {% for value, label in form.algorithms.field.choices %}
                 <option value="{{ value }}">{{ label }}</option>
                 {% endfor %}
