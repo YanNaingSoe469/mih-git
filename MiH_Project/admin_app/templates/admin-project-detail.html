@@ -69,7 +69,8 @@
 {% endblock %}
 
 {% block content %}
-<a href="javascript:history.back()" class="btn btn-sm btn-outline-primary mx-3 mt-3 mb-0" style="text-decoration:none;"><i class="fa-solid fa-chevron-left"></i> Back</a>
+<a href="javascript:history.back()" class="btn btn-sm btn-outline-primary mx-3 mt-3 mb-0" style="text-decoration:none;"><i
+        class="fa-solid fa-chevron-left"></i> Back</a>
 
 <!-- Software Project Section -->
 {% if project.type == 'SW' %}
@@ -293,10 +294,43 @@
     <div class="buttons">
         <div class="buttons text-center">
             <div class="text-center my-4">
-                <a href="{% url 'project_delete' id=project.id %}" class="btn btn-danger btn-sm">Delete Project</a>
+                <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#deleteSwModal{{ project.id }}">Delete Project
+                </button>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="deleteSwModal{{ project.id }}" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Deleting Project</h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    This action cannot be undone.
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <a href="{% url 'project_delete' id=project.id %}">
+                        <button type="submit"
+                                class="btn btn-danger">
+                            Yes, Delete
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>
 {% endif %}
 
@@ -522,10 +556,43 @@
     <div class="buttons">
         <div class="buttons text-center">
             <div class="text-center my-4">
-                <a href="{% url 'project_delete' id=project.id %}" class="btn btn-danger btn-sm">Delete Project</a>
+                <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#deleteHwModal{{ project.id }}">Delete Project
+                </button>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="deleteHwModal{{ project.id }}" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Deleting Project</h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    This action cannot be undone.
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <a href="{% url 'project_delete' id=project.id %}">
+                        <button type="submit"
+                                class="btn btn-danger">
+                            Yes, Delete
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>
 {% endif %}
 
@@ -742,10 +809,43 @@
     <div class="buttons">
         <div class="buttons text-center">
             <div class="text-center my-4">
-                <a href="{% url 'project_delete' id=project.id %}" class="btn btn-danger btn-sm">Delete Project</a>
+                <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#deleteAiModal{{ project.id }}">Delete Project
+                </button>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="deleteAiModal{{ project.id }}" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Deleting Project</h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    This action cannot be undone.
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <a href="{% url 'project_delete' id=project.id %}">
+                        <button type="submit"
+                                class="btn btn-danger">
+                            Yes, Delete
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>
 {% endif %}
 

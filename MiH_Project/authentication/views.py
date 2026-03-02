@@ -1,21 +1,49 @@
+"""
+Authentication App - Views Module
+----------------------------------
+
+Author: Yan Naing Soe & Thuta Kyaw Lynn
+Year: 2026
+
+Description:
+This module contains all view functions related to user authentication
+and profile management within the system. It handles user registration,
+login, logout, role-based access control, profile viewing and updating,
+password management, and announcement listing.
+
+The module also implements custom decorators for admin-level authorization
+and integrates filtering, searching, and role-based redirection logic.
+
+Main Functionalities:
+- F1: User Registration
+- F2: User Login
+- F3: View Profile
+- F4: Update Profile
+- F5: Change Password
+- User Management (Admin Only)
+- Project Filtering and Search
+- Announcement Listing
+"""
+
 import os
 
+from admin_app.models import Announcement
 from django.apps import apps
-from django.db.models import Q
-from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import RegistrationForm, LoginForm
 from .forms import UpdateProfileForm, ChangePasswordForm
 from .models import *
-from admin_app.models import Announcement
 
 
 # from .projects_app.models import Language, Framework, Focus, Algorithm
 def admin_required(view_func):
     return user_passes_test(lambda u: u.role == 'admin' or u.role == 'rootadmin')(view_func)
+
 
 # F1: Signup
 def register(request):
@@ -88,7 +116,7 @@ def user_homepage(request):
     Focus = apps.get_model('projects_app', 'Focus')
     Algorithm = apps.get_model('projects_app', 'Algorithm')
 
-    #software filtering
+    # software filtering
     if platform:
         projects = Software.objects.filter(platform=platform)
     elif language:
@@ -96,17 +124,17 @@ def user_homepage(request):
     elif framework:
         projects = Software.objects.filter(framework=framework)
 
-    #hardware filtering
+    # hardware filtering
     elif level:
         projects = Hardware.objects.filter(skill_level=level)
 
-    #ai filtering
+    # ai filtering
     elif focus:
         projects = Ai.objects.filter(focus=focus)
     elif algorithm:
         projects = Ai.objects.filter(algorithms=algorithm)
 
-    #searching
+    # searching
     elif key:
         projects = Project.objects.filter(title__icontains=key)
     else:
@@ -118,18 +146,19 @@ def user_homepage(request):
     algorithms = Algorithm.objects.all()
     return render(request, "user-homepage.html",
                   {
-                    "user": user,
-                    'projects': projects,
+                      "user": user,
+                      'projects': projects,
                       'languages': languages,
                       'frameworks': frameworks,
                       'focuses': focuses,
                       'algorithms': algorithms,
-                   }
+                  }
                   )
+
 
 @login_required
 @admin_required
-#Direct to user management page
+# Direct to user management page
 def user_list(request):
     key = request.GET.get('key', '')
     role = request.GET.get('role', '')
@@ -144,6 +173,7 @@ def user_list(request):
         users = User.objects.all().order_by('name')
     return render(request, "user-management.html", {'users': users})
 
+
 @login_required
 # F3: View Profile
 def profile_page(request):
@@ -155,6 +185,7 @@ def profile_page(request):
     else:
         return render(request, "admin-profile.html", {"user": user})
 
+
 @login_required
 # F4: Update Profile
 def update_profile(request, id):
@@ -162,20 +193,20 @@ def update_profile(request, id):
     if request.method == "POST":
         form = UpdateProfileForm(request.POST, request.FILES, instance=user)
 
-        #old profile path if exists
         old_profile_path = user.profile_pic.path if user.profile_pic.name and user.profile_pic.name != 'profile_pics/default-profile.png' else None
-
         if form.is_valid():
-            #if the user uploads new profile
             if 'profile_pic' in request.FILES:
-
-                #and the user already have an old profile
                 if old_profile_path and os.path.isfile(old_profile_path):
                     os.remove(old_profile_path)
-
             form.save()
             messages.success(request, "Profile updated successfully.")
             return redirect("update_profile", id=user.id)
+        else:
+            if user.role == 'user':
+                return render(request, "user-profile-update.html", {"form": form, "user": user})
+            else:
+                return render(request, "admin-profile-update.html", {"form": form, "user": user})
+
     else:
         form = UpdateProfileForm(instance=user)
         if user.role == 'user':

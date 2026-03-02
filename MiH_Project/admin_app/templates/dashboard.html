@@ -23,18 +23,15 @@
         </div>
         <div class="list-group list-group-flush">
             <small class="text-muted px-4 mb-2 text-uppercase" style="font-size: 0.7rem;">Navigation</small>
-            <a href="{% url 'project_stats' %}" id="home-link"
-               class="list-group-item list-group-item-action active-nav border-0 mx-2 rounded py-2">
+            <a href="{% url 'project_stats' %}" class="list-group-item list-group-item-action border-0 mx-2 rounded py-2 {% if request.resolver_match.url_name == 'project_stats' %}active-nav{% endif %}">
                 <i class="fa-solid fa-house me-3"></i> Home <i
                     class="fa-solid fa-chevron-right float-end mt-1 small"></i>
             </a>
-            <a href="{% url 'project_list' %}"
-               class="list-group-item list-group-item-action border-0 mx-2 rounded py-2">
+            <a href="{% url 'project_list' %}" class="list-group-item list-group-item-action border-0 mx-2 rounded py-2 {% if request.resolver_match.url_name == 'project_list' %}active-nav{% endif %}">
                 <i class="fa-solid fa-file-lines me-3"></i> Project lists <i
                     class="fa-solid fa-chevron-right float-end mt-1 small"></i>
             </a>
-            <a href="{% url 'user_list' %}"
-               class="list-group-item list-group-item-action border-0 mx-2 rounded py-2">
+            <a href="{% url 'user_list' %}" class="list-group-item list-group-item-action border-0 mx-2 rounded py-2 {% if request.resolver_match.url_name == 'user_list' %}active-nav{% endif %}">
                 <i class="fa-solid fa-users me-3"></i> User Management <i
                     class="fa-solid fa-chevron-right float-end mt-1 small"></i>
             </a>
@@ -44,37 +41,35 @@
                 <i class="fa-solid fa-chevron-right arrow-icon small"></i>
             </a>
 
-            <div class="collapse" id="dataMngMenu">
-                <div class="list-group list-group-flush ps-4">
-                    <a href="{% url 'create_language' %}"
-                       class="list-group-item list-group-item-action border-0 py-2 small">
+            <div class="collapse {% if request.resolver_match.url_name in 'create_language create_framework create_component create_algorithm create_focus' %}show{% endif %}" id="dataMngMenu">                <div class="list-group list-group-flush ps-4">
+                    <a href="{% url 'create_language' %}" class="list-group-item list-group-item-action border-0 py-2 small {% if request.resolver_match.url_name == 'create_language' %}active-nav{% endif %}">
                         <i class="fa-solid fa-code me-2"></i> Programming Languages
                     </a>
                     <a href="{% url 'create_framework' %}"
-                       class="list-group-item list-group-item-action border-0 py-2 small">
+                       class="list-group-item list-group-item-action border-0 py-2 small {% if request.resolver_match.url_name == 'create_framework' %}active-nav{% endif %}">
                         <i class="fa-solid fa-layer-group me-2"></i> Frameworks
                     </a>
                     <a href="{% url 'create_component' %}"
-                       class="list-group-item list-group-item-action border-0 py-2 small">
+                       class="list-group-item list-group-item-action border-0 py-2 small {% if request.resolver_match.url_name == 'create_component' %}active-nav{% endif %}">
                         <i class="fa-solid fa-cubes me-2"></i> Components
                     </a>
                     <a href="{% url 'create_algorithm' %}"
-                       class="list-group-item list-group-item-action border-0 py-2 small">
+                       class="list-group-item list-group-item-action border-0 py-2 small {% if request.resolver_match.url_name == 'create_algorithm' %}active-nav{% endif %}">
                         <i class="fa-solid fa-gears me-2"></i> Algorithms
                     </a>
                     <a href="{% url 'create_focus' %}"
-                       class="list-group-item list-group-item-action border-0 py-2 small">
+                       class="list-group-item list-group-item-action border-0 py-2 small {% if request.resolver_match.url_name == 'create_focus' %}active-nav{% endif %}">
                         <i class="fa-solid fa-bullseye me-2"></i> Focus Areas
                     </a>
                 </div>
             </div>
             <a href="{% url 'contact_list' %}"
-               class="list-group-item list-group-item-action border-0 mx-2 rounded py-2">
+               class="list-group-item list-group-item-action border-0 mx-2 rounded py-2 {% if request.resolver_match.url_name == 'contact_list' %}active-nav{% endif %}">
                 <i class="fa-solid fa-address-book me-3"></i> Contacts <i
                     class="fa-solid fa-chevron-right float-end mt-1 small"></i>
             </a>
             <a href="{% url 'create_announcement' %}"
-               class="list-group-item list-group-item-action border-0 mx-2 rounded py-2">
+               class="list-group-item list-group-item-action border-0 mx-2 rounded py-2 {% if request.resolver_match.url_name == 'create_announcement' %}active-nav{% endif %}">
                 <i class="fa-solid fa-bullhorn me-3"></i> Announcements <i
                     class="fa-solid fa-chevron-right float-end mt-1 small"></i>
             </a>
