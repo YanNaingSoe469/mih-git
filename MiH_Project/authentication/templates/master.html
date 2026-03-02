@@ -17,27 +17,31 @@
 
 <!-- HEADER -->
 <header class="navbar fixed-top" style="background-color: #E4F8FF; z-index: 1000;">
-    <div class="logo">
-        <img src="{% static 'MiH Logo.jpg' %}" alt="Myanmar InnoHub Logo" class="logo-img">
-        <span><b>Myanmar<br>InnoHub</b></span>
-    </div>
+    <a href="{% url 'user_homepage' %}" style="text-decoration: none; color: inherit;">
+        <div class="logo">
+            <img src="{% static 'MiH Logo.jpg' %}" alt="Myanmar InnoHub Logo" class="logo-img">
+            <span><b>Myanmar<br>InnoHub</b></span>
+        </div>
+    </a>
 
     <nav>
         <a href="{% url 'user_homepage' %}"><b>Projects</b></a>
         <a href="{% url 'user_homepage' %}#about"><b>About</b></a>
         <a href="{% url 'user_homepage' %}#contact"><b>Contact</b></a>
+        <a href="{% url 'announcement_list' %}"><b>Announcements</b></a>
     </nav>
 
     <div class="nav-right">
         <div class="dropdown">
-          <button class="btn nav-right btn dropdown-toggle text-white" id="create-btn" style="background-color: #004AAD;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            + Create Project
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'sw_create' %}">Software Project</a></li>
-            <li><a class="dropdown-item" href="{% url 'hw_create' %}">Hardware Project</a></li>
-            <li><a class="dropdown-item" href="{% url 'ai_create' %}">Ai Project</a></li>
-          </ul>
+            <button class="btn nav-right btn dropdown-toggle text-white" id="create-btn"
+                    style="background-color: #004AAD;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                + Create Project
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'sw_create' %}">Software Project</a></li>
+                <li><a class="dropdown-item" href="{% url 'hw_create' %}">Hardware Project</a></li>
+                <li><a class="dropdown-item" href="{% url 'ai_create' %}">Ai Project</a></li>
+            </ul>
         </div>
         <a href="{% url 'announcement_list' %}" class="btn btn-light"><i class="bi bi-bell-fill me-1"></i></a>
         <a href="{% url 'profile_page' %}">{% if user.profile_pic %}

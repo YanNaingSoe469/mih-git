@@ -29,11 +29,14 @@
         {% endif %}
 
         <!-- Upload new image -->
-        <div class="mb-3 text-center" >
+        <div class="mb-3 text-center">
             <input type="file"
                    name="profile_pic"
                    class="form-control w-50 h-100 mx-auto">
         </div>
+        <span class="text-danger">
+                    {{ form.profile_pic.errors }}
+            </span>
 
         <div class="edite-group">
             <label>Name</label>
@@ -76,8 +79,8 @@
                     Update
                 </button>
                 <a href="javascript:history.back()"
-                        class="btn btn-cancel"
-                        id="cancelBtn">
+                   class="btn btn-cancel"
+                   id="cancelBtn">
                     Cancel
                 </a>
             </div>

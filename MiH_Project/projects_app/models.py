@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 
+
 # Create your models here.
 
 class Project(models.Model):
@@ -28,19 +29,26 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+
 class Language(models.Model):
     name = models.CharField(max_length=50, unique=True)
+
     def __str__(self):
         return self.name
+
     class Meta:
         verbose_name_plural = "Languages"
 
+
 class Framework(models.Model):
     name = models.CharField(max_length=50, unique=True)
+
     def __str__(self):
         return self.name
+
     class Meta:
         verbose_name_plural = "Frameworks"
+
 
 class Software(Project):
     platform_types = [
@@ -50,8 +58,8 @@ class Software(Project):
         ('CRS', 'Cross Platform'),
     ]
     source_link = models.URLField()
-    language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name="built_with")
-    framework = models.ForeignKey(Framework, on_delete=models.CASCADE, related_name="written_with")
+    language = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="built_with")
+    framework = models.ForeignKey(Framework, on_delete=models.PROTECT, related_name="written_with")
     platform = models.CharField(max_length=10, choices=platform_types)
 
     class Meta:
@@ -63,10 +71,13 @@ class Software(Project):
 
 class Component(models.Model):
     name = models.CharField(max_length=50, unique=True)
+
     def __str__(self):
         return self.name
+
     class Meta:
         verbose_name_plural = "Components"
+
 
 class Hardware(Project):
     levels = [
@@ -84,26 +95,33 @@ class Hardware(Project):
     def __str__(self):
         return self.title
 
+
 class Focus(models.Model):
     name = models.CharField(max_length=50, unique=True)
+
     def __str__(self):
         return self.name
 
     class Meta:
         verbose_name_plural = "Focuses"
 
+
 class Algorithm(models.Model):
     name = models.CharField(max_length=50, unique=True)
+
     def __str__(self):
         return self.name
+
     class Meta:
         verbose_name_plural = "Algorithms"
+
 
 class Ai(Project):
     dataset_link = models.URLField()
     notebook_source_link = models.URLField()
     algorithms = models.ManyToManyField(Algorithm, related_name="applies")
-    focus = models.ForeignKey(Focus, on_delete=models.CASCADE, related_name="has")
+    focus = models.ForeignKey(Focus, on_delete=models.PROTECT, related_name="has")
+
     class Meta:
         verbose_name_plural = "Ai"
 
