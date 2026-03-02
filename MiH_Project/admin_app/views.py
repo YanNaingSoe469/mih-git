@@ -32,7 +32,7 @@ from admin_app.models import Announcement, Contact
 from authentication.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.db.models import Q
+from django.db.models import Q, ProtectedError
 from django.shortcuts import render, redirect
 from projects_app.models import Project, Software, Hardware, Ai, Language, Framework, Component, Focus, Algorithm
 
@@ -134,7 +134,12 @@ def update_language(request, id):
 @admin_required
 def delete_language(request, id):
     language = Language.objects.get(id=id)
-    language.delete()
+    try:
+        language.delete()
+        messages.success(request, f"Language '{language.name}' deleted successfully.")
+    except ProtectedError as e:
+        # Show error in red box
+        messages.error(request, f"Cannot delete '{language.name}' because it is used by a project.")
     return redirect('create_language')
 
 
@@ -168,7 +173,11 @@ def update_framework(request, id):
 @admin_required
 def delete_framework(request, id):
     framework = Framework.objects.get(id=id)
-    framework.delete()
+    try:
+        framework.delete()
+        messages.success(request, f"Framework '{framework.name}' deleted successfully.")
+    except ProtectedError:
+        messages.error(request, f"Cannot delete '{framework.name}' because it is used by a project.")
     return redirect('create_framework')
 
 
@@ -236,7 +245,11 @@ def update_focus(request, id):
 @admin_required
 def delete_focus(request, id):
     focus = Focus.objects.get(id=id)
-    focus.delete()
+    try:
+        focus.delete()
+        messages.success(request, f"Focus Area '{focus.name}' deleted successfully.")
+    except ProtectedError:
+        messages.error(request, f"Cannot delete '{focus.name}' because it is used by a project.")
     return redirect('create_focus')
 
 
@@ -314,7 +327,6 @@ def update_announcement(request, id):
 
 # F13: Contact Admin
 @login_required
-@admin_required
 def create_contact(request):
     if request.method == 'POST':
         form = CreateContactForm(request.POST)
