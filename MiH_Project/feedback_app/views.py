@@ -46,3 +46,15 @@ def add_rating(request, project_id):
             )
 
     return redirect("project_detail", id=project.id)
+
+def hide_comment(request, id):
+    comment = get_object_or_404(Comment, id=id)
+    comment.visibility = False
+    comment.save()
+    return redirect('project_detail')
+
+def unhide_comment(request, id):
+    comment = get_object_or_404(Comment, id=id)
+    comment.visibility = True
+    comment.save()
+    return redirect('project_detail')

@@ -13,4 +13,6 @@ urlpatterns = [
     path('add-comment/<int:project_id>/', feedback_views.add_comment, name="add_comment"),
     path('comment/delete/<int:comment_id>/', feedback_views.delete_comment, name='delete_comment'),
     path('add-rating/<int:project_id>/', feedback_views.add_rating, name="add_rating"),
+    path('hide-comment/<int:id>/', feedback_views.hide_comment, name="hide_comment"),
+    path('unhide-comment/<int:id>/', feedback_views.unhide_comment, name="unhide_comment"),
 ]

@@ -85,7 +85,10 @@ def project_detail(request, id):
         else:
             project = Ai.objects.get(id=project_id)
 
-        comments = project.comments.all()
+        if request.user.id != project.innovator.id:
+            comments = project.comments.filter(visibility=True)
+        else:
+            comments = project.comments.all()
 
         average_rating = project.ratings.aggregate(
             Avg("count")

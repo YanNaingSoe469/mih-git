@@ -15,6 +15,7 @@ class Comment(models.Model):
         related_name="user_comments"
     )
     message = models.TextField()
+    visibility = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

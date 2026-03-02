@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from projects_app.models import Project, Software, Hardware, Ai, Language, Framework, Component, Focus, Algorithm
 from authentication.models import User
-from admin_app.forms import CreateLanguageForm, CreateFrameworkForm, CreateComponentForm, CreateFocusForm, CreateAlgorithmForm, CreateAnnouncementForm, CreateContactForm
+from admin_app.forms import CreateLanguageForm, CreateFrameworkForm, CreateComponentForm, CreateFocusForm, CreateAlgorithmForm, CreateAnnouncementForm, CreateContactForm, UpdateLanguageForm
 from admin_app.models import Announcement, Contact
 
 CreateContactForm
@@ -93,9 +93,18 @@ def create_language(request):
 @admin_required
 def update_language(request, id):
     language = Language.objects.get(id=id)
-    language.name = request.POST['name']
-    language.save()
-    return redirect('create_language')
+    languages = Language.objects.all()
+
+    if request.method == 'POST':
+        form = UpdateLanguageForm(request.POST, instance=language)
+        if form.is_valid():
+            form.save()
+        else:
+            form = UpdateLanguageForm(instance=language)
+            return render(request, 'language-list.html', {'u_form': form, 'languages': languages})
+    else:
+        form = UpdateLanguageForm(instance=language)
+        return render(request, 'language-list.html', {'u_form': form, 'languages': languages})
 
 
 @login_required
