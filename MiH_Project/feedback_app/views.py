@@ -1,3 +1,25 @@
+"""
+Feedback App - Views Module
+----------------------------
+
+Author: Thuta Kyaw Lynn
+Year: 2026
+
+Description:
+This module manages all user feedback functionalities for projects.
+It handles adding and deleting comments, as well as creating and
+updating project ratings.
+
+The rating system allows users to rate a project once and update
+their rating if it already exists. Comments are linked to both
+the project and the authenticated user.
+
+Main Functionalities:
+- F8: Add Comment
+- F8: Delete Comment
+- F9: Add/Update Rating
+"""
+
 from django.shortcuts import get_object_or_404, redirect
 from projects_app.models import Project
 

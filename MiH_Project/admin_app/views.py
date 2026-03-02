@@ -1,22 +1,53 @@
+"""
+Admin App - Views Module
+-------------------------
+
+Author:Yan Naing Soe
+Year: 2026
+
+Description:
+This module manages administrative functionalities of the system.
+It provides role-based access control for administrators and root
+administrators, project management oversight, statistical reporting,
+reference data management, announcement handling, and contact
+administration.
+
+The module enforces permission levels:
+- Admin: Manage projects, reference data, announcements, contacts
+- Root Admin: Grant and revoke admin privileges
+
+Main Functionalities:
+- Project Listing and Filtering
+- Project Statistics Dashboard
+- F10.1: Grant Admin Role
+- F10.2: Revoke Admin Role
+- F11: Reference Data Management (Language, Framework, Component, Focus, Algorithm)
+- F12: Announcement Management
+- F13: Contact Administration
+"""
+
+from admin_app.forms import CreateLanguageForm, CreateFrameworkForm, CreateComponentForm, CreateFocusForm, \
+    CreateAlgorithmForm, CreateAnnouncementForm, CreateContactForm
+from admin_app.models import Announcement, Contact
+from authentication.models import User
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
 from projects_app.models import Project, Software, Hardware, Ai, Language, Framework, Component, Focus, Algorithm
-from authentication.models import User
-from admin_app.forms import CreateLanguageForm, CreateFrameworkForm, CreateComponentForm, CreateFocusForm, CreateAlgorithmForm, CreateAnnouncementForm, CreateContactForm
-from admin_app.models import Announcement, Contact
 
 CreateContactForm
 
+
 def admin_required(view_func):
     return user_passes_test(lambda u: u.role == 'admin' or u.role == 'rootadmin')(view_func)
+
 
 def rootadmin_required(view_func):
     return user_passes_test(lambda u: u.role == 'rootadmin')(view_func)
 
 
-#Project Listing
+# Project Listing
 @login_required
 @admin_required
 def project_list(request):
@@ -33,7 +64,7 @@ def project_list(request):
     return render(request, "project-list.html", {'projects': projects})
 
 
-#Project Statistics
+# Project Statistics
 @login_required
 @admin_required
 def project_stats(request):
@@ -50,7 +81,8 @@ def project_stats(request):
                   }
                   )
 
-#F10.1 Grant Admin
+
+# F10.1 Grant Admin
 @login_required
 @rootadmin_required
 def grant_admin(request, id):
@@ -60,7 +92,7 @@ def grant_admin(request, id):
     return redirect('user_list')
 
 
-#F10.2 Revoke Admin
+# F10.2 Revoke Admin
 @login_required
 @rootadmin_required
 def revoke_admin(request, id):
@@ -70,7 +102,7 @@ def revoke_admin(request, id):
     return redirect('user_list')
 
 
-#F11: Reference Data Management (language)
+# F11: Reference Data Management (language)
 @login_required
 @admin_required
 def create_language(request):
@@ -88,7 +120,7 @@ def create_language(request):
         return render(request, 'language-list.html', {'languages': languages, 'form': form})
 
 
-#F11: Reference Data Management (language)
+# F11: Reference Data Management (language)
 @login_required
 @admin_required
 def update_language(request, id):
@@ -130,6 +162,7 @@ def update_framework(request, id):
     framework.name = request.POST['name']
     framework.save()
     return redirect('create_framework')
+
 
 @login_required
 @admin_required
@@ -241,7 +274,7 @@ def delete_algorithm(request, id):
     return redirect('create_algorithm')
 
 
-#F12: Announcement Making
+# F12: Announcement Making
 @login_required
 @admin_required
 def create_announcement(request):
@@ -259,7 +292,7 @@ def create_announcement(request):
         return render(request, 'announcement-list.html', {'form': form, 'announcements': announcements})
 
 
-#delete announcement
+# delete announcement
 @login_required
 @admin_required
 def delete_announcement(request, id):
@@ -267,7 +300,8 @@ def delete_announcement(request, id):
     announcement.delete()
     return redirect('create_announcement')
 
-#update announcement
+
+# update announcement
 @login_required
 @admin_required
 def update_announcement(request, id):
@@ -277,7 +311,8 @@ def update_announcement(request, id):
     announcement.save()
     return redirect('create_announcement')
 
-#F13: Contact Admin
+
+# F13: Contact Admin
 @login_required
 @admin_required
 def create_contact(request):
@@ -290,7 +325,8 @@ def create_contact(request):
     else:
         return redirect('user_homepage')
 
-#Contact list
+
+# Contact list
 @login_required
 @admin_required
 def contact_list(request):

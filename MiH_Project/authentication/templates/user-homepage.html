@@ -47,18 +47,18 @@
                     <option value="DES">Desktop</option>
                     <option value="CRS">Cross Platform</option>
                 </select>
-    
+
                 <select class="form-select " name="language" id="">
                     <option value="">Choose Language</option>
                     {% for language in languages %}
-                        <option value="{{ language.id }}">{{ language.name }}</option>
+                    <option value="{{ language.id }}">{{ language.name }}</option>
                     {% endfor %}
                 </select>
-    
+
                 <select class="form-select " name="framework" id="">
                     <option value="">Choose Framework</option>
                     {% for framework in frameworks %}
-                        <option value="{{ framework.id }}">{{ framework.name }}</option>
+                    <option value="{{ framework.id }}">{{ framework.name }}</option>
                     {% endfor %}
                 </select>
 
@@ -68,7 +68,7 @@
     </div>
 </div>
 
-<div class="hw-filter-wrapper justify-content-center align-items-center"  id="hwFilters">
+<div class="hw-filter-wrapper justify-content-center align-items-center" id="hwFilters">
     <div class="hw-filters">
         <form method="get" action="{% url 'user_homepage' %}">
             <div class="d-flex gap-3">
@@ -93,14 +93,14 @@
                 <select class="form-select " name="focus" id="">
                     <option value="">Choose Focus</option>
                     {% for focus in focuses %}
-                        <option value="{{ focus.id }}">{{ focus.name }}</option>
+                    <option value="{{ focus.id }}">{{ focus.name }}</option>
                     {% endfor %}
                 </select>
 
                 <select class="form-select w-100" name="algorithm" id="">
                     <option value="">Choose Algorithms</option>
                     {% for algorithm in algorithms %}
-                        <option value="{{ algorithm.id }}">{{ algorithm.name }}</option>
+                    <option value="{{ algorithm.id }}">{{ algorithm.name }}</option>
                     {% endfor %}
                 </select>
 
@@ -115,18 +115,18 @@
 <section class="projects" style="display: flex; flex-wrap: wrap">
 
     {% if projects %}
-        {% for project in projects %}
-        <a href="{% url 'project_detail' project.id %}" style="text-decoration: none; width: 300px;">
-            <div class="card" style="width:300px;">
-                <span class="tag {{project.type}}">{{project.type}}</span>
-                <h3>{{project.title}}</h3>
-                <p>by {{project.innovator.name}}</p>
-                <img src="{{project.cover_photo.url}}" alt="{{project.title}}"/>
-            </div>
-        </a>
-        {% endfor %}
+    {% for project in projects %}
+    <a href="{% url 'project_detail' project.id %}" style="text-decoration: none; width: 300px;">
+        <div class="card" style="width:300px;">
+            <span class="tag {{project.type}}">{{project.type}}</span>
+            <h3>{{project.title}}</h3>
+            <p>by {{project.innovator.name}}</p>
+            <img src="{{project.cover_photo.url}}" alt="{{project.title}}"/>
+        </div>
+    </a>
+    {% endfor %}
     {% else %}
-        <h2 class="text-muted text-center">No such projects in MiH.</h2>
+    <h2 class="text-muted text-center">No such projects in MiH.</h2>
     {% endif %}
 
 
@@ -177,7 +177,8 @@
                     <form method="post" action="{% url 'create_contact' %}">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <input name="title" type="text" class="form-control" id="title" placeholder="Title" required>
+                            <input name="title" type="text" class="form-control" id="title" placeholder="Title"
+                                   required>
                         </div>
                         <input type="hidden" name="sender" value="{{user.id}}">
                         <div class="mb-3">
@@ -203,6 +204,25 @@
         <button id="modalBackBtn">Back</button>
     </div>
 </div>
+<button
+        onclick="scrollToTop()"
+        id="topBtn"
+        style="
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 99;
+        font-size: 25px;
+        border: none;
+        background-color: #004AAD;
+        color: white;
+        cursor: pointer;
+        padding: 12px 20px;
+        border-radius: 40%;
+    ">
+    ↑
+</button>
+
 {% endblock %}
 
 {% block script %}
@@ -267,6 +287,16 @@
         });
     });
 
+    window.onscroll = function () {
+        const btn = document.getElementById("topBtn");
+
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            btn.style.display = "block";
+        } else {
+            btn.style.display = "none";
+        }
+    };
+
     const modal = document.getElementById("successModal");
     const modalBackBtn = document.getElementById("modalBackBtn");
 
@@ -292,5 +322,12 @@
     cancelBtn.addEventListener("click", function () {
         window.location.href = "{% url 'user_homepage' %}";
     });
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
 </script>
 {% endblock %}

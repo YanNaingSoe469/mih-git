@@ -1,18 +1,33 @@
+"""
+Projects App - Views Module
+----------------------------
+
+Author: Yan Naing Soe
+Year: 2026
+
+Description:
+This module manages all project-related functionalities within the system.
+It handles project creation, updating, deletion, searching, and detailed
+viewing for different project categories including Software, Hardware,
+and AI projects.
+
+Main Functionalities:
+- F6.1: Search Project
+- F7.1: Create Project (Software, Hardware, AI)
+- F7.2: Update Project (Software, Hardware, AI)
+- F7.3: Delete Project
+- View Project Detail (with comments and ratings)
+"""
+
 import os
-from pprint import pprint
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Avg
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-
-from projects_app.forms import ProjectCreateForm, SoftwareCreateForm, HardwareCreateForm, AiCreateForm
-
-from projects_app.models import Project
-
-from projects_app.models import Software, Hardware, Ai
-
 from feedback_app.forms import CommentForm, RatingForm
+from projects_app.forms import ProjectCreateForm, SoftwareCreateForm, HardwareCreateForm, AiCreateForm
+from projects_app.models import Project
+from projects_app.models import Software, Hardware, Ai
 
 
 # F7.1 Create Project (Software)
