@@ -21,7 +21,7 @@ urlpatterns = [
     path("profile/", authentication_views.profile_page, name="profile_page"),
     path("update-profile/<int:id>/", authentication_views.update_profile, name="update_profile"),
     path("change-password/", authentication_views.change_password, name="change_password"),
-    path('announcements/', authentication_views.announcement_list, name="announcement_list"),
+    path('announcements/', authentication_views.    announcement_list, name="announcement_list"),
 
     # project_app routes
     path("sw-create/", project_views.create_software, name="sw_create"),
