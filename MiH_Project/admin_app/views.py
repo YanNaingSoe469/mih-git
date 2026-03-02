@@ -279,7 +279,6 @@ def update_announcement(request, id):
 
 #F13: Contact Admin
 @login_required
-@admin_required
 def create_contact(request):
     if request.method == 'POST':
         form = CreateContactForm(request.POST)
