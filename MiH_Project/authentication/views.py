@@ -226,6 +226,11 @@ def change_password(request):
             update_session_auth_hash(request, user)
             messages.success(request, "Password updated successfully!")
             return redirect("change_password")
+        else:
+            if user.role == 'user':
+                return render(request, "user-change-password.html", {"form": form})
+            else:
+                return render(request, "admin-change-password.html", {"form": form})
     else:
         form = ChangePasswordForm(user=request.user)
         if user.role == 'user':
