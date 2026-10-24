@@ -8,6 +8,35 @@ class CreateLanguageForm(forms.ModelForm):
         model = Language
         fields = "__all__"
 
+    def clean_name(self):
+        name = self.cleaned_data.get("name", "").strip()
+        queryset = Language.objects.filter(name__iexact=name)
+
+        if self.instance.pk:
+            queryset = queryset.exclude(pk=self.instance.pk)
+
+        if queryset.exists():
+            self.add_error("name", "It already exists.")
+
+        return name
+
+class UpdateLanguageForm(forms.ModelForm):
+    class Meta:
+        model = Language
+        fields = "__all__"
+
+    def clean_name(self):
+        name = self.cleaned_data.get("name", "").strip()
+        queryset = Language.objects.filter(name__iexact=name)
+
+        if self.instance.pk:
+            queryset = queryset.exclude(pk=self.instance.pk)
+
+        if queryset.exists():
+            self.add_error("name", "It already exists.")
+
+        return name
+
 class CreateFrameworkForm(forms.ModelForm):
     class Meta:
         model = Framework

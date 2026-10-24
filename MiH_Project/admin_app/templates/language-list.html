@@ -67,11 +67,14 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
-                                                <form method="post" action="{% url 'update_language' id=language.id %}">
+                                                <form method="POST" action="{% url 'update_language' id=language.id %}">
                                                     {% csrf_token %}
                                                     <div class="modal-body">
                                                         <input type="text" name="name" id="" class="form-control"
                                                                value="{{language.name}}">
+                                                        <span class="text-danger">
+                                                            {{ u_form.name.errors }}
+                                                        </span>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-sm btn-secondary"

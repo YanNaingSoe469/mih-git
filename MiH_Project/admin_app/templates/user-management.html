@@ -61,19 +61,89 @@
                         <td class="text-end pe-4">
 
                             {% if person.role == 'user' %}
-                            <a href="{% url 'grant_admin' id=person.id %}"
+                            <button class="btn btn-sm btn-outline-success"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#grant{{person.id}}"
                                class="btn btn-outline-success py-1 px-2 rounded-1 me-1"
                                style="font-size: 0.75rem;">
                                 <i class="fa fa-check-circle"></i> Grant Admin
-                            </a>
+                            </button>
+
+                            <div class="modal fade" id="grant{{ person.id }}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <div class="modal-header text-center">
+                                                <h5 class="modal-title">Grant Admin?</h5>
+                                                <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                            </div>
+
+                                            <div class="modal-body text-center">
+                                                Are you sure you want to grant admin to this user?
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button"
+                                                        class="btn btn-sm btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                    Cancel
+                                                </button>
+                                                <form method="GET"
+                                                      action="{% url 'grant_admin' id=person.id %}"">
+                                                    {% csrf_token %}
+                                                    <button type="submit"
+                                                            class="btn btn-sm btn-success">
+                                                        Yes, Grant Admin
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             {% endif %}
 
                             {% if person.role == 'admin' %}
-                            <a href="{% url 'revoke_admin' id=person.id %}" class="btn btn-danger py-1 px-2 rounded-1"
+                            <button class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#revoke{{person.id}}" class="btn btn-danger py-1 px-2 rounded-1"
                                style="background-color: #fff; color: #dc3545; border: 1px solid #dc3545; font-size: 0.75rem;"
                                title="Revoke Admin">
                                 <i class="fa fa-times-circle"></i> Revoke Admin
-                            </a>
+                            </button>
+
+                            <div class="modal fade" id="revoke{{ person.id }}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <div class="modal-header text-center">
+                                                <h5 class="modal-title">Revoke Admin?</h5>
+                                                <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                            </div>
+
+                                            <div class="modal-body text-center">
+                                                Are you sure you want to revoke this admin?
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button"
+                                                        class="btn btn-sm btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                    Cancel
+                                                </button>
+                                                <form method="GET"
+                                                      action="{% url 'revoke_admin' id=person.id %}"">
+                                                    {% csrf_token %}
+                                                    <button type="submit"
+                                                            class="btn btn-sm btn-danger">
+                                                        Yes, Revoke Admin
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             {% endif %}
 
                         </td>
