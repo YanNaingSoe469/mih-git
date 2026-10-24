@@ -144,7 +144,7 @@ def project_delete(request, id):
     cover_photo_path = project.cover_photo.path
     os.remove(cover_photo_path)
     project.delete()
-    return redirect('profile_page')
+    return redirect('project_list')
 
 
 # F6.1 Search Project
